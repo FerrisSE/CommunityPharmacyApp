@@ -6,8 +6,8 @@ const HomeScreen = ({ navigation }) => {
 		<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 			<Text>Home Screen</Text>
 			<Button
-				title="Profile"
-				onPress={() => navigation.push('Profile', { name: "Test User" })}
+				title="Patient Profile Screen"
+				onPress={() => navigation.push('Profile')}
 			/>
 		</View>
 	);

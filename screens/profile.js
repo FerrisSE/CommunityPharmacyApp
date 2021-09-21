@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 const ProfileScreen = ({ navigation, route }) => {
 	return (
 		<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-			<Text>This is {route.params.name}'s profile</Text>
+			<Text>Patient Profile</Text>
 		</View>
 	);
 };
