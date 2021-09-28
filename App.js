@@ -20,7 +20,7 @@ export default function App() {
         <Stack.Screen
           name="Profile"
           component={ProfileScreen}
-          options={{ title: 'Profile' }}
+          options={{ title: 'My Profile' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
