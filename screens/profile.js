@@ -47,7 +47,6 @@ function Profile(props) {
 	return <SafeAreaView style={styles.container}>
 		<View style={{ flex: 1 }}>
 			<Text style={styles.title}>{props.patient.givenName + ' ' + props.patient.familyName}</Text>
-			<Text style={styles.subheader}>Information on Record</Text>
 			<View style={{
 				alignSelf: 'stretch',
 				borderBottomWidth: 1,
@@ -55,6 +54,7 @@ function Profile(props) {
 				marginTop: 10,
 				marginBottom: 10
 			}} />
+			<Text style={styles.subheader}>Information on Record</Text>
 			<View style={styles.row}>
 				<Icon name="map-marker-radius" size={40} />
 				<Text style={styles.information}>{props.patient.addressStreet + " "}</Text>
