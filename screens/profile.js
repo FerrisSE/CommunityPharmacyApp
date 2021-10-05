@@ -8,7 +8,7 @@ const ProfileScreen = ({ navigation, route }) => {
 	let [error, setError] = React.useState(false)
 
 	useEffect(() => {
-		fetch('http://localhost:8080/LocalPatient/Martin/Kucharek', {
+		fetch('http://localhost:8080/api/patient/all', {
 			"method": "GET",
 			"headers": {
 				'Accept': 'application/json',
