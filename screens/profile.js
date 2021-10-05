@@ -33,7 +33,7 @@ export default ProfileScreen;
 
 function ProfileLoading(props) {
 	return <View style={styles.center}>
-		<Text style={styles.center}>Loading</Text>
+		<Text style={styles.loadingText}>Loading</Text>
 	</View>
 }
 
@@ -95,6 +95,10 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		fontSize: 24,
 		color: "crimson"
+	},
+	loadingText: {
+		fontWeight: "bold",
+		fontSize: 24
 	},
 	center: {
 		flex: 1,
