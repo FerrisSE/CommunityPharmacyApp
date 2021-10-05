@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import mainStyles from '../main-styles';
 
 const ProfileScreen = ({ navigation, route }) => {
 	let [patient, setPatient] = React.useState('')
@@ -32,21 +33,21 @@ const ProfileScreen = ({ navigation, route }) => {
 export default ProfileScreen;
 
 function ProfileLoading(props) {
-	return <View style={styles.center}>
+	return <View style={mainStyles.center}>
 		<Text style={styles.loadingText}>Loading</Text>
 	</View>
 }
 
 function ProfileFailed(props) {
-	return <View style={styles.center}>
+	return <View style={mainStyles.center}>
 		<Text style={styles.errorText}>Something Went Wrong!</Text>
 	</View>
 }
 
 function Profile({ patient }) {
-	return <SafeAreaView style={styles.container}>
+	return <SafeAreaView style={mainStyles.container}>
 		<View style={{ flex: 1 }}>
-			<Text style={styles.title}>{patient.givenName + ' ' + patient.familyName}</Text>
+			<Text style={mainStyles.title}>{patient.givenName + ' ' + patient.familyName}</Text>
 			<View style={{
 				alignSelf: 'stretch',
 				borderBottomWidth: 1,
@@ -54,23 +55,23 @@ function Profile({ patient }) {
 				marginTop: 10,
 				marginBottom: 10
 			}} />
-			<Text style={styles.subheader}>Information on Record</Text>
-			<View style={styles.row}>
+			<Text style={mainStyles.subheader}>Information on Record</Text>
+			<View style={mainStyles.row}>
 				<Icon name="map-marker-radius" size={40} />
 				<Text style={styles.information}>{patient.addressStreet + " "}</Text>
 				<Text style={styles.information}>{patient.addressCity + ", "}</Text>
 				<Text style={styles.information}>{patient.addressState + " "}</Text>
 				<Text style={styles.information}>{patient.addressZipcode}</Text>
 			</View>
-			<View style={styles.row}>
+			<View style={mainStyles.row}>
 				<Icon name="phone" size={40} />
 				<Text style={styles.information}>{patient.phoneNumber}</Text>
 			</View>
-			<View style={styles.row}>
+			<View style={mainStyles.row}>
 				<Icon name="account" size={40} />
 				<Text style={styles.information}>{patient.gender}</Text>
 			</View>
-			<View style={styles.row}>
+			<View style={mainStyles.row}>
 				<Icon name="cake" size={40} />
 				<Text style={styles.information}>{patient.birthdate}</Text>
 			</View>
@@ -79,14 +80,6 @@ function Profile({ patient }) {
 }
 
 const styles = StyleSheet.create({
-	title: {
-		fontWeight: "bold",
-		fontSize: 48
-	},
-	subheader: {
-		fontWeight: "bold",
-		fontSize: 24
-	},
 	information: {
 		fontWeight: "normal",
 		fontSize: 20
@@ -100,17 +93,4 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		fontSize: 24
 	},
-	center: {
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	container: {
-		margin: 20,
-	},
-	row: {
-		flex: 1,
-		flexDirection: "row",
-		alignItems: "center"
-	}
 });
