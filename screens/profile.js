@@ -43,10 +43,10 @@ function ProfileFailed(props) {
 	</View>
 }
 
-function Profile(props) {
+function Profile({ patient }) {
 	return <SafeAreaView style={styles.container}>
 		<View style={{ flex: 1 }}>
-			<Text style={styles.title}>{props.patient.givenName + ' ' + props.patient.familyName}</Text>
+			<Text style={styles.title}>{patient.givenName + ' ' + patient.familyName}</Text>
 			<View style={{
 				alignSelf: 'stretch',
 				borderBottomWidth: 1,
@@ -57,22 +57,22 @@ function Profile(props) {
 			<Text style={styles.subheader}>Information on Record</Text>
 			<View style={styles.row}>
 				<Icon name="map-marker-radius" size={40} />
-				<Text style={styles.information}>{props.patient.addressStreet + " "}</Text>
-				<Text style={styles.information}>{props.patient.addressCity + ", "}</Text>
-				<Text style={styles.information}>{props.patient.addressState + " "}</Text>
-				<Text style={styles.information}>{props.patient.addressZipcode}</Text>
+				<Text style={styles.information}>{patient.addressStreet + " "}</Text>
+				<Text style={styles.information}>{patient.addressCity + ", "}</Text>
+				<Text style={styles.information}>{patient.addressState + " "}</Text>
+				<Text style={styles.information}>{patient.addressZipcode}</Text>
 			</View>
 			<View style={styles.row}>
 				<Icon name="phone" size={40} />
-				<Text style={styles.information}>{props.patient.phoneNumber}</Text>
+				<Text style={styles.information}>{patient.phoneNumber}</Text>
 			</View>
 			<View style={styles.row}>
 				<Icon name="account" size={40} />
-				<Text style={styles.information}>{props.patient.gender}</Text>
+				<Text style={styles.information}>{patient.gender}</Text>
 			</View>
 			<View style={styles.row}>
 				<Icon name="cake" size={40} />
-				<Text style={styles.information}>{props.patient.birthdate}</Text>
+				<Text style={styles.information}>{patient.birthdate}</Text>
 			</View>
 		</View>
 	</SafeAreaView>
