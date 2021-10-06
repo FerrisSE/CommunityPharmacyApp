@@ -24,6 +24,12 @@ const mainStyles = StyleSheet.create({
 	row: {
 		flex: 1,
 		flexDirection: "row",
+		justifyContent: "flex-start",
+		alignItems: "center"
+	},
+	rowSpaced: {
+		flex: 1,
+		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center"
 	},

@@ -9,7 +9,7 @@ const TextLink = ({ label, onPress }) => {
 			activeOpacity={0.6}
 			underlayColor="#00000000"
 			onPress={onPress}>
-			<View style={[mainStyles.CardView, mainStyles.row]}>
+			<View style={[mainStyles.CardView, mainStyles.rowSpaced]}>
 				<Text style={styles.text}>{label}</Text>
 				<Icon name="arrow-right" size={40} />
 			</View>

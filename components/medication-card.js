@@ -25,7 +25,7 @@ const MedicationCard = () => {
 				</View>
 			</View>
 
-			<View style={mainStyles.row}>
+			<View style={mainStyles.rowSpaced}>
 				<Text style={mainStyles.textImportant}>Status: On hold</Text>
 				<Button style={{ alignSelf: 'right', }} title="Request Refill"
 					onPress={() => { }} />
