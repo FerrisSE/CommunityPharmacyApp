@@ -12,7 +12,7 @@ const ProfileScreen = () => {
 	return (
 		<Stack.Navigator>
 			<Stack.Screen
-				name="Profile"
+				name="Profile Dashboard"
 				component={ProfileMainScreen}
 				options={{ headerShown: false }}
 			/>
