@@ -7,7 +7,7 @@ const HomeScreen = ({ navigation }) => {
 			<Text>Home Screen</Text>
 			<Button
 				title="Patient Profile Screen"
-				onPress={() => navigation.navigate('Personal Information')}
+				onPress={() => navigation.navigate('Profile')}
 			/>
 		</View>
 	);

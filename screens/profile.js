@@ -1,9 +1,29 @@
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import TextLink from '../components/text-link';
 import mainStyles from '../main-styles';
+import CurrentMedicationScreen from './current-medication';
 
-const ProfileScreen = ({ navigation, route }) => {
+const Stack = createNativeStackNavigator();
+
+const ProfileScreen = () => {
+	return (
+		<Stack.Navigator>
+			<Stack.Screen
+				name="Profile"
+				component={ProfileMainScreen}
+				options={{ headerShown: false }}
+			/>
+			<Stack.Screen name="Current Medication" component={CurrentMedicationScreen} />
+		</Stack.Navigator>
+	)
+}
+
+export default ProfileScreen;
+
+const ProfileMainScreen = ({ navigation, route }) => {
 	let [patient, setPatient] = React.useState('')
 	let [loading, setLoading] = React.useState(true)
 	let [error, setError] = React.useState(false)
@@ -27,10 +47,8 @@ const ProfileScreen = ({ navigation, route }) => {
 	if (loading)
 		return <ProfileLoading />
 
-	return <Profile patient={patient[0]} />
+	return <Profile patient={patient[0]} navigator={navigation} />
 };
-
-export default ProfileScreen;
 
 function ProfileLoading(props) {
 	return <View style={mainStyles.center}>
@@ -44,18 +62,11 @@ function ProfileFailed(props) {
 	</View>
 }
 
-function Profile({ patient }) {
+function Profile({ patient, navigator }) {
 	return <SafeAreaView style={mainStyles.container}>
-		<View style={{ flex: 1 }}>
-			<Text style={mainStyles.title}>{patient.givenName + ' ' + patient.familyName}</Text>
-			<View style={{
-				alignSelf: 'stretch',
-				borderBottomWidth: 1,
-				borderBottomColor: '#000',
-				marginTop: 10,
-				marginBottom: 10
-			}} />
-			<Text style={mainStyles.subheader}>Information on Record</Text>
+		<View style={mainStyles.CardView}>
+			<Text style={mainStyles.CardTitle}>{patient.givenName + ' ' + patient.familyName}</Text>
+			<Text style={mainStyles.CardSubtitle}>Personal Information on Record</Text>
 			<View style={mainStyles.row}>
 				<Icon name="map-marker-radius" size={40} />
 				<Text style={styles.information}>{patient.addressStreet + " "}</Text>
@@ -76,6 +87,7 @@ function Profile({ patient }) {
 				<Text style={styles.information}>{patient.birthdate}</Text>
 			</View>
 		</View>
+		<TextLink label="Current Medication" onPress={() => { navigator.navigate('Current Medication') }} />
 	</SafeAreaView>
 }
 

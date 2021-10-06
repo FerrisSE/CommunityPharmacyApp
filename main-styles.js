@@ -52,6 +52,9 @@ const mainStyles = StyleSheet.create({
 		fontWeight: "bold",
 		fontSize: 32
 	},
+	CardSubtitle: {
+		fontSize: 24
+	},
 	CardSubView: {
 		backgroundColor: "#f4f4f4",
 		padding: 12,
