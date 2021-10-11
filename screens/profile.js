@@ -1,14 +1,35 @@
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import TextLink from '../components/text-link';
+import mainStyles from '../main-styles';
+import CurrentMedicationScreen from './current-medication';
 
-const ProfileScreen = ({ navigation, route }) => {
+const Stack = createNativeStackNavigator();
+
+const ProfileScreen = () => {
+	return (
+		<Stack.Navigator>
+			<Stack.Screen
+				name="Profile Dashboard"
+				component={ProfileMainScreen}
+				options={{ headerShown: false }}
+			/>
+			<Stack.Screen name="Current Medication" component={CurrentMedicationScreen} />
+		</Stack.Navigator>
+	)
+}
+
+export default ProfileScreen;
+
+const ProfileMainScreen = ({ navigation, route }) => {
 	let [patient, setPatient] = React.useState('')
 	let [loading, setLoading] = React.useState(true)
 	let [error, setError] = React.useState(false)
 
 	useEffect(() => {
-		fetch('http://localhost:8080/LocalPatient/Martin/Kucharek', {
+		fetch('http://localhost:8080/api/patient/all', {
 			"method": "GET",
 			"headers": {
 				'Accept': 'application/json',
@@ -26,67 +47,51 @@ const ProfileScreen = ({ navigation, route }) => {
 	if (loading)
 		return <ProfileLoading />
 
-	return <Profile patient={patient[0]} />
+	return <Profile patient={patient[0]} navigator={navigation} />
 };
 
-export default ProfileScreen;
-
 function ProfileLoading(props) {
-	return <View style={styles.center}>
-		<Text style={styles.center}>Loading</Text>
+	return <View style={mainStyles.center}>
+		<Text style={styles.loadingText}>Loading</Text>
 	</View>
 }
 
 function ProfileFailed(props) {
-	return <View style={styles.center}>
+	return <View style={mainStyles.center}>
 		<Text style={styles.errorText}>Something Went Wrong!</Text>
 	</View>
 }
 
-function Profile(props) {
-	return <SafeAreaView style={styles.container}>
-		<View style={{ flex: 1 }}>
-			<Text style={styles.title}>{props.patient.givenName + ' ' + props.patient.familyName}</Text>
-			<View style={{
-				alignSelf: 'stretch',
-				borderBottomWidth: 1,
-				borderBottomColor: '#000',
-				marginTop: 10,
-				marginBottom: 10
-			}} />
-			<Text style={styles.subheader}>Information on Record</Text>
-			<View style={styles.row}>
+function Profile({ patient, navigator }) {
+	return <SafeAreaView style={mainStyles.container}>
+		<View style={mainStyles.CardView}>
+			<Text style={mainStyles.CardTitle}>{patient.givenName + ' ' + patient.familyName}</Text>
+			<Text style={mainStyles.CardSubtitle}>Personal Information on Record</Text>
+			<View style={mainStyles.row}>
 				<Icon name="map-marker-radius" size={40} />
-				<Text style={styles.information}>{props.patient.addressStreet + " "}</Text>
-				<Text style={styles.information}>{props.patient.addressCity + ", "}</Text>
-				<Text style={styles.information}>{props.patient.addressState + " "}</Text>
-				<Text style={styles.information}>{props.patient.addressZipcode}</Text>
+				<Text style={styles.information}>{patient.addressStreet + " "}</Text>
+				<Text style={styles.information}>{patient.addressCity + ", "}</Text>
+				<Text style={styles.information}>{patient.addressState + " "}</Text>
+				<Text style={styles.information}>{patient.addressZipcode}</Text>
 			</View>
-			<View style={styles.row}>
+			<View style={mainStyles.row}>
 				<Icon name="phone" size={40} />
-				<Text style={styles.information}>{props.patient.phoneNumber}</Text>
+				<Text style={styles.information}>{patient.phoneNumber}</Text>
 			</View>
-			<View style={styles.row}>
+			<View style={mainStyles.row}>
 				<Icon name="account" size={40} />
-				<Text style={styles.information}>{props.patient.gender}</Text>
+				<Text style={styles.information}>{patient.gender}</Text>
 			</View>
-			<View style={styles.row}>
+			<View style={mainStyles.row}>
 				<Icon name="cake" size={40} />
-				<Text style={styles.information}>{props.patient.birthdate}</Text>
+				<Text style={styles.information}>{patient.birthdate}</Text>
 			</View>
 		</View>
+		<TextLink label="Current Medication" onPress={() => { navigator.navigate('Current Medication') }} />
 	</SafeAreaView>
 }
 
 const styles = StyleSheet.create({
-	title: {
-		fontWeight: "bold",
-		fontSize: 48
-	},
-	subheader: {
-		fontWeight: "bold",
-		fontSize: 24
-	},
 	information: {
 		fontWeight: "normal",
 		fontSize: 20
@@ -96,17 +101,8 @@ const styles = StyleSheet.create({
 		fontSize: 24,
 		color: "crimson"
 	},
-	center: {
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
+	loadingText: {
+		fontWeight: "bold",
+		fontSize: 24
 	},
-	container: {
-		margin: 20,
-	},
-	row: {
-		flex: 1,
-		flexDirection: "row",
-		alignItems: "center"
-	}
 });
