@@ -1,13 +1,12 @@
 import React from 'react';
 import { Button, Text, View } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import { changeStack } from '../App';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import mainStyles from '../main-styles';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
 import RegisterAccountScreen from './register-account';
 import ForgotPasswordScreen from './forgot-password';
+import PrivacyAcceptanceScreen from './privacy-acceptance';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +27,13 @@ const LoginScreen = ({ navigation }) => {
 			<Stack.Screen
 				name="Forgot Password"
 				component={ForgotPasswordScreen}
+			/>
+			<Stack.Screen
+				name="Privacy Agreement"
+				component={PrivacyAcceptanceScreen}
+				options={({ route }) => ({
+					headerShown: false
+				})}
 			/>
 		</Stack.Navigator>
 	);
@@ -57,7 +63,7 @@ const LoginMainScreen = ({ navigation }) => {
 
 			<Button
 				title="Login"
-				onPress={() => changeStack('Main')}
+				onPress={() => navigation.push('Privacy Agreement')}
 			/>
 
 			<View style={mainStyles.rowFull}>
