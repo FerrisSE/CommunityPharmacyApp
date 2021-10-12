@@ -13,6 +13,13 @@ const mainStyles = StyleSheet.create({
 		fontWeight: "bold",
 		fontSize: 16,
 	},
+	textInput: {
+		fontSize: 18,
+		padding: 10,
+		margin: 16,
+		backgroundColor: "#e0e0e0",
+		borderRadius: 8,
+	},
 	center: {
 		flex: 1,
 		alignItems: "center",
@@ -31,6 +38,12 @@ const mainStyles = StyleSheet.create({
 		flex: 1,
 		flexDirection: "row",
 		justifyContent: "space-between",
+		alignItems: "center"
+	},
+	rowFull: {
+		flex: 1,
+		flexDirection: "row",
+		justifyContent: "space-around",
 		alignItems: "center"
 	},
 	CardView: {
