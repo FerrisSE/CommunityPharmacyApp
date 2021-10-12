@@ -16,7 +16,10 @@ const ProfileScreen = () => {
 				component={ProfileMainScreen}
 				options={{ headerShown: false }}
 			/>
-			<Stack.Screen name="Current Medication" component={CurrentMedicationScreen} />
+			<Stack.Screen
+				name="Current Medication"
+				component={CurrentMedicationScreen}
+			/>
 		</Stack.Navigator>
 	)
 }
@@ -64,6 +67,7 @@ function ProfileFailed(props) {
 
 function Profile({ patient, navigator }) {
 	return <SafeAreaView style={mainStyles.container}>
+		<Text style={mainStyles.title}>Profile</Text>
 		<View style={mainStyles.CardView}>
 			<Text style={mainStyles.CardTitle}>{patient.givenName + ' ' + patient.familyName}</Text>
 			<Text style={mainStyles.CardSubtitle}>Personal Information on Record</Text>
