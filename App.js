@@ -40,8 +40,15 @@ export default function App() {
           })}
         />
         <Stack.Screen
-          name="Main"
+          name="Pharmacist"
           component={MainApp}
+          options={({ route }) => ({
+            headerShown: false
+          })}
+        />
+        <Stack.Screen
+          name="Patient"
+          component={ProfileScreen}
           options={({ route }) => ({
             headerShown: false
           })}

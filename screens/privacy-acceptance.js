@@ -19,7 +19,7 @@ const PrivacyAcceptanceScreen = ({ navigation }) => {
 				</TouchableOpacity>
 				<Button
 					title="Agree"
-					onPress={() => changeStack('Main')}
+					onPress={() => changeStack('Patient')}
 				/>
 			</View>
 
