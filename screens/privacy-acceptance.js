@@ -6,7 +6,7 @@ import mainStyles from '../main-styles';
 const PrivacyAcceptanceScreen = ({ navigation }) => {
 	return (
 		<View style={{ flex: 1, padding: 20 }}>
-			<Text style={mainStyles.title}>Privacy Agreement</Text>
+			<Text style={mainStyles.title}>Privacy Consent Form</Text>
 			<Text style={[mainStyles.textImportant, { paddingBottom: 20, paddingTop: 20 }]}>Before being able to use our app, we need consent to use your medical information.</Text>
 			<View style={{ flex: 10, paddingBottom: 20 }}>
 				<ScrollView style={{ flexGrow: 0.2, padding: 20 }}>
@@ -19,7 +19,7 @@ const PrivacyAcceptanceScreen = ({ navigation }) => {
 				</TouchableOpacity>
 				<Button
 					title="Agree"
-					onPress={() => changeStack('Main')}
+					onPress={() => changeStack('Patient')}
 				/>
 			</View>
 
@@ -29,22 +29,65 @@ const PrivacyAcceptanceScreen = ({ navigation }) => {
 
 export default PrivacyAcceptanceScreen;
 
-const privacyAgreementText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam odio vel risus condimentum venenatis. Ut facilisis ligula vel urna laoreet pulvinar. Vestibulum sit amet nisl quis risus varius ullamcorper gravida quis orci. In hac habitasse platea dictumst. Duis congue purus a ultricies scelerisque. Suspendisse quis egestas dolor, et elementum orci. Ut sit amet luctus risus. Nulla pretium, turpis sit amet ultrices eleifend, eros tellus condimentum felis, sed vehicula orci arcu eget ex. Morbi a diam imperdiet purus viverra auctor id ut tortor. Donec pretium commodo velit id pretium. Curabitur tempor faucibus velit a lacinia. Sed vestibulum faucibus dolor.
+const privacyAgreementText =
+	`NOTICE OF NONDISCRIMINATION:
+Spectrum Health complies with applicable federal civil rights laws and does not discriminate on the basis of race, color, national origin, age, disability, or sex. Spectrum Health does not exclude people or treat them differently because of race, color, national origin, age, disability, or sex or any other basis prohibited by law.
 
-Ut justo sapien, viverra eu fermentum sed, posuere sit amet ex. Fusce non tellus eu odio feugiat aliquam. Vestibulum finibus convallis diam, sit amet iaculis neque lacinia ac. Suspendisse fringilla orci vel eros bibendum, at volutpat ex blandit. In mollis scelerisque viverra. Integer tempus orci sem, quis semper ligula feugiat in. Donec nec nisi placerat, hendrerit nunc nec, venenatis turpis. Proin tincidunt magna turpis, sagittis eleifend lorem faucibus eu. Integer sed purus libero. Proin eu erat a est cursus consequat. In semper nec ipsum non ultrices. Etiam ut mauris dapibus, porttitor libero eget, imperdiet ipsum. Morbi aliquet est eget ex molestie aliquam. Vestibulum tristique congue nulla, consectetur suscipit ipsum condimentum vitae. Nulla et velit dolor. Aliquam eu ante mi.
+I AGREE:
+• To examination and treatment by providers, residents, students, and other healthcare professionals at Spectrum Health. This may include in-person, shared medical appointment, telemedicine, videotaping, photographing and audio devices. These tools may be used to treat/diagnose or for procedures to be performed for medical, scientific and/or personal safety.  
+• As discussed and agreed, the provider may change my and/or my child’s care to benefit my life or health.
+• If I am here to give birth, the provider and other healthcare professionals may give care to my baby.
+• If I am participating in a shared medical appointment, I will attend this appointment with other patients. During these appointments, personal information about me may be shared by my provider to others.
 
-Praesent ullamcorper rutrum ipsum, pretium sollicitudin est scelerisque vel. Morbi gravida elit vel turpis eleifend maximus. Nam at interdum augue. Mauris sed elit nec lorem placerat sagittis id at neque. Curabitur libero augue, dignissim vel tortor sed, ultricies tempus sem. Donec dapibus ac leo in mollis. Nullam malesuada lobortis egestas. Donec vitae pharetra dui. Nullam ut erat urna.
+I UNDERSTAND THAT:
+• I will ask questions.
+• No one has made promises or guarantees about the results of my treatment or care. I am aware the practice of medicine and surgery is not an exact science. No guarantees have been made to me as a result of my treatment or examination at Spectrum Health.
+• Students and staff may see me and look at my medical record for teaching or research purposes.
+• The staff will double-check who I am. They will ask what I am having done. This is to protect me.      
+• Some providers and staff are not employees of Spectrum Health. I know that Spectrum Health is not responsible for their care or other actions. I also know I will receive separate bills from them even though they provide services to me at a Spectrum Health location. I will work with their offices to answer questions about my insurance.
+• Michigan law allows healthcare providers to test my blood for HIV (AIDS virus) or Hepatitis without my consent if someone who has helped in my care is exposed to my blood or body fluids.
+• A copy of the Spectrum Health Financial Assistance Eligibility Policy is available upon request at all registration areas and on our website at www.spectrumhealth.org.
+• Spectrum Health will not tolerate discrimination against my provider, other healthcare professionals or staff because of race, color, gender, national origin, age, disability, sex or any other basis prohibited by federal, state or local law.
+• Should my condition require referral to a specialist, I understand I will be asked my choice of a provider. I will have the opportunity to have Spectrum Health contact the provider of my choice or if I do not have a preference, an independent provider from Spectrum Health’s “on-call” list will be called. I consent to my insurance company billing for professional services given by this provider whether or not this provider participates with my insurance program.
+• This consent is valid for one (1) year from the date of my signature.
 
-Proin lacus ante, scelerisque a maximus ac, rhoncus id sem. Sed semper elit ullamcorper lorem accumsan fermentum. Sed rhoncus turpis eget iaculis aliquet. Nam eu condimentum mi. Phasellus sollicitudin, eros id auctor congue, odio dolor ornare sem, eget ornare est est sed nisl. Vestibulum euismod euismod justo, vitae tincidunt augue congue at. Vivamus interdum sollicitudin lorem et dictum. Vestibulum ullamcorper lectus ut risus vestibulum, consequat posuere urna sagittis. Pellentesque imperdiet efficitur mauris, quis efficitur dui vulputate sed. Nam facilisis efficitur sem, ut sollicitudin dui auctor sit amet. Vestibulum condimentum molestie velit, ac lobortis urna rhoncus eget.
+MY MEDICAL INFORMATION:
+• SPECTRUM HEALTH MAY RELEASE MY MEDICAL INFORMATION TO:
+• Insurance companies, health plans and administrators for payment of services I or my child receive(s).
+• Government agencies like Medicare and Medicaid or as required by law.
+• My providers and others involved in my care now or in the future.
+• My employer, if the records are related to care or services paid for by my employer, or for other purposes that are allowed under law.
+• Any person or entity responsible to pay all or part of my bill.
+• I agree that Spectrum Health can take my or my child’s picture and save it to my electronic medical record. I understand that Spectrum Health will use this picture for identification purposes with the goal of improving patient experience.
+• I understand Spectrum Health will keep my or my child’s medical information according to state law, federal law and policy. I also understand that my medical information may be stored electronically and may be sent to or received from other healthcare providers and/or payers electronically. This includes my diagnosis (what is wrong with me), treatments (what we are doing to do make me better), and medicine or prescription information. This may also include details about my mental health, infectious diseases (like HIV), and other problems like drug or alcohol use disorder.  
+• In some cases, Spectrum Health is required by law to report medical information to an agency like the health department. This may include information about HIV, TB and other diseases.
+• If I am transferred to another facility, Spectrum Health’s providers/resident providers may access my medical records to follow up on my care and/or use the information for medical research.
 
-Praesent vel interdum nisi. Nam vestibulum ante cursus, malesuada libero vel, ornare risus. Sed nec malesuada nulla. Vivamus non nisi nec purus eleifend convallis. Nam vulputate fermentum urna ut scelerisque. Vestibulum aliquam lectus a odio pharetra porta. Praesent viverra diam sed odio efficitur condimentum. Vivamus at viverra dui. Cras efficitur urna a pharetra porttitor. Suspendisse a laoreet mauris. Maecenas in efficitur sem. Nam orci mi, sodales at hendrerit quis, tincidunt eget leo. Duis interdum odio ac tristique semper. Duis tortor ante, egestas gravida blandit quis, feugiat vitae dolor. Cras eleifend, mauris a convallis facilisis, lacus sem pharetra lacus, quis laoreet dolor sem sit amet sapien.
+PRIVACY NOTICE
+• I have rights and responsibilities when I or my child receive(s) services. Spectrum Health has given me its Notice of Privacy Practices, and I have had an opportunity to ask questions about the information in the Notice.
 
-Nullam viverra nibh condimentum velit ultricies, molestie scelerisque ligula accumsan. Pellentesque a hendrerit arcu. In ac malesuada dui. Aliquam ultrices, ipsum eget volutpat ullamcorper, urna urna fringilla arcu, porta aliquet nibh sem vel elit. Nullam porttitor leo in diam euismod imperdiet. Integer bibendum venenatis lorem non blandit. Aenean id est et nisi aliquet blandit. Nam id nisl quis purus malesuada suscipit et nec magna. Nam dui magna, luctus at cursus id, ullamcorper a nunc. In egestas turpis urna, vitae iaculis velit convallis ut. Nullam hendrerit, massa sit amet malesuada ornare, risus urna congue lacus, non interdum nunc risus tristique augue. Quisque dapibus quam metus. Phasellus lacinia tristique nulla, blandit dignissim felis aliquet eu. Nam consequat velit quis maximus consectetur. Integer non tempor augue, a dictum ante.
+VALUABLES
+• Spectrum Health would like its patients to leave valuables at home or with family members. I agree Spectrum Health is not responsible for safeguarding my property.
 
-Vestibulum molestie arcu felis, at gravida leo lacinia sed. Curabitur a bibendum justo. Integer gravida ligula vitae sapien venenatis venenatis. Phasellus aliquet ultricies nisi a ultricies. Praesent quis lectus metus. Fusce in elit risus. Morbi rutrum mollis turpis, at dignissim nisl accumsan non. Ut ac molestie lectus. Curabitur vitae ultricies tellus, sit amet sagittis arcu. Mauris vulputate placerat purus a cursus. Vestibulum fermentum lacus elit, a tempus tellus porttitor in. Maecenas vel scelerisque nisi, et tristique mi. Duis in lorem in mauris ullamcorper porttitor. Mauris a purus enim.
+PATIENT RIGHTS AND GRIEVANCES
+• I understand that I may submit a concern or complaint without fear of reprisal or retaliation. But, efforts will be made to resolve my concern promptly or within seven (7) days, if possible. If I have questions about my rights as a patient, I am free to ask questions. The number to call is 269.983.8624 (Spectrum Health Lakeland) or 855.613.2262 (all other Spectrum Health locations).
 
-Aenean viverra urna vitae risus lobortis ultrices. Vestibulum auctor, turpis vel fringilla scelerisque, lacus velit molestie augue, at ultricies nunc diam nec lorem. Phasellus volutpat tellus non varius gravida. Nam fringilla at felis ac pulvinar. Duis cursus iaculis enim sit amet bibendum. Vivamus id egestas mauris. Proin id arcu id magna auctor elementum.
+CONSENT TO CALL
+• I have given residential and/or cellular telephone numbers and an email address to Spectrum Health. I consent to receive autodialed and/or pre-recorded telephone calls, text messages and/or emails from Spectrum Health and/or its agents/third parties. These communications may include billing. I am responsible for any communication charges from my phone provider(s). I can still be treated even if I do not give “consent to call”.  
 
-Maecenas ornare elementum malesuada. Curabitur id placerat nibh, sed maximus magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque pharetra dui eu arcu varius tempor quis in risus. Suspendisse malesuada risus ipsum, id consequat justo interdum ac. Sed vitae efficitur neque, eu maximus nunc. In eget odio facilisis, malesuada odio et, mollis quam. Curabitur vehicula nisi quis tempor consectetur. Nam non molestie arcu, eget scelerisque mi. Donec lacinia purus egestas turpis pretium hendrerit. Sed viverra dapibus nisi quis luctus. In pellentesque molestie mi.
+AUTHORIZATION TO RECEIVE PAYMENT AND BILLING
+• Spectrum Health is authorized to seek payment from any third party and from me. I authorize Spectrum Health to act on my behalf to collect benefits from any third party and endorse checks payable to me and/or Spectrum Health. 
+• I authorize any insurance company, responsible for payment of my medical care and treatment, to pay Spectrum Health for the services given. I understand that I am responsible for any charges not covered by insurance.
+• I request payment due to me of authorized Medicare benefits be paid (on my behalf) to Spectrum Health for any services provided to me by Spectrum Health or in its facilities.
+• I agree that if my account is not paid when due, the hospital may retain a lawyer and/or collection agency for collection. I will be responsible to reimburse the hospital for all costs, charges and fees associated with the collection of the amount due. This includes, but not limited to, reasonable interest, legal cost in the event suit is filed and reasonable lawyer fees and/or reasonable collection agency fees including those based on a percentage of the debt.
+• If you do not want us to bill your insurance, you must notify us at the time of service.
 
-Fusce non sodales nunc, id tincidunt diam. Phasellus vestibulum dolor at risus auctor dignissim. Nunc ex risus, cursus et congue commodo, ullamcorper nec lectus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc lacinia mauris non dolor feugiat, non molestie nulla ultrices. Duis molestie, tortor eu ultrices tempor, leo sapien sagittis elit, vel pretium tortor erat eu metus. Fusce est nisi, viverra at ex nec, tempor viverra leo.`
+ASSIGNMENT
+• I assign Spectrum Health:
+• All benefits, claims, and any and all other rights, including the right to bill and talk to any third party for the purpose of seeking payment, regarding my charges at Spectrum Health.
+• The right to file suit or intervene in any lawsuit or proceeding which involves my charges at Spectrum Health.
+• The right to take any other action to seek payment of my charges at Spectrum Health.
+• This assignment includes, but is not limited to, the right to appeal the denial of payment of my Spectrum Health charges from any payer, including any employer-sponsored benefit plan, insurance policy or insurance coverage provided by law or contract. 
+• I also assign to Spectrum Health, and agree that I waive, any and all rights to settle, release or retain payment of my Spectrum Health charges, or take any other action which would in any way compromise payment or reimbursement of my Spectrum Health charges.  
+• I also appoint Spectrum health as my authorized representative for the purpose of pursuing payment for my Spectrum Health charges. I authorize Spectrum Health to act on my behalf to pursue any benefit claim, including one under Employee Retirement Income Security Act of 1974, and to appeal an adverse benefit determination. I agree to assist Spectrum Health in the pursuit of all insurance benefits and agree to pay all co-insurance, co-payments and deductibles required by any insurance plan.
+• I authorize and direct Spectrum Health to apply the proceeds of any recovery to my Spectrum Health charges.`

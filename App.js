@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import HomeScreen from './screens/home';
 import ProfileScreen from './screens/profile';
 import LoginScreen from './screens/login';
+import SearchScreen from './screens/search-screen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Tab = createBottomTabNavigator();
@@ -40,11 +41,37 @@ export default function App() {
           })}
         />
         <Stack.Screen
-          name="Main"
-          component={MainApp}
+          name="Pharmacist"
+          component={PharmacistApp}
           options={({ route }) => ({
             headerShown: false
           })}
+        />
+        <Stack.Screen
+          name="Patient"
+          component={ProfileScreen}
+          options={({ route }) => ({
+            headerShown: false
+          })}
+          /* just hardcoding patient user to be the following*/
+          initialParams={{
+            patient: {
+              "givenName": "Joe",
+              "familyName": "Bob",
+              "phoneNumber": "123456789",
+              "gender": "male",
+              "birthdate": "2020-09-14",
+              "addressStreet": "nothing",
+              "addressZipcode": "456465",
+              "addressCity": "nothing",
+              "addressState": "nothing",
+              "status": true,
+              "consentTimeStamp": "2020-09-14",
+              "conditions": null,
+              "medications": null,
+              "allergies": null
+            }
+          }}
         />
       </Stack.Navigator>
 
@@ -52,6 +79,24 @@ export default function App() {
   );
 }
 
+const pharmacistStack = createNativeStackNavigator();
+
+const PharmacistApp = ({ navigator }) => {
+  return (
+    <pharmacistStack.Navigator>
+      <pharmacistStack.Screen
+        name="Search"
+        component={SearchScreen}
+      />
+      <pharmacistStack.Screen
+        name="Patient Profile"
+        component={ProfileScreen}
+      />
+    </pharmacistStack.Navigator>
+  )
+}
+
+// main tab based navigator, not used for demo
 const MainApp = ({ navigator }) => {
   return (
     <Tab.Navigator
@@ -69,8 +114,16 @@ const MainApp = ({ navigator }) => {
           return <Icon name={iconName} size={size} color={color} />;
         },
       })}>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ headerShown: false }}
+      />
     </Tab.Navigator>
   )
 }
