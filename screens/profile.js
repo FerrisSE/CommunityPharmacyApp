@@ -1,34 +1,14 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import TextLink from '../components/text-link';
 import mainStyles from '../main-styles';
-import CurrentMedicationScreen from './current-medication';
 
 const Stack = createNativeStackNavigator();
 
-const ProfileScreen = () => {
-	return (
-		<Stack.Navigator>
-			<Stack.Screen
-				name="Profile Dashboard"
-				component={ProfileMainScreen}
-				options={{ headerShown: false }}
-			/>
-			<Stack.Screen
-				name="Current Medication"
-				component={CurrentMedicationScreen}
-			/>
-		</Stack.Navigator>
-	)
-}
-
-export default ProfileScreen;
-
-const ProfileMainScreen = ({ navigation, route }) => {
-	let [patient, setPatient] = React.useState('')
+const ProfileScreen = ({ navigation, route }) => {
+	let [fhirPatient, setFhirPatient] = React.useState('')
 	let [loading, setLoading] = React.useState(true)
 	let [error, setError] = React.useState(false)
 
@@ -40,11 +20,10 @@ const ProfileMainScreen = ({ navigation, route }) => {
 				'Content-Type': 'application/json'
 			},
 		}).then(response => response.json())
-			.then(response => setPatient(response))
+			.then(response => setFhirPatient(response))
 			.catch(err => setError(err))
 			.finally(() => setLoading(false))
 	}, []);
-
 
 	if (error)
 		return (
@@ -59,10 +38,14 @@ const ProfileMainScreen = ({ navigation, route }) => {
 			</View>
 		)
 
-	return <Profile patient={patient} navigator={navigation} />
-};
+	return (
+		<Profile patient={route.params.patient} fhirPatient={fhirPatient} />
+	)
+}
 
-function Profile({ patient, navigator }) {
+export default ProfileScreen;
+
+function Profile({ patient, fhirPatient }) {
 	return <ScrollView>
 		<SafeAreaView style={mainStyles.container}>
 			<Text style={mainStyles.title}>Profile</Text>
@@ -92,7 +75,7 @@ function Profile({ patient, navigator }) {
 
 			<View style={styles.infoContainer}>
 				<Text style={mainStyles.CardTitle}>Medication</Text>
-				{patient.medications.map((med) => {
+				{fhirPatient.medications.map((med) => {
 					return (
 						<View style={mainStyles.CardView}>
 							<Text style={styles.information}>{med.display}</Text>
@@ -103,7 +86,7 @@ function Profile({ patient, navigator }) {
 
 			<View style={styles.infoContainer}>
 				<Text style={mainStyles.CardTitle}>Conditions</Text>
-				{patient.conditions.map((cond) => {
+				{fhirPatient.conditions.map((cond) => {
 					return (
 						<View style={mainStyles.CardView}>
 							<Text style={mainStyles.CardSubtitle}>{cond.display}</Text>
@@ -115,7 +98,7 @@ function Profile({ patient, navigator }) {
 
 			<View style={styles.infoContainer}>
 				<Text style={mainStyles.CardTitle}>Allergies</Text>
-				{patient.allergies.map((cond) => {
+				{fhirPatient.allergies.map((cond) => {
 					return (
 						<View style={mainStyles.CardView}>
 							<Text style={mainStyles.CardSubtitle}>{cond.display}</Text>
