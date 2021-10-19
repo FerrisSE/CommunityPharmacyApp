@@ -22,7 +22,10 @@ const SearchScreen = ({ navigation }) => {
 	let [patients, setPatients] = React.useState([])
 	let [givenName, setGivenName] = React.useState('')
 	let [familyName, setFamilyName] = React.useState('')
-	let [birthdate, setBirthdate] = React.useState('')
+
+	let [birthDay, setBirthDay] = React.useState('')
+	let [birthMonth, setBirthMonth] = React.useState('')
+	let [birthYear, setBirthYear] = React.useState('')
 
 	return (
 		<View style={mainStyles.container}>
@@ -46,13 +49,31 @@ const SearchScreen = ({ navigation }) => {
 				/>
 
 				<Text style={mainStyles.subheader}>Birthdate</Text>
-				<TextInput
-					style={mainStyles.textInput}
-					placeholder="birthday (year-month-day)"
-					onChangeText={text => setBirthdate(text)}
-					defaultValue={birthdate}
-				/>
-				<Button title="Search" onPress={() => SearchForPatient(givenName, familyName, birthdate, setPatients)} />
+				<View style={mainStyles.row}>
+					<Text style={mainStyles.textImportant}>Month</Text>
+					<TextInput
+						style={mainStyles.textInput}
+						placeholder="month"
+						onChangeText={text => setBirthMonth(text)}
+						defaultValue={birthMonth}
+					/>
+					<Text style={mainStyles.textImportant}>Day</Text>
+					<TextInput
+						style={mainStyles.textInput}
+						placeholder="day"
+						onChangeText={text => setBirthDay(text)}
+						defaultValue={birthDay}
+					/>
+					<Text style={mainStyles.textImportant}>Year</Text>
+					<TextInput
+						style={mainStyles.textInput}
+						placeholder="year"
+						onChangeText={text => setBirthYear(text)}
+						defaultValue={birthYear}
+					/>
+				</View>
+
+				<Button title="Search" onPress={() => SearchForPatient(givenName, familyName, `${birthYear}-${birthMonth}-${birthDay}`, setPatients)} />
 			</View>
 
 			{patients.map((patient) => {
