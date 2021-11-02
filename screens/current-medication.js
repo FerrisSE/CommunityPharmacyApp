@@ -1,17 +1,49 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import Card from '../components/card';
 import MedicationCard from '../components/medication-card';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
+import mainStyles from '../main-styles';
 
 const CurrentMedicationScreen = ({ navigation }) => {
+	let [fhirPatient, setFhirPatient] = React.useState('')
+	let [loading, setLoading] = React.useState(true)
+	let [error, setError] = React.useState(false)
+
+	useEffect(() => {
+		fetch('http://localhost:8080/api/patient/fhir/full/egqBHVfQlt4Bw3XGXoxVxHg3', {
+			"method": "GET",
+			"headers": {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+		}).then(response => response.json())
+			.then(response => setFhirPatient(response))
+			.catch(err => setError(err))
+			.finally(() => setLoading(false))
+	}, []);
+
+	if (error)
+		return (
+			<View style={mainStyles.center}>
+				<Text style={MedsStyles.errorText}>Something Went Wrong!</Text>
+			</View>
+		)
+	if (loading)
+		return (
+			<View style={mainStyles.center}>
+				<Text style={MedsStyles.loadingText}>Loading</Text>
+			</View>
+		)
+
 
 	return (
 		<View>
 			<Text style={MedsStyles.sectionTitle}>My Meds</Text>
 			<FlatList
-				data={[{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }]}
-				renderItem={({ item }) => <MedicationCard />}
+				data={fhirPatient.medications}
+				renderItem={(med) => <MedicationCard med={med.item} />}
+				keyExtractor={item => item.display}
 			/>
 
 			<Text style={MedsStyles.sectionTitle}>Past Prescriptions</Text>
@@ -57,5 +89,14 @@ const MedsStyles = StyleSheet.create({
 	prescripCardDesc: {
 		fontSize: 14,
 		paddingBottom: 24,
+	},
+	errorText: {
+		fontWeight: "bold",
+		fontSize: 24,
+		color: "crimson"
+	},
+	loadingText: {
+		fontWeight: "bold",
+		fontSize: 24
 	},
 })

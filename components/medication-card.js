@@ -4,7 +4,7 @@ import Card from "./card";
 import pill from "../images/pill.png"
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 
-const MedicationCard = () => {
+const MedicationCard = ({ med }) => {
 	return (
 		<Card backgroundColor="#F0F1F4">
 			<View style={MedCardStyles.row}>
@@ -12,7 +12,7 @@ const MedicationCard = () => {
 					<Image source={pill} style={MedCardStyles.image} />
 				</View>
 				<View style={MedCardStyles.textStack}>
-					<Text style={MedCardStyles.textBrandName}>Med Brand Name</Text>
+					<Text style={MedCardStyles.textBrandName}>{med.display}</Text>
 					<Text style={MedCardStyles.textGenericName}>Generic Name</Text>
 				</View>
 				<Icon name="arrow-expand" size={20} />
