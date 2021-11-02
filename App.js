@@ -8,6 +8,7 @@ import ProfileScreen from './screens/profile';
 import LoginScreen from './screens/login';
 import SearchScreen from './screens/search-screen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import CurrentMedicationScreen from './screens/current-medication';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -31,51 +32,53 @@ const resetRoot = (routeName) => {
 
 export default function App() {
   return (
-    <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={({ route }) => ({
-            headerShown: false
-          })}
-        />
-        <Stack.Screen
-          name="Pharmacist"
-          component={PharmacistApp}
-          options={({ route }) => ({
-            headerShown: false
-          })}
-        />
-        <Stack.Screen
-          name="Patient"
-          component={ProfileScreen}
-          options={({ route }) => ({
-            headerShown: false
-          })}
-          /* just hardcoding patient user to be the following*/
-          initialParams={{
-            patient: {
-              "givenName": "Joe",
-              "familyName": "Bob",
-              "phoneNumber": "123456789",
-              "gender": "male",
-              "birthdate": "2020-09-14",
-              "addressStreet": "nothing",
-              "addressZipcode": "456465",
-              "addressCity": "nothing",
-              "addressState": "nothing",
-              "status": true,
-              "consentTimeStamp": "2020-09-14",
-              "conditions": null,
-              "medications": null,
-              "allergies": null
-            }
-          }}
-        />
-      </Stack.Navigator>
+    // overriding currently for ease of development
+    <CurrentMedicationScreen />
+    // <NavigationContainer ref={navigationRef}>
+    //   <Stack.Navigator>
+    //     <Stack.Screen
+    //       name="Login"
+    //       component={LoginScreen}
+    //       options={({ route }) => ({
+    //         headerShown: false
+    //       })}
+    //     />
+    //     <Stack.Screen
+    //       name="Pharmacist"
+    //       component={PharmacistApp}
+    //       options={({ route }) => ({
+    //         headerShown: false
+    //       })}
+    //     />
+    //     <Stack.Screen
+    //       name="Patient"
+    //       component={ProfileScreen}
+    //       options={({ route }) => ({
+    //         headerShown: false
+    //       })}
+    //       /* just hardcoding patient user to be the following*/
+    //       initialParams={{
+    //         patient: {
+    //           "givenName": "Joe",
+    //           "familyName": "Bob",
+    //           "phoneNumber": "123456789",
+    //           "gender": "male",
+    //           "birthdate": "2020-09-14",
+    //           "addressStreet": "nothing",
+    //           "addressZipcode": "456465",
+    //           "addressCity": "nothing",
+    //           "addressState": "nothing",
+    //           "status": true,
+    //           "consentTimeStamp": "2020-09-14",
+    //           "conditions": null,
+    //           "medications": null,
+    //           "allergies": null
+    //         }
+    //       }}
+    //     />
+    //   </Stack.Navigator>
 
-    </NavigationContainer>
+    // </NavigationContainer>
   );
 }
 
