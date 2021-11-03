@@ -8,7 +8,7 @@ import ProfileScreen from './screens/profile';
 import LoginScreen from './screens/login';
 import SearchScreen from './screens/search-screen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import CurrentMedicationScreen from './screens/current-medication';
+import MedicationScreenStack from './screens/medication-screen-stack';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -33,7 +33,9 @@ const resetRoot = (routeName) => {
 export default function App() {
   return (
     // overriding currently for ease of development
-    <CurrentMedicationScreen />
+    <NavigationContainer>
+      <MedicationScreenStack />
+    </NavigationContainer>
     // <NavigationContainer ref={navigationRef}>
     //   <Stack.Navigator>
     //     <Stack.Screen
