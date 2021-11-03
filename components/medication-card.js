@@ -1,37 +1,71 @@
 import React from "react";
-import { Button, Text, View } from "react-native";
-import mainStyles from "../main-styles";
+import { Image, StyleSheet, Text, View } from "react-native";
+import { TouchableCard } from "./card.js"
+import pill from "../images/pill.png"
+import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 
-const MedicationCard = () => {
+const MedicationCard = ({ navigation, med }) => {
 	return (
-		<View style={mainStyles.CardView}>
-			<Text style={mainStyles.CardTitle}>Drug Name</Text>
-			<Text>Prescribed: 10/5/2021 by Prescriber Name</Text>
-
-			<View style={{
-				marginTop: 16
-			}}>
-				<Text style={mainStyles.textImportant}>Dosage</Text>
-				<Text>10mg every 24 hours</Text>
-			</View>
-
-			<View style={{
-				marginBottom: 16,
-				marginTop: 8
-			}}>
-				<Text>Note:</Text>
-				<View style={mainStyles.CardSubView}>
-					<Text>Take once per day</Text>
+		<TouchableCard
+			onClicked={() => {
+				navigation.navigate({
+					name: 'Medication',
+					params: {
+						med: med
+					}
+				})
+			}}
+		>
+			<View style={MedCardStyles.row}>
+				<View style={MedCardStyles.imageView}>
+					<Image source={pill} style={MedCardStyles.image} />
 				</View>
+				<View style={MedCardStyles.textStack}>
+					<Text style={MedCardStyles.textBrandName}>{med.display}</Text>
+					<Text style={MedCardStyles.textGenericName}>Generic Name</Text>
+				</View>
+				<Icon name="arrow-expand" size={20} />
 			</View>
-
-			<View style={mainStyles.rowSpaced}>
-				<Text style={mainStyles.textImportant}>Status: On hold</Text>
-				<Button style={{ alignSelf: 'right', }} title="Request Refill"
-					onPress={() => { }} />
-			</View>
-		</View>
+		</TouchableCard>
 	);
 }
 
 export default MedicationCard;
+
+const MedCardStyles = StyleSheet.create({
+	row: {
+		flex: 1,
+		flexDirection: "row",
+		justifyContent: "flex-start",
+		alignItems: "flex-start",
+		alignContent: "space-around",
+	},
+	textStack: {
+		flex: 1,
+		height: "100%",
+		flexDirection: "column",
+		justifyContent: "center",
+		padding: 16,
+	},
+	imageView: {
+		padding: 16,
+		justifyContent: "center",
+		height: "100%",
+		backgroundColor: "#E3E5EB",
+		width: 85,
+		height: 85,
+		borderRadius: 85 / 2,
+	},
+	image: {
+		width: '100%',
+		height: '100%',
+		padding: 16,
+	},
+	textBrandName: {
+		fontSize: 16,
+		fontWeight: "700",
+	},
+	textGenericName: {
+		fontSize: 14,
+	}
+})
