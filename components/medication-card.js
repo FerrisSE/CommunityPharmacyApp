@@ -4,9 +4,18 @@ import { TouchableCard } from "./card.js"
 import pill from "../images/pill.png"
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 
-const MedicationCard = ({ med }) => {
+const MedicationCard = ({ navigation, med }) => {
 	return (
-		<TouchableCard>
+		<TouchableCard
+			onClicked={() => {
+				navigation.navigate({
+					name: 'Medication',
+					params: {
+						med: med
+					}
+				})
+			}}
+		>
 			<View style={MedCardStyles.row}>
 				<View style={MedCardStyles.imageView}>
 					<Image source={pill} style={MedCardStyles.image} />

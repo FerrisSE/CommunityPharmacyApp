@@ -42,7 +42,7 @@ const CurrentMedicationScreen = ({ navigation }) => {
 			<Text style={MedsStyles.sectionTitle}>My Meds</Text>
 			<FlatList
 				data={fhirPatient.medications}
-				renderItem={(med) => <MedicationCard med={med.item} />}
+				renderItem={(med) => <MedicationCard med={med.item} navigation={navigation} />}
 				keyExtractor={item => item.display}
 			/>
 
