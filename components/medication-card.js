@@ -1,12 +1,12 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import Card from "./card";
+import { TouchableCard } from "./card.js"
 import pill from "../images/pill.png"
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 
 const MedicationCard = ({ med }) => {
 	return (
-		<Card backgroundColor="#F0F1F4">
+		<TouchableCard>
 			<View style={MedCardStyles.row}>
 				<View style={MedCardStyles.imageView}>
 					<Image source={pill} style={MedCardStyles.image} />
@@ -17,7 +17,7 @@ const MedicationCard = ({ med }) => {
 				</View>
 				<Icon name="arrow-expand" size={20} />
 			</View>
-		</Card>
+		</TouchableCard>
 	);
 }
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Button, FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import Card from '../components/card';
+import { Card } from '../components/card';
 import MedicationCard from '../components/medication-card';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 import mainStyles from '../main-styles';

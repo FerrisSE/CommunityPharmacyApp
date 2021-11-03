@@ -2,21 +2,28 @@ import React from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { TouchableHighlight, TouchableOpacity } from "react-native-gesture-handler";
 
-const Card = ({ onClicked, backgroundColor, children }) => {
+export const Card = ({ backgroundColor, children }) => {
+	return (
+		<View style={[cardStyles.CardView, { backgroundColor: backgroundColor ? backgroundColor : "#F0F1F4", }]}>
+			{children}
+		</View>
+
+	);
+}
+
+export const TouchableCard = ({ onClicked, backgroundColor, children }) => {
 	return (
 		<TouchableOpacity
 			activeOpacity={0.6}
 			underlayColor="#333"
 			onPress={onClicked ? () => { onClicked() } : () => { }}>
-			<View style={[cardStyles.CardView, { backgroundColor: backgroundColor ? backgroundColor : "white", }]}>
+			<View style={[cardStyles.CardView, { backgroundColor: backgroundColor ? backgroundColor : "#F0F1F4", }]}>
 				{children}
 			</View>
 		</TouchableOpacity>
 
 	);
 }
-
-export default Card;
 
 const cardStyles = StyleSheet.create({
 	CardView: {
