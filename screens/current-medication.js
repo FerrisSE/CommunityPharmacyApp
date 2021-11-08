@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Button, FlatList, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Card } from '../components/card';
 import MedicationCard from '../components/medication-card';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
@@ -9,6 +9,7 @@ const CurrentMedicationScreen = ({ navigation }) => {
 	let [fhirPatient, setFhirPatient] = React.useState('')
 	let [loading, setLoading] = React.useState(true)
 	let [error, setError] = React.useState(false)
+	let [searchText, setSearchText] = React.useState('')
 
 	useEffect(() => {
 		fetch('http://localhost:8080/api/patient/fhir/full/egqBHVfQlt4Bw3XGXoxVxHg3', {
@@ -39,7 +40,16 @@ const CurrentMedicationScreen = ({ navigation }) => {
 
 	return (
 		<View>
-			<Text style={MedsStyles.sectionTitle}>My Meds</Text>
+			<TextInput
+				style={mainStyles.textInput}
+				placeholder="search"
+				onChangeText={text => setSearchText(text)}
+				defaultValue={searchText}
+			/>
+			<View style={[mainStyles.rowSpaced, { paddingBottom: 12, paddingRight: 16 }]}>
+				<Text style={MedsStyles.sectionTitle}>Current Medication</Text>
+				<Button title="Select Refills" />
+			</View>
 			<FlatList
 				data={fhirPatient.medications}
 				renderItem={(med) => <MedicationCard med={med.item} navigation={navigation} />}
