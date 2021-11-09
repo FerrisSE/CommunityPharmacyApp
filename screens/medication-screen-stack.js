@@ -2,6 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CurrentMedicationScreen from "./current-medication";
 import SpecificMedicationScreen from "./specific-medication";
+import MedicationRefillScreen from "./medication-refill";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,10 @@ const MedicationScreenStack = ({ navigation }) => {
 						display: "Test Med"
 					}
 				}}
+			/>
+			<Stack.Screen
+				name="Refill Order"
+				component={MedicationRefillScreen}
 			/>
 		</Stack.Navigator>
 	)

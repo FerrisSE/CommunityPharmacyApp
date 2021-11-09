@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, FlatList, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableHighlight, View } from 'react-native';
 import { Card } from '../components/card';
 import MedicationCard from '../components/medication-card';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
@@ -10,6 +10,14 @@ const CurrentMedicationScreen = ({ navigation }) => {
 	let [loading, setLoading] = React.useState(true)
 	let [error, setError] = React.useState(false)
 	let [searchText, setSearchText] = React.useState('')
+	let [refillCart, setRefillCart] = React.useState([])
+
+	const ChangeMedCart = (id, add) => {
+		if (add) // adding med to cart
+			setRefillCart([...refillCart, id])
+		else // remove med from cart
+			setRefillCart(refillCart.filter(med => med != id))
+	}
 
 	useEffect(() => {
 		fetch('http://localhost:8080/api/patient/fhir/full/egqBHVfQlt4Bw3XGXoxVxHg3', {
@@ -47,12 +55,25 @@ const CurrentMedicationScreen = ({ navigation }) => {
 				defaultValue={searchText}
 			/>
 			<View style={[mainStyles.rowSpaced, { paddingBottom: 12, paddingRight: 16 }]}>
-				<Text style={MedsStyles.sectionTitle}>Current Medication</Text>
-				<Button title="Select Refills" />
+				<Text style={[MedsStyles.sectionTitle, { fontSize: 24 }]}>Current Medications</Text>
+				{
+					refillCart.length == 0 ?
+						<Button title="Select Refills" disabled={true} />
+						:
+						<Button title="Order" onPress={() => {
+							navigation.navigate({
+								name: 'Refill Order',
+								params: {
+									meds: fhirPatient.medications.filter(med => refillCart.includes(med.display)),
+								}
+							})
+						}} />
+
+				}
 			</View>
 			<FlatList
 				data={fhirPatient.medications}
-				renderItem={(med) => <MedicationCard med={med.item} navigation={navigation} />}
+				renderItem={(med) => <MedicationCard med={med.item} navigation={navigation} updateCartFunction={ChangeMedCart} />}
 				keyExtractor={item => item.display}
 			/>
 

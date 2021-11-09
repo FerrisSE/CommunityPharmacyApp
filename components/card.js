@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
-import { TouchableHighlight, TouchableOpacity } from "react-native-gesture-handler";
+import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export const Card = ({ backgroundColor, children }) => {
 	return (

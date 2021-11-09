@@ -1,10 +1,12 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { TouchableCard } from "./card.js"
 import pill from "../images/pill.png"
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 
-const MedicationCard = ({ navigation, med }) => {
+const MedicationCard = ({ navigation, med, updateCartFunction }) => {
+	let [requestRefill, setRequestRefill] = React.useState(false)
+
 	return (
 		<TouchableCard
 			onClicked={() => {
@@ -15,6 +17,7 @@ const MedicationCard = ({ navigation, med }) => {
 					}
 				})
 			}}
+			backgroundColor={requestRefill ? "#FFFFFF" : "#F0F1F4"}
 		>
 			<View style={MedCardStyles.row}>
 				<View style={MedCardStyles.imageView}>
@@ -24,7 +27,14 @@ const MedicationCard = ({ navigation, med }) => {
 					<Text style={MedCardStyles.textBrandName}>{med.display}</Text>
 					<Text style={MedCardStyles.textGenericName}>Generic Name</Text>
 				</View>
-				<Icon name="arrow-expand" size={20} />
+				{updateCartFunction != null &&
+					<TouchableOpacity onPress={() => {
+						setRequestRefill(!requestRefill);
+						updateCartFunction(med.display, !requestRefill);
+					}}>
+						<Icon name={requestRefill ? "plus-circle" : "plus-circle-outline"} size={25} />
+					</TouchableOpacity>
+				}
 			</View>
 		</TouchableCard>
 	);
