@@ -20,7 +20,7 @@ const CurrentMedicationScreen = ({ navigation }) => {
 	}
 
 	useEffect(() => {
-		fetch('http://localhost:8080/api/patient/fhir/full/egqBHVfQlt4Bw3XGXoxVxHg3', {
+		fetch('http://localhost:8080/api/patient/medications/0', {
 			"method": "GET",
 			"headers": {
 				'Accept': 'application/json',
@@ -64,7 +64,7 @@ const CurrentMedicationScreen = ({ navigation }) => {
 							navigation.navigate({
 								name: 'Refill Order',
 								params: {
-									meds: fhirPatient.medications.filter(med => refillCart.includes(med.display)),
+									meds: fhirPatient["patient-medications"].filter(med => refillCart.includes(med.medicationName)),
 								}
 							})
 						}} />
@@ -72,7 +72,7 @@ const CurrentMedicationScreen = ({ navigation }) => {
 				}
 			</View>
 			<FlatList
-				data={fhirPatient.medications}
+				data={fhirPatient["patient-medications"]}
 				renderItem={(med) => <MedicationCard med={med.item} navigation={navigation} updateCartFunction={ChangeMedCart} />}
 				keyExtractor={item => item.display}
 			/>

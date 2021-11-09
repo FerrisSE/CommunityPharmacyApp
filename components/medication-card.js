@@ -24,14 +24,22 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 					<Image source={pill} style={MedCardStyles.image} />
 				</View>
 				<View style={MedCardStyles.textStack}>
-					<Text style={MedCardStyles.textBrandName}>{med.display}</Text>
-					<Text style={MedCardStyles.textGenericName}>Generic Name</Text>
+					<Text style={MedCardStyles.textBrandName}>{med.medicationName}</Text>
+					<Text style={MedCardStyles.textPurpose}>{med.drugPurpose}</Text>
+					<Text>{med.dose}</Text>
+					<Text>{med.instructions}</Text>
+					<Text>Refills: {med.currentRefills}/{med.totalRefills}</Text>
 				</View>
 				{updateCartFunction != null &&
-					<TouchableOpacity onPress={() => {
-						setRequestRefill(!requestRefill);
-						updateCartFunction(med.display, !requestRefill);
-					}}>
+					<TouchableOpacity
+						style={{
+							height: "100%",
+							alignContent: "flex-start",
+						}}
+						onPress={() => {
+							setRequestRefill(!requestRefill);
+							updateCartFunction(med.medicationName, !requestRefill);
+						}}>
 						<Icon name={requestRefill ? "plus-circle" : "plus-circle-outline"} size={25} />
 					</TouchableOpacity>
 				}
@@ -47,7 +55,7 @@ const MedCardStyles = StyleSheet.create({
 		flex: 1,
 		flexDirection: "row",
 		justifyContent: "flex-start",
-		alignItems: "flex-start",
+		alignItems: "center",
 		alignContent: "space-around",
 	},
 	textStack: {
@@ -75,7 +83,8 @@ const MedCardStyles = StyleSheet.create({
 		fontSize: 16,
 		fontWeight: "700",
 	},
-	textGenericName: {
+	textPurpose: {
 		fontSize: 14,
+		fontWeight: "700",
 	}
 })
