@@ -32,6 +32,14 @@ const CurrentMedicationScreen = ({ navigation }) => {
 			.finally(() => setLoading(false))
 	}, []);
 
+	// show every med if they aren't searching
+	let shownMeds = []
+	if (searchText == "")
+		shownMeds = fhirPatient["patient-medications"]
+	else
+		shownMeds = fhirPatient["patient-medications"].filter(m => m.medicationName.includes(searchText))
+
+
 	if (error)
 		return (
 			<View style={mainStyles.center}>
@@ -72,9 +80,9 @@ const CurrentMedicationScreen = ({ navigation }) => {
 				}
 			</View>
 			<FlatList
-				data={fhirPatient["patient-medications"]}
+				data={shownMeds}
 				renderItem={(med) => <MedicationCard med={med.item} navigation={navigation} updateCartFunction={ChangeMedCart} />}
-				keyExtractor={item => item.display}
+				keyExtractor={item => item.medicationName}
 			/>
 
 			<Text style={MedsStyles.sectionTitle}>Past Prescriptions</Text>
