@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Button, FlatList, SafeAreaView, Text, View } from 'react-native';
-import mainStyles from '../main-styles';
+import mainStyles from '../../../main-styles';
 import YoutubePlayer from "react-native-youtube-iframe";
 
 const SpecificMedicationScreen = ({ navigation, route }) => {

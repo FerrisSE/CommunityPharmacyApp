@@ -6,8 +6,8 @@ import mainStyles from '../../main-styles';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import RegisterAccountScreen from './register-account';
 import ForgotPasswordScreen from './forgot-password';
-import PrivacyAcceptanceScreen from '../privacy-acceptance';
-import { changeStack } from '../../App';
+import PrivacyAcceptanceScreen from './privacy-acceptance';
+import { changeStack } from '../../App.js';
 import Dialog, { DialogButton, DialogContent, DialogFooter } from 'react-native-popup-dialog';
 
 const Stack = createNativeStackNavigator();

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
-import MedicationCard from '../components/medication-card';
+import MedicationCard from '../../../components/medication-card';
 import BouncyCheckboxGroup from "react-native-bouncy-checkbox-group";
 
 const DeliverOptions = [

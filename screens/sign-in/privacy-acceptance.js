@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { changeStack } from '../App';
-import mainStyles from '../main-styles';
+import { changeStack } from '../../App.js';
+import mainStyles from '../../main-styles';
 
 const PrivacyAcceptanceScreen = ({ navigation }) => {
 	return (

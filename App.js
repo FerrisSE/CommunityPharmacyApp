@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import HomeScreen from './screens/patient/home';
 import ProfileScreen from './screens/patient/profile/profile';
 import LoginScreen from './screens/sign-in/login';
-import SearchScreen from './screens/search-screen';
+import SearchScreen from './screens/pharmacist/search-screen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PatientScreenStack from './screens/patient/patient-screen-stack';
 
