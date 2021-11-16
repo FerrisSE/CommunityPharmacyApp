@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Button, FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableHighlight, View } from 'react-native';
-import { Card } from '../components/card';
-import MedicationCard from '../components/medication-card';
+import { Card } from '../../../components/card';
+import MedicationCard from '../../../components/medication-card';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
-import mainStyles from '../main-styles';
+import mainStyles from '../../../main-styles';
 
 const CurrentMedicationScreen = ({ navigation }) => {
 	let [fhirPatient, setFhirPatient] = React.useState('')

@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MedicationScreenStack from "./medication-screen-stack";
-import SchedulingScreen from "./scheduling";
+import MedicationScreenStack from "./medication/medication-screen-stack";
+import SchedulingScreen from "./scheduling/scheduling";
 import { View } from "react-native";
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 
