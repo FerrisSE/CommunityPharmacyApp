@@ -3,6 +3,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { TouchableCard } from "./card.js"
 import pill from "../images/pill.png"
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
+import * as Progress from 'react-native-progress'
 
 const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 	let [requestRefill, setRequestRefill] = React.useState(false)
@@ -26,9 +27,22 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 				<View style={MedCardStyles.textStack}>
 					<Text style={MedCardStyles.textBrandName}>{med.medicationName}</Text>
 					<Text style={MedCardStyles.textPurpose}>{med.drugPurpose}</Text>
-					<Text>{med.dose}</Text>
-					<Text>{med.instructions}</Text>
-					<Text>Refills: {med.currentRefills}/{med.totalRefills}</Text>
+
+					<View style={{ marginTop: 10, marginBottom: 10 }}>
+						<Text>{med.instructions}</Text>
+						<Text>Refills: {med.currentRefills}/{med.totalRefills}</Text>
+					</View>
+
+					<Text>Amount Left:</Text>
+					<Progress.Bar
+						progress={med.remainingQuantity / med.totalQuantity}
+						width={null}
+						height={12}
+						animated={false}
+						color={'#2196F3'}
+						unfilledColor={'#E3E5EB'}
+						borderWidth={0}
+					/>
 				</View>
 				{updateCartFunction != null &&
 					<TouchableOpacity
@@ -80,7 +94,7 @@ const MedCardStyles = StyleSheet.create({
 		padding: 16,
 	},
 	textBrandName: {
-		fontSize: 16,
+		fontSize: 20,
 		fontWeight: "700",
 	},
 	textPurpose: {
