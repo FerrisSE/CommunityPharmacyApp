@@ -10,6 +10,13 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 
 	let precentLeft = med.remainingQuantity / med.totalQuantity;
 
+	let barColor = '#9ECE6A';
+
+	if (precentLeft < .25)
+		barColor = '#FF3A45';
+	else if (precentLeft < .50)
+		barColor = '#FFA035';
+
 	return (
 		<TouchableCard
 			onClicked={() => {
@@ -25,7 +32,7 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 			<View style={MedCardStyles.row}>
 				<View style={MedCardStyles.imageView}>
 					<Image source={pill} style={MedCardStyles.image} />
-					{precentLeft < 0.25 &&
+					{precentLeft <= 0.25 &&
 						<Icon name="alert-circle" size={25} style={{ position: "absolute", alignSelf: "flex-end", marginTop: -48 }} color={'#FF3A45'} />
 					}
 				</View>
@@ -44,7 +51,7 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 						width={null}
 						height={12}
 						animated={false}
-						color={'#2196F3'}
+						color={barColor}
 						unfilledColor={'#E3E5EB'}
 						borderWidth={0}
 					/>
