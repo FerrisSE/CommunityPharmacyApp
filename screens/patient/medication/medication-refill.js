@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
+import { Button, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 import MedicationCard from '../../../components/medication-card';
 import BouncyCheckboxGroup from "react-native-bouncy-checkbox-group";
 
@@ -26,7 +26,7 @@ const DeliverOptions = [
 
 const MedicationRefillScreen = ({ navigation, route }) => {
 	return (
-		<View style={{ padding: 16, flex: 1 }}>
+		<ScrollView style={{ padding: 16, flex: 1 }}>
 			<Text style={MedRefillStyles.textTitle}>Cart</Text>
 			<FlatList
 				data={route.params.meds}
@@ -44,7 +44,7 @@ const MedicationRefillScreen = ({ navigation, route }) => {
 			<Button title="Confirm Order" />
 			<View style={{ paddingTop: 12 }} />
 			<Button title="Cancel Order" />
-		</View>
+		</ScrollView>
 	);
 };
 

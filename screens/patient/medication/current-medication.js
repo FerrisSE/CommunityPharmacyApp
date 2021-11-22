@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableHighlight, View } from 'react-native';
+import { Button, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableHighlight, View } from 'react-native';
 import { Card } from '../../../components/card';
 import MedicationCard from '../../../components/medication-card';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
@@ -55,7 +55,7 @@ const CurrentMedicationScreen = ({ navigation }) => {
 
 
 	return (
-		<View>
+		<ScrollView>
 			<TextInput
 				style={mainStyles.textInput}
 				placeholder="search"
@@ -87,7 +87,7 @@ const CurrentMedicationScreen = ({ navigation }) => {
 
 			<Text style={MedsStyles.sectionTitle}>Past Prescriptions</Text>
 			<PastPrescriptsAllowCard />
-		</View>
+		</ScrollView>
 
 	);
 };
