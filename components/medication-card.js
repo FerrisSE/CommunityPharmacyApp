@@ -8,6 +8,8 @@ import * as Progress from 'react-native-progress'
 const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 	let [requestRefill, setRequestRefill] = React.useState(false)
 
+	let precentLeft = med.remainingQuantity / med.totalQuantity;
+
 	return (
 		<TouchableCard
 			onClicked={() => {
@@ -23,6 +25,9 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 			<View style={MedCardStyles.row}>
 				<View style={MedCardStyles.imageView}>
 					<Image source={pill} style={MedCardStyles.image} />
+					{precentLeft < 0.25 &&
+						<Icon name="alert-circle" size={25} style={{ position: "absolute", alignSelf: "flex-end", marginTop: -48 }} color={'#FF3A45'} />
+					}
 				</View>
 				<View style={MedCardStyles.textStack}>
 					<Text style={MedCardStyles.textBrandName}>{med.medicationName}</Text>
@@ -35,7 +40,7 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 
 					<Text>Amount Left:</Text>
 					<Progress.Bar
-						progress={med.remainingQuantity / med.totalQuantity}
+						progress={precentLeft}
 						width={null}
 						height={12}
 						animated={false}
@@ -80,7 +85,7 @@ const MedCardStyles = StyleSheet.create({
 		padding: 16,
 	},
 	imageView: {
-		padding: 16,
+		alignItems: "center",
 		justifyContent: "center",
 		height: "100%",
 		backgroundColor: "#E3E5EB",
@@ -89,9 +94,8 @@ const MedCardStyles = StyleSheet.create({
 		borderRadius: 85 / 2,
 	},
 	image: {
-		width: '100%',
-		height: '100%',
-		padding: 16,
+		width: '60%',
+		height: '60%',
 	},
 	textBrandName: {
 		fontSize: 20,
