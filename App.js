@@ -3,12 +3,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import HomeScreen from './screens/home';
-import ProfileScreen from './screens/profile';
-import LoginScreen from './screens/login';
-import SearchScreen from './screens/search-screen';
+import HomeScreen from './screens/patient/home';
+import ProfileScreen from './screens/patient/profile/profile';
+import LoginScreen from './screens/sign-in/login';
+import SearchScreen from './screens/pharmacist/search-screen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import MedicationScreenStack from './screens/medication-screen-stack';
+import PatientScreenStack from './screens/patient/patient-screen-stack';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -50,7 +50,7 @@ export default function App() {
         />
         <Stack.Screen
           name="Patient"
-          component={MedicationScreenStack}
+          component={PatientScreenStack}
           options={({ route }) => ({
             headerShown: false
           })}

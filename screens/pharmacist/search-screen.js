@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
-import TextLink from '../components/text-link';
-import mainStyles from '../main-styles';
+import TextLink from '../../components/text-link';
+import mainStyles from '../../main-styles';
 
 const SearchForPatient = (firstName, familyName, birthdate, setPatients) => {
 	fetch(`http://localhost:8080/api/patient/name/${firstName}/${familyName}/${birthdate}`, {

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import mainStyles from '../main-styles';
+import mainStyles from '../../../main-styles';
 
 const Stack = createNativeStackNavigator();
 
