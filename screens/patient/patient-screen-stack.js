@@ -1,9 +1,9 @@
 import React from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MedicationScreenStack from "./medication/medication-screen-stack";
-import SchedulingScreen from "./scheduling/scheduling";
 import { View } from "react-native";
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
+import SchedulingScreenStack from "./scheduling/scheduling-screen-stack";
 
 const Tab = createBottomTabNavigator()
 
@@ -33,7 +33,7 @@ const PatientScreenStack = ({ navigation }) => {
 			/>
 			<Tab.Screen
 				name="Scheduling"
-				component={SchedulingScreen}
+				component={SchedulingScreenStack}
 			/>
 		</Tab.Navigator>
 	)
