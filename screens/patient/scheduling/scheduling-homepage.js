@@ -16,12 +16,12 @@ const bloodTests = [
 	{ name: "Hemoglobin Test", icon: "water-outline" }
 ]
 
-const SchedulingScreen = ({ navigation }) => {
+const SchedulingHomeScreen = ({ navigation }) => {
 	let [searchText, setSearchText] = React.useState('')
 
-	let searchEvents = []
+	let searchServices = []
 	if (searchText.length != 0) {
-		searchEvents.push(
+		searchServices.push(
 			...vaccines.filter(v => v.name.toLowerCase().includes(searchText.toLowerCase())),
 			...bloodTests.filter(v => v.name.toLowerCase().includes(searchText.toLowerCase()))
 		);
@@ -41,41 +41,17 @@ const SchedulingScreen = ({ navigation }) => {
 			{searchText.length == 0 &&
 				<View>
 					<Text style={SchldStyles.subtitle}>Vaccines</Text>
-					<FlatGrid
-						itemDimension={240}
-						data={vaccines}
-						style={SchldStyles.gridView}
-						spacing={10}
-						renderItem={({ item }) => (
-							<SchedulingButton icon={item.icon} label={item.name} />
-						)}
-					/>
+					<RenderServicesGrid items={vaccines} navigation={navigation} />
 
 					<Text style={SchldStyles.subtitle}>Blood Tests</Text>
-					<FlatGrid
-						itemDimension={240}
-						data={bloodTests}
-						style={SchldStyles.gridView}
-						spacing={10}
-						renderItem={({ item }) => (
-							<SchedulingButton icon={item.icon} label={item.name} />
-						)}
-					/>
+					<RenderServicesGrid items={bloodTests} navigation={navigation} />
 				</View>
 			}
 
 			{searchText.length != 0 &&
 				<View>
 					<Text style={SchldStyles.subtitle}>Search Results For {searchText}...</Text>
-					<FlatGrid
-						itemDimension={240}
-						data={searchEvents}
-						style={SchldStyles.gridView}
-						spacing={10}
-						renderItem={({ item }) => (
-							<SchedulingButton icon={item.icon} label={item.name} />
-						)}
-					/>
+					<RenderServicesGrid items={searchServices} navigation={navigation} />
 				</View>
 			}
 
@@ -84,7 +60,28 @@ const SchedulingScreen = ({ navigation }) => {
 	);
 };
 
-export default SchedulingScreen;
+const RenderServicesGrid = ({ items, navigation }) => {
+	return (
+		<FlatGrid
+			itemDimension={240}
+			data={items}
+			style={SchldStyles.gridView}
+			spacing={10}
+			renderItem={({ item }) => (
+				<SchedulingButton icon={item.icon} label={item.name} onClicked={() => {
+					navigation.navigate({
+						name: 'Service Scheduling',
+						params: {
+							service: item
+						}
+					})
+				}} />
+			)}
+		/>
+	)
+}
+
+export default SchedulingHomeScreen;
 
 const SchldStyles = StyleSheet.create({
 	gridView: {
