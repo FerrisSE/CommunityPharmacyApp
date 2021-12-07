@@ -5,6 +5,53 @@ import MedicationCard from '../../../components/medication-card';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 import mainStyles from '../../../main-styles';
 
+const testMeds = {
+	"patient-medications": [
+		{
+			"medicationName": "Acetaminophen",
+			"drugPurpose": "Treats minor aches and pains, reduces fever.",
+			"dose": "25 mg",
+			"instructions": "Take 1 tablets every 4 hours as needed.",
+			"currentRefills": 2,
+			"totalRefills": 4,
+			"totalQuantity": 20,
+			"remainingQuantity": 15,
+			"sideEffects": ["nausea", "loss of appetite"],
+			"interactions": ["Alcohol", "Something else..."],
+			"videoURL": "https://youtube.com",
+			"pdf": []
+		},
+		{
+			"medicationName": "drug 2",
+			"drugPurpose": "does stuff",
+			"dose": "100 mg",
+			"instructions": "Take 1 tablets every other day with a meal.",
+			"currentRefills": 4,
+			"totalRefills": 10,
+			"totalQuantity": 20,
+			"remainingQuantity": 3,
+			"sideEffects": ["drowsiness"],
+			"interactions": [],
+			"videoURL": "https://youtube.com/something",
+			"pdf": []
+		},
+		{
+			"medicationName": "drug 3",
+			"drugPurpose": "does stuff",
+			"dose": "100 mg",
+			"instructions": "Take 1 tablets every other day with a meal.",
+			"currentRefills": 4,
+			"totalRefills": 10,
+			"totalQuantity": 20,
+			"remainingQuantity": 8,
+			"sideEffects": ["drowsiness"],
+			"interactions": [],
+			"videoURL": "https://youtube.com/something",
+			"pdf": []
+		}
+	]
+}
+
 const CurrentMedicationScreen = ({ navigation }) => {
 	let [fhirPatient, setFhirPatient] = React.useState('')
 	let [loading, setLoading] = React.useState(true)
@@ -35,9 +82,9 @@ const CurrentMedicationScreen = ({ navigation }) => {
 	// show every med if they aren't searching
 	let shownMeds = []
 	if (searchText == "")
-		shownMeds = fhirPatient["patient-medications"]
+		shownMeds = testMeds["patient-medications"] //fhirPatient["patient-medications"]
 	else
-		shownMeds = fhirPatient["patient-medications"].filter(m => m.medicationName.includes(searchText))
+		shownMeds = testMeds["patient-medications"].filter(m => m.medicationName.includes(searchText)) // fhirPatient["patient-medications"].filter(m => m.medicationName.includes(searchText))
 
 
 	if (error)
@@ -72,7 +119,7 @@ const CurrentMedicationScreen = ({ navigation }) => {
 							navigation.navigate({
 								name: 'Refill Order',
 								params: {
-									meds: fhirPatient["patient-medications"].filter(med => refillCart.includes(med.medicationName)),
+									meds: testMeds["patient-medications"].filter(med => refillCart.includes(med.medicationName)),
 								}
 							})
 						}} />
