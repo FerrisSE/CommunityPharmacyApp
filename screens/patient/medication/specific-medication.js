@@ -57,7 +57,7 @@ const SpecificMedicationScreen = ({ navigation, route }) => {
             <Text> {"Instructions for meds"} </Text>
             <YoutubePlayer
               height={300}
-              videoId={"iik25wqIuFo"}
+              videoId={"-a5b2u7MG7U"}
             />
           </View>
         </View>
