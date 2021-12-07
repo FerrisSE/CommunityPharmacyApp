@@ -26,25 +26,27 @@ const DeliverOptions = [
 
 const MedicationRefillScreen = ({ navigation, route }) => {
 	return (
-		<ScrollView style={{ padding: 16, flex: 1 }}>
+		<View style={{ padding: 16, flex: 1 }}>
 			<Text style={MedRefillStyles.textTitle}>Cart</Text>
-			<FlatList
-				data={route.params.meds}
-				renderItem={(med) => <MedicationCard med={med.item} navigation={navigation} />}
-				keyExtractor={item => item.display}
-			/>
+			<ScrollView style={{ flex: 2 }}>
+				<FlatList
+					data={route.params.meds}
+					renderItem={(med) => <MedicationCard med={med.item} navigation={navigation} />}
+					keyExtractor={item => item.display}
+				/>
+			</ScrollView>
 
-			<View style={{ flex: 1, justifyContent: "center" }}>
+			<View style={{ flex: 1, justifyContent: "flex-end" }}>
 				<BouncyCheckboxGroup
 					data={DeliverOptions}
-					style={{ flexDirection: "column" }}
+					style={{ flexDirection: "column", paddingBottom: 32 }}
 				/>
-			</View>
 
-			<Button title="Confirm Order" />
-			<View style={{ paddingTop: 12 }} />
-			<Button title="Cancel Order" />
-		</ScrollView>
+				<Button title="Confirm Order" />
+				<View style={{ paddingTop: 12 }} />
+				<Button title="Cancel Order" />
+			</View>
+		</View>
 	);
 };
 
