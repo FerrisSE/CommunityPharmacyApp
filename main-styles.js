@@ -41,6 +41,7 @@ const mainStyles = StyleSheet.create({
 		alignItems: "center"
 	},
 	rowFull: {
+		margin: 10,
 		flex: 1,
 		flexDirection: "row",
 		justifyContent: "space-around",

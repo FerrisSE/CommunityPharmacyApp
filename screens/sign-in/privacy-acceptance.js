@@ -9,7 +9,7 @@ const PrivacyAcceptanceScreen = ({ navigation }) => {
 			<Text style={mainStyles.title}>Privacy Consent Form</Text>
 			<Text style={[mainStyles.textImportant, { paddingBottom: 20, paddingTop: 20 }]}>Before being able to use our app, we need consent to use your medical information.</Text>
 			<View style={{ flex: 10, paddingBottom: 20 }}>
-				<ScrollView style={{ flexGrow: 0.2, padding: 20 }}>
+				<ScrollView style={{ padding: 20 }}>
 					<Text>{privacyAgreementText}</Text>
 				</ScrollView>
 			</View>

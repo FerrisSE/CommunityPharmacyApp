@@ -161,7 +161,7 @@ const MedsStyles = StyleSheet.create({
 		paddingTop: 38,
 		paddingBottom: 12,
 		fontSize: 42,
-		fontWeight: 300,
+		fontWeight: "300",
 	},
 	prescripCardInfoView: {
 		width: "100%",

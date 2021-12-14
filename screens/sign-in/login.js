@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, Pressable, Text, View } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import mainStyles from '../../main-styles';
@@ -64,7 +64,7 @@ const LoginMainScreen = ({ navigation }) => {
 
 	return (
 		<View style={mainStyles.container}>
-			<Text style={mainStyles.title}>Login</Text>
+			<Text style={[mainStyles.title, { marginTop: 40 }]}>Login</Text>
 
 			<View style={{ marginBottom: 40 }} />
 
@@ -91,15 +91,26 @@ const LoginMainScreen = ({ navigation }) => {
 				}} />
 			</View>
 
-			<Button
-				title="Login"
-				onPress={() => {
-					// if it fails, show dialog
-					if (!Login(inputUsername, inputPassword, navigation)) {
-						setDialog(true)
-					}
-				}}
-			/>
+			<View style={{ marginTop: 20, marginBottom: 40 }}>
+				<Button
+					title="Login"
+					onPress={() => {
+						// if it fails, show dialog
+						if (!Login(inputUsername, inputPassword, navigation)) {
+							setDialog(true)
+						}
+					}}
+				/>
+			</View>
+
+			<View style={mainStyles.rowFull}>
+				<Pressable style={mainStyles.center} onPress={() => { navigation.push("Register") }}>
+					<Text style={mainStyles.textImportant}>Register</Text>
+				</Pressable>
+				<Pressable style={mainStyles.center} onPress={() => { navigation.push("Forgot Password") }}>
+					<Text style={mainStyles.textImportant}>Forgot your Password?</Text>
+				</Pressable>
+			</View>
 
 			<Dialog
 				visible={showDialog}
@@ -117,17 +128,6 @@ const LoginMainScreen = ({ navigation }) => {
 					<Text style={[mainStyles.textImportant, { padding: 8, fontSize: 16 }]}>Invalid Username or Password!</Text>
 				</DialogContent>
 			</Dialog>
-
-			<View style={mainStyles.rowFull}>
-				<TouchableOpacity style={[mainStyles.center, { margin: 40 }]} onPress={() => { navigation.push("Register") }}>
-					<Text style={mainStyles.textImportant}>Register</Text>
-				</TouchableOpacity>
-				<TouchableOpacity style={[mainStyles.center, { margin: 40 }]} onPress={() => { navigation.push("Forgot Password") }}>
-					<Text style={mainStyles.textImportant}>Forgot your Password?</Text>
-				</TouchableOpacity>
-			</View>
-
-
 		</View>
 	)
 }
