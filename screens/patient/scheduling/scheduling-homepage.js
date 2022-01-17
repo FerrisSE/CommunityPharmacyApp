@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text, TextInput, View, SafeAreaView } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import SchedulingButton from '../../../components/scheduling-card-button';
 import mainStyles from '../../../main-styles';
@@ -28,35 +28,35 @@ const SchedulingHomeScreen = ({ navigation }) => {
 	}
 
 	return (
-		<ScrollView style={SchldStyles.container}>
-			<Text style={SchldStyles.title}>Services</Text>
+		<SafeAreaView style={{ flex: 1 }}>
+			<ScrollView style={[SchldStyles.container, { flex: 1 }]}>
+				<Text style={[SchldStyles.title, { marginTop: 40 }]}>Services</Text>
 
-			<TextInput
-				style={mainStyles.textInput}
-				placeholder="search"
-				onChangeText={text => setSearchText(text)}
-				defaultValue={searchText}
-			/>
+				<TextInput
+					style={mainStyles.textInput}
+					placeholder="search"
+					onChangeText={text => setSearchText(text)}
+					defaultValue={searchText}
+				/>
 
-			{searchText.length == 0 &&
-				<View>
-					<Text style={SchldStyles.subtitle}>Vaccines</Text>
-					<RenderServicesGrid items={vaccines} navigation={navigation} />
+				{searchText.length == 0 &&
+					<View>
+						<Text style={SchldStyles.subtitle}>Vaccines</Text>
+						<RenderServicesGrid items={vaccines} navigation={navigation} />
 
-					<Text style={SchldStyles.subtitle}>Blood Tests</Text>
-					<RenderServicesGrid items={bloodTests} navigation={navigation} />
-				</View>
-			}
+						<Text style={SchldStyles.subtitle}>Blood Tests</Text>
+						<RenderServicesGrid items={bloodTests} navigation={navigation} />
+					</View>
+				}
 
-			{searchText.length != 0 &&
-				<View>
-					<Text style={SchldStyles.subtitle}>Search Results For {searchText}...</Text>
-					<RenderServicesGrid items={searchServices} navigation={navigation} />
-				</View>
-			}
-
-
-		</ScrollView>
+				{searchText.length != 0 &&
+					<View>
+						<Text style={SchldStyles.subtitle}>Search Results For {searchText}...</Text>
+						<RenderServicesGrid items={searchServices} navigation={navigation} />
+					</View>
+				}
+			</ScrollView>
+		</SafeAreaView>
 	);
 };
 
@@ -67,6 +67,7 @@ const RenderServicesGrid = ({ items, navigation }) => {
 			data={items}
 			style={SchldStyles.gridView}
 			spacing={10}
+			scrollEnabled={false}
 			renderItem={({ item }) => (
 				<SchedulingButton icon={item.icon} label={item.name} onClicked={() => {
 					navigation.navigate({

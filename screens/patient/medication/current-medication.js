@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableHighlight, View } from 'react-native';
+import { Button, FlatList, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableHighlight, View } from 'react-native';
 import { Card } from '../../../components/card';
 import MedicationCard from '../../../components/medication-card';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
@@ -89,28 +89,28 @@ const CurrentMedicationScreen = ({ navigation }) => {
 
 	if (error)
 		return (
-			<View style={mainStyles.center}>
+			<SafeAreaView style={mainStyles.center}>
 				<Text style={MedsStyles.errorText}>Something Went Wrong!</Text>
-			</View>
+			</SafeAreaView>
 		)
 	if (loading)
 		return (
-			<View style={mainStyles.center}>
+			<SafeAreaView style={mainStyles.center}>
 				<Text style={MedsStyles.loadingText}>Loading</Text>
-			</View>
+			</SafeAreaView>
 		)
 
 
 	return (
-		<ScrollView>
+		<SafeAreaView style={{ flex: 1 }}>
 			<TextInput
-				style={mainStyles.textInput}
+				style={[mainStyles.textInput, { flex: 0 }]}
 				placeholder="search"
 				onChangeText={text => setSearchText(text)}
 				defaultValue={searchText}
 			/>
-			<View style={[mainStyles.rowSpaced, { paddingBottom: 12, paddingRight: 16 }]}>
-				<Text style={[MedsStyles.sectionTitle, { fontSize: 24 }]}>Current Medications</Text>
+			<View style={[mainStyles.rowSpaced, { paddingTop: 12, paddingBottom: 24, paddingRight: 16, flex: 0 }]}>
+				<Text style={[MedsStyles.sectionTitle, { fontSize: 24 }]}></Text>
 				{
 					refillCart.length == 0 ?
 						<Button title="Select Refills" disabled={true} />
@@ -126,15 +126,21 @@ const CurrentMedicationScreen = ({ navigation }) => {
 
 				}
 			</View>
-			<FlatList
-				data={shownMeds}
-				renderItem={(med) => <MedicationCard med={med.item} navigation={navigation} updateCartFunction={ChangeMedCart} />}
-				keyExtractor={item => item.medicationName}
-			/>
 
-			<Text style={MedsStyles.sectionTitle}>Past Prescriptions</Text>
-			<PastPrescriptsAllowCard />
-		</ScrollView>
+			<ScrollView style={{ flex: 1 }}>
+				<View>
+					<Text style={[MedsStyles.sectionTitle, { fontSize: 24 }]}>Current Medications</Text>
+					{
+						shownMeds.map(m => (
+							<MedicationCard med={m} navigation={navigation} updateCartFunction={ChangeMedCart} />
+						))
+					}
+
+					<Text style={MedsStyles.sectionTitle}>Past Prescriptions</Text>
+					<PastPrescriptsAllowCard />
+				</View>
+			</ScrollView>
+		</SafeAreaView>
 
 	);
 };
@@ -158,7 +164,7 @@ const PastPrescriptsAllowCard = () => {
 const MedsStyles = StyleSheet.create({
 	sectionTitle: {
 		paddingLeft: 16,
-		paddingTop: 38,
+		paddingTop: 24,
 		paddingBottom: 12,
 		fontSize: 42,
 		fontWeight: "300",

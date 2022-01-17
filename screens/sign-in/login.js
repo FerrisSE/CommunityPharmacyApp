@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Pressable, Text, View } from 'react-native';
+import { Button, Pressable, SafeAreaView, Text, View } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import mainStyles from '../../main-styles';
@@ -63,7 +63,7 @@ const LoginMainScreen = ({ navigation }) => {
 	let [inputPassword, setInputPassword] = React.useState('')
 
 	return (
-		<View style={mainStyles.container}>
+		<SafeAreaView style={mainStyles.container}>
 			<Text style={[mainStyles.title, { marginTop: 40 }]}>Login</Text>
 
 			<View style={{ marginBottom: 40 }} />
@@ -116,18 +116,20 @@ const LoginMainScreen = ({ navigation }) => {
 				visible={showDialog}
 				onTouchOutside={() => setDialog(false)}
 				footer={
-					<DialogFooter>
-						<DialogButton
-							text="OK"
-							onPress={() => setDialog(false)}
-						/>
-					</DialogFooter>
+					<DialogFooter
+						children={
+							<DialogButton
+								text="OK"
+								onPress={() => setDialog(false)}
+							/>
+						}
+					/>
 				}
 			>
 				<DialogContent>
 					<Text style={[mainStyles.textImportant, { padding: 8, fontSize: 16 }]}>Invalid Username or Password!</Text>
 				</DialogContent>
 			</Dialog>
-		</View>
+		</SafeAreaView>
 	)
 }

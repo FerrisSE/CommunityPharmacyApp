@@ -1,11 +1,11 @@
 import React from 'react';
-import { Button, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Button, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { changeStack } from '../../App.js';
 import mainStyles from '../../main-styles';
 
 const PrivacyAcceptanceScreen = ({ navigation }) => {
 	return (
-		<View style={{ flex: 1, padding: 20 }}>
+		<SafeAreaView style={{ flex: 1, padding: 20, marginTop: 20 }}>
 			<Text style={mainStyles.title}>Privacy Consent Form</Text>
 			<Text style={[mainStyles.textImportant, { paddingBottom: 20, paddingTop: 20 }]}>Before being able to use our app, we need consent to use your medical information.</Text>
 			<View style={{ flex: 10, paddingBottom: 20 }}>
@@ -23,7 +23,7 @@ const PrivacyAcceptanceScreen = ({ navigation }) => {
 				/>
 			</View>
 
-		</View>
+		</SafeAreaView>
 	);
 };
 

@@ -16,7 +16,7 @@ const PatientScreenStack = ({ navigation }) => {
 				tabBarIcon: ({ focused, color, size }) => {
 					let iconName;
 
-					if (route.name === 'Medication') {
+					if (route.name === 'My Rx') {
 						iconName = 'pill';
 					} else if (route.name === 'Scheduling') {
 						iconName = 'calendar-blank-multiple';
@@ -28,7 +28,7 @@ const PatientScreenStack = ({ navigation }) => {
 			})}
 		>
 			<Tab.Screen
-				name="Medication"
+				name="My Rx"
 				component={MedicationScreenStack}
 			/>
 			<Tab.Screen
