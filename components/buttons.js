@@ -73,8 +73,8 @@ const styles = StyleSheet.create({
 		fontFamily: "Open Sans SemiBold",
 		fontSize: 18,
 		opacity: 1,
-		paddingTop: 10,
-		paddingBottom: 10,
+		paddingTop: 14,
+		paddingBottom: 14,
 		paddingLeft: 14,
 	},
 });

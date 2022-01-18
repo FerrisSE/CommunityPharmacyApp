@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
-import { BLACK } from "../colors";
+import { BLACK, GRAY_3 } from "../colors";
 
 export const TextHeader1 = ({ text }) => {
 	return (
@@ -95,5 +95,6 @@ const styles = StyleSheet.create({
 		fontFamily: "Open Sans Light",
 		fontSize: 14,
 		color: BLACK,
+		color: GRAY_3,
 	},
 });
