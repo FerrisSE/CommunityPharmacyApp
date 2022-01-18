@@ -88,12 +88,12 @@ const styles = StyleSheet.create({
 	},
 	Body: {
 		fontFamily: "Open Sans Regular",
-		fontSize: 12,
+		fontSize: 14,
 		color: BLACK,
 	},
 	Note: {
 		fontFamily: "Open Sans Light",
-		fontSize: 18,
+		fontSize: 14,
 		color: BLACK,
 	},
 });

@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
 	CardButtonTouchable: {
 		backgroundColor: PRIMARY_COLOR_TRANSPARENT,
 		justifyContent: 'flex-start',
+		margin: 4,
 	},
 	CardButtonText: {
 		color: BLACK,
