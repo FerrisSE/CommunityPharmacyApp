@@ -1,9 +1,10 @@
 import React from 'react';
 import { SafeAreaView, View } from 'react-native';
-import { WHITE } from '../../../colors';
+import { PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT, WHITE } from '../../../colors';
 import { PrimaryButton } from '../../../components/buttons';
 import { CloseButton } from '../../../components/close-button';
-import { TextBody, TextHeader1, TextHeader2, TextHeader3, TextSubHeader2 } from '../../../components/text';
+import { TextHeader2, TextHeader3, TextSubHeader2 } from '../../../components/text';
+import CalendarStrip from 'react-native-calendar-strip';
 
 const ServiceScheduling = ({ navigation, route }) => {
 	return (
@@ -18,7 +19,16 @@ const ServiceScheduling = ({ navigation, route }) => {
 				</View>
 
 				<View style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: WHITE, flex: 1, alignItems: 'center' }}>
-					<TextHeader3 text="Jan. 08 - Jan. 14," />
+					<CalendarStrip
+						style={{ width: "90%", height: 150, paddingTop: 32, paddingBottom: 32 }}
+						calendarHeaderStyle={{ fontFamily: "Open Sans SemiBold", fontSize: 24 }}
+						highlightDateContainerStyle={{ backgroundColor: PRIMARY_COLOR, borderRadius: 16, padding: 8 }}
+						highlightDateNumberStyle={{ color: WHITE }}
+						highlightDateNameStyle={{ color: WHITE }}
+						dayContainerStyle={{ backgroundColor: PRIMARY_COLOR_TRANSPARENT, borderRadius: 16, padding: 8 }}
+						dateNameStyle={{ color: PRIMARY_COLOR }}
+						dateNumberStyle={{ color: PRIMARY_COLOR }}
+					/>
 					<PrimaryButton label="CONFIRM APPOINTMENT" />
 				</View>
 			</SafeAreaView>
