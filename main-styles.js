@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { PRIMARY_COLOR, WHITE } from "./colors";
 
 const mainStyles = StyleSheet.create({
 	title: {
@@ -14,11 +15,15 @@ const mainStyles = StyleSheet.create({
 		fontSize: 16,
 	},
 	textInput: {
+		fontFamily: 'Open Sans Regular',
 		fontSize: 18,
 		padding: 10,
 		margin: 16,
-		backgroundColor: "#e0e0e0",
-		borderRadius: 8,
+		backgroundColor: WHITE,
+		color: PRIMARY_COLOR,
+		borderColor: PRIMARY_COLOR,
+		paddingLeft: 32,
+		borderRadius: 25,
 	},
 	center: {
 		flex: 1,

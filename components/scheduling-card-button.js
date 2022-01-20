@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT } from "../colors";
 
 const SchedulingButton = ({ onClicked, icon, label }) => {
 	return (
@@ -10,7 +11,7 @@ const SchedulingButton = ({ onClicked, icon, label }) => {
 			onPress={onClicked ? () => { onClicked() } : () => { }}>
 			<View style={cardStyles.CardView}>
 				<View style={cardStyles.iconView}>
-					<Icon name={icon} size={128} />
+					<Icon name={icon} size={84} color={PRIMARY_COLOR} />
 				</View>
 				<Text style={cardStyles.cardText}>{label}</Text>
 			</View>
@@ -30,24 +31,19 @@ const cardStyles = StyleSheet.create({
 	},
 	cardText: {
 		fontSize: 16,
-		fontWeight: "600"
+		fontWeight: "600",
+		textAlign: 'center',
 	},
 	CardView: {
-		backgroundColor: "#F0F1F4",
+		backgroundColor: PRIMARY_COLOR_TRANSPARENT,
 		alignItems: 'stretch',
 		justifyContent: 'center',
-		borderRadius: 8,
-		shadowColor: "black",
-		shadowOffset: { width: 0, height: 0 },
-		shadowOpacity: 0.2,
-		shadowRadius: 6,
-		elevation: 4,
 		flexDirection: 'column',
 		justifyContent: 'space-evenly',
-		paddingLeft: 16,
-		paddingRight: 16,
-		paddingTop: 16,
-		paddingBottom: 16,
+		padding: 16,
 		margin: 8,
+		width: 190,
+		height: 190,
+		borderRadius: 16,
 	}
 })

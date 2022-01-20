@@ -78,12 +78,12 @@ const styles = StyleSheet.create({
 	SubHeader1: {
 		fontFamily: "Open Sans",
 		fontWeight: "bold",
-		fontSize: 18,
+		fontSize: 20,
 		color: BLACK,
 	},
 	SubHeader2: {
 		fontFamily: "Open Sans SemiBold",
-		fontSize: 14,
+		fontSize: 16,
 		color: BLACK,
 	},
 	Body: {
