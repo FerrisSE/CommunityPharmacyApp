@@ -29,7 +29,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 						dateNameStyle={{ color: PRIMARY_COLOR }}
 						dateNumberStyle={{ color: PRIMARY_COLOR }}
 					/>
-					<PrimaryButton label="CONFIRM APPOINTMENT" />
+					<PrimaryButton label="CONFIRM APPOINTMENT" style={{ width: '75%' }} />
 				</View>
 			</SafeAreaView>
 		</View>
