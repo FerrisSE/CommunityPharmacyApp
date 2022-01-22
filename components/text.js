@@ -2,57 +2,57 @@ import React from "react";
 import { StyleSheet, Text } from "react-native";
 import { BLACK, GRAY_3 } from "../colors";
 
-export const TextHeader1 = ({ text }) => {
+export const TextHeader1 = ({ text, style }) => {
 	return (
-		<Text style={styles.Header1}>
+		<Text style={[styles.Header1, { ...style }]}>
 			{text}
 		</Text>
 	)
 };
 
-export const TextHeader2 = ({ text }) => {
+export const TextHeader2 = ({ text, style }) => {
 	return (
-		<Text style={styles.Header2}>
+		<Text style={[styles.Header2, { ...style }]}>
 			{text}
 		</Text>
 	)
 };
 
-export const TextHeader3 = ({ text }) => {
+export const TextHeader3 = ({ text, style }) => {
 	return (
-		<Text style={styles.Header3}>
+		<Text style={[styles.Header3, { ...style }]}>
 			{text}
 		</Text>
 	)
 };
 
-export const TextSubHeader1 = ({ text }) => {
+export const TextSubHeader1 = ({ text, style }) => {
 	return (
-		<Text style={styles.SubHeader1}>
+		<Text style={[styles.SubHeader1, { ...style }]}>
 			{text}
 		</Text>
 	)
 };
 
-export const TextSubHeader2 = ({ text }) => {
+export const TextSubHeader2 = ({ text, style }) => {
 	return (
-		<Text style={styles.SubHeader2}>
+		<Text style={[styles.SubHeader2, { ...style }]}>
 			{text}
 		</Text>
 	)
 };
 
-export const TextBody = ({ text }) => {
+export const TextBody = ({ text, style }) => {
 	return (
-		<Text style={styles.Body}>
+		<Text style={[styles.Body, { ...style }]}>
 			{text}
 		</Text>
 	)
 };
 
-export const TextNote = ({ text }) => {
+export const TextNote = ({ text, style }) => {
 	return (
-		<Text style={styles.Note}>
+		<Text style={[styles.Note, { ...style }]}>
 			{text}
 		</Text>
 	)

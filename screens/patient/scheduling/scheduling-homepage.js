@@ -46,17 +46,17 @@ const SchedulingHomeScreen = ({ navigation }) => {
 
 					{searchText.length == 0 &&
 						<View>
-							<TextSubHeader2 text="Vaccines" />
+							<TextSubHeader2 text="Vaccines" style={{ marginLeft: 8, marginTop: 16 }} />
 							<RenderServicesGrid items={vaccines} navigation={navigation} />
 
-							<TextSubHeader2 text="Blood Tests" />
+							<TextSubHeader2 text="Blood Tests" style={{ marginLeft: 8, marginTop: 16 }} />
 							<RenderServicesGrid items={bloodTests} navigation={navigation} />
 						</View>
 					}
 
 					{searchText.length != 0 &&
 						<View>
-							<TextSubHeader2 text={`Search Results For ${searchText}...`} />
+							<TextSubHeader2 text={`Search Results For ${searchText}...`} style={{ marginLeft: 8 }} />
 							<RenderServicesGrid items={searchServices} navigation={navigation} />
 						</View>
 					}
