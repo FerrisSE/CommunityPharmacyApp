@@ -87,6 +87,7 @@ export default SchedulingHomeScreen;
 
 const SchldStyles = StyleSheet.create({
 	gridView: {
+		width: '100%',
 		marginTop: 10,
 		flex: 1,
 		flexDirection: 'row',

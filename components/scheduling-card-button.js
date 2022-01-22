@@ -8,7 +8,9 @@ const SchedulingButton = ({ onClicked, icon, label }) => {
 		<TouchableOpacity
 			activeOpacity={0.6}
 			underlayColor="#333"
-			onPress={onClicked ? () => { onClicked() } : () => { }}>
+			onPress={onClicked ? () => { onClicked() } : () => { }}
+			style={{ width: '50%', aspectRatio: 1 }}
+		>
 			<View style={cardStyles.CardView}>
 				<View style={cardStyles.iconView}>
 					<Icon name={icon} size={84} color={PRIMARY_COLOR} />
@@ -16,7 +18,6 @@ const SchedulingButton = ({ onClicked, icon, label }) => {
 				<Text style={cardStyles.cardText}>{label}</Text>
 			</View>
 		</TouchableOpacity>
-
 	);
 }
 
@@ -42,8 +43,7 @@ const cardStyles = StyleSheet.create({
 		justifyContent: 'space-evenly',
 		padding: 16,
 		margin: 8,
-		width: 190,
-		height: 190,
 		borderRadius: 16,
+		aspectRatio: 1,
 	}
 })
