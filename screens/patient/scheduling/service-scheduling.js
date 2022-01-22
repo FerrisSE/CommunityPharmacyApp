@@ -5,6 +5,58 @@ import { PrimaryButton } from '../../../components/buttons';
 import { CloseButton } from '../../../components/close-button';
 import { TextHeader2, TextHeader3, TextSubHeader2 } from '../../../components/text';
 import CalendarStrip from 'react-native-calendar-strip';
+import { TimePicker } from '../../../components/time-picker';
+
+const times = [
+	{
+		time: "8:00",
+		am: true,
+		active: false,
+		available: true,
+	},
+	{
+		time: "8:30",
+		am: true,
+		active: true,
+		available: true,
+	},
+	{
+		time: "9:00",
+		am: true,
+		active: false,
+		available: false,
+	},
+	{
+		time: "9:30",
+		am: true,
+		active: false,
+		available: true,
+	},
+	{
+		time: "10:00",
+		am: true,
+		active: false,
+		available: true,
+	},
+	{
+		time: "10:30",
+		am: true,
+		active: false,
+		available: false,
+	},
+	{
+		time: "11:00",
+		am: true,
+		active: false,
+		available: false,
+	},
+	{
+		time: "11:30",
+		am: true,
+		active: false,
+		available: true,
+	}
+];
 
 const ServiceScheduling = ({ navigation, route }) => {
 	return (
@@ -29,7 +81,10 @@ const ServiceScheduling = ({ navigation, route }) => {
 						dateNameStyle={{ color: PRIMARY_COLOR }}
 						dateNumberStyle={{ color: PRIMARY_COLOR }}
 					/>
-					<PrimaryButton label="CONFIRM APPOINTMENT" style={{ width: '75%' }} />
+
+					<TimePicker title="Available Appointments" subtitle="location name" times={times} style={{ marginTop: 24, marginBottom: 24, width: '90%', flex: 1 }} />
+
+					<PrimaryButton label="CONFIRM APPOINTMENT" style={{ width: '75%', marginTop: 32, marginBottom: 32 }} />
 				</View>
 			</SafeAreaView>
 		</View>
