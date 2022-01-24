@@ -7,6 +7,7 @@ export const PRIMARY_COLOR_TRANSPARENT = "#5252981A";
 export const SECONDARY_COLOR_TRANSPARENT = "#94CAE133";
 
 export const HIGH_PRIORITY = "#F56A4C";
+export const HIGH_PRIORITY_TRANSPARENT = "#F56A4C1A";
 export const ACCENT_1 = "#FFBF48";
 export const ACCENT_2 = "#F1A4C9";
 

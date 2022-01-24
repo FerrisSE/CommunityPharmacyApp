@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button, ScrollView, StyleSheet, Text, TextInput, View, SafeAreaView } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
-import { PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT } from '../../../colors';
+import { PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT, WHITE } from '../../../colors';
 import { Card } from '../../../components/cards';
 import SchedulingButton from '../../../components/scheduling-card-button';
+import { UpcomingEvents } from '../../../components/scheduling-upcoming';
 import { TextSubHeader1, TextSubHeader2 } from '../../../components/text';
 import mainStyles from '../../../main-styles';
 
@@ -31,9 +32,11 @@ const SchedulingHomeScreen = ({ navigation }) => {
 	}
 
 	return (
-		<SafeAreaView style={{ flex: 1 }}>
+		<SafeAreaView style={{ backgroundColor: WHITE, flex: 1 }}>
 			<ScrollView style={[SchldStyles.container, { flex: 1 }]}>
-				<TextSubHeader1 text="Services" />
+				<UpcomingEvents />
+
+				<TextSubHeader1 text="Services" style={{ marginTop: 24 }} />
 
 				<Card depth={1}>
 					<TextInput

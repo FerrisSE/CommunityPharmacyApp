@@ -1,12 +1,16 @@
 import React from "react";
 import { View } from "react-native";
-import { PRIMARY_COLOR_TRANSPARENT, SECONDARY_COLOR_TRANSPARENT } from "../colors";
+import { HIGH_PRIORITY_TRANSPARENT, PRIMARY_COLOR_TRANSPARENT, SECONDARY_COLOR_TRANSPARENT } from "../colors";
 
 export const Card = ({ color, depth, outlined, children, style }) => {
 	let backgroundColor = PRIMARY_COLOR_TRANSPARENT;
 
 	if (color == 'secondary') {
 		backgroundColor = SECONDARY_COLOR_TRANSPARENT;
+	}
+
+	if (color == 'priority') {
+		backgroundColor = HIGH_PRIORITY_TRANSPARENT;
 	}
 
 	return (

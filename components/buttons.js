@@ -13,12 +13,12 @@ export const PrimaryButton = ({ label, onPress, icon, iconSide, style }) => {
 	)
 }
 
-export const OutlineButton = ({ label, onPress, icon, iconSide, style }) => {
+export const OutlineButton = ({ label, onPress, icon, iconSide, color, style }) => {
 	return (
-		<TouchableOpacity style={[styles.OutlineButtonTouchable, { ...style }]} onPress={onPress ? onPress() : () => { }}>
-			{icon && iconSide == "left" && <Icon name={icon} size={25} color={PRIMARY_COLOR} />}
-			<Text style={styles.OutlineButtonText}>{label}</Text>
-			{icon && iconSide == "right" && <Icon name={icon} size={25} color={PRIMARY_COLOR} />}
+		<TouchableOpacity style={[styles.OutlineButtonTouchable, { borderColor: color }, { ...style }]} onPress={onPress ? onPress() : () => { }}>
+			{icon && iconSide == "left" && <Icon name={icon} size={25} color={color} />}
+			<Text style={[styles.OutlineButtonText, { color: color }]}>{label}</Text>
+			{icon && iconSide == "right" && <Icon name={icon} size={25} color={color} />}
 		</TouchableOpacity>
 	)
 }
@@ -52,16 +52,17 @@ const styles = StyleSheet.create({
 	},
 	OutlineButtonTouchable: {
 		borderWidth: 2,
-		borderColor: PRIMARY_COLOR,
 		borderRadius: 35,
 		justifyContent: 'center',
 		opacity: 1,
 	},
 	OutlineButtonText: {
 		textAlign: 'center',
-		color: PRIMARY_COLOR,
 		fontFamily: "Open Sans SemiBold",
 		fontSize: 18,
+		margin: 4,
+		marginLeft: 25,
+		marginRight: 25,
 		opacity: 1,
 	},
 	CardButtonTouchable: {
