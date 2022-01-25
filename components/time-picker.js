@@ -4,7 +4,7 @@ import { BLACK, GRAY_4, GRAY_5, SECONDARY_COLOR, SECONDARY_COLOR_TRANSPARENT, WH
 import { Card, CardWithHeader } from "./cards";
 import { TextHeader3, TextNote, TextSubHeader2 } from "./text";
 
-export const TimePicker = ({ title, subtitle, times, style }) => {
+export const TimePicker = ({ title, subtitle, times, style, activeId, setActive }) => {
 	return (
 		<CardWithHeader
 			depth={1}
@@ -17,7 +17,7 @@ export const TimePicker = ({ title, subtitle, times, style }) => {
 		>
 			<View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
 				{
-					times.map(t => <TimeSlot time={t.time} am={t.am} active={t.active} available={t.available} />)
+					times.map((t, i) => <TimeSlot id={i} time={t.time} am={t.am} active={i == activeId} available={t.available} setActive={setActive} />)
 				}
 			</View>
 
@@ -25,7 +25,7 @@ export const TimePicker = ({ title, subtitle, times, style }) => {
 	)
 };
 
-const TimeSlot = ({ time, am, active, available }) => {
+const TimeSlot = ({ id, time, am, active, available, setActive }) => {
 	let subText = am ? "am" : "pm";
 
 	let color = "#D8ECF4";
@@ -42,7 +42,7 @@ const TimeSlot = ({ time, am, active, available }) => {
 	}
 
 	return (
-		<TouchableOpacity style={{ width: '25%' }}>
+		<TouchableOpacity style={{ width: '25%' }} disabled={!available || active} onPress={() => setActive(id)}>
 			<Card depth={2} color="secondary" style={{ margin: 4, backgroundColor: color }}>
 				<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-end', padding: 12 }}>
 					<TextSubHeader2 text={time} style={{ color: textColor }} />

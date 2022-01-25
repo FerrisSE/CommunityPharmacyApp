@@ -7,58 +7,52 @@ import { TextHeader2, TextHeader3, TextSubHeader2 } from '../../../components/te
 import CalendarStrip from 'react-native-calendar-strip';
 import { TimePicker } from '../../../components/time-picker';
 
-const times = [
+let times = [
 	{
 		time: "8:00",
 		am: true,
-		active: false,
 		available: true,
 	},
 	{
 		time: "8:30",
 		am: true,
-		active: true,
 		available: true,
 	},
 	{
 		time: "9:00",
 		am: true,
-		active: false,
 		available: false,
 	},
 	{
 		time: "9:30",
 		am: true,
-		active: false,
 		available: true,
 	},
 	{
 		time: "10:00",
 		am: true,
-		active: false,
 		available: true,
 	},
 	{
 		time: "10:30",
 		am: true,
-		active: false,
 		available: false,
 	},
 	{
 		time: "11:00",
 		am: true,
-		active: false,
 		available: false,
 	},
 	{
 		time: "11:30",
 		am: true,
-		active: false,
 		available: true,
 	}
 ];
 
 const ServiceScheduling = ({ navigation, route }) => {
+	let [pickedId, setPickedId] = React.useState(-1);
+
 	return (
 		<View style={{ backgroundColor: "#A9A9CC", flex: 1 }}>
 			<SafeAreaView style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: "#EEEEF4", marginTop: 8, flex: 1 }}>
@@ -82,7 +76,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 						dateNumberStyle={{ color: PRIMARY_COLOR }}
 					/>
 
-					<TimePicker title="Available Appointments" subtitle="location name" times={times} style={{ marginTop: 24, marginBottom: 24, width: '90%', flex: 1 }} />
+					<TimePicker title="Available Appointments" subtitle="location name" times={times} activeId={pickedId} setActive={setPickedId} style={{ marginTop: 24, marginBottom: 24, width: '90%', flex: 1 }} />
 
 					<PrimaryButton label="CONFIRM APPOINTMENT" style={{ width: '75%', marginTop: 32, marginBottom: 32 }} />
 				</View>
