@@ -5,7 +5,7 @@ import { View } from 'react-native';
 import YoutubePlayer from "react-native-youtube-iframe";
 import { TextBody, TextHeader2, TextHeader3, TextNote, TextSubHeader2 } from '../../../components/text';
 import { Card } from '../../../components/cards';
-import { CardButton } from '../../../components/buttons';
+import { CardButton, OutlineButton } from '../../../components/buttons';
 import { PRIMARY_COLOR, SECONDARY_COLOR_TRANSPARENT, WHITE } from '../../../colors';
 
 const SpecificMedicationScreen = ({ navigation, route }) => {

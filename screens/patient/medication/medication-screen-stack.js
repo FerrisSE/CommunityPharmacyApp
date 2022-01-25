@@ -27,10 +27,23 @@ const MedicationScreenStack = ({ navigation }) => {
 						display: "Test Med"
 					}
 				}}
-				options={{
+				options={({ route }) => ({
 					headerTitle: props => <View></View>,
-					headerRight: () => (<OutlineButton label="Refill" color={PRIMARY_COLOR} style={{ marginRight: 8 }} />)
-				}
+					headerRight: () => (
+						<OutlineButton
+							label="Refill"
+							color={PRIMARY_COLOR}
+							style={{ marginRight: 8 }}
+							onPress={() => {
+								navigation.navigate({
+									name: 'Refill Order',
+									params: {
+										meds: [route.params.med],
+									}
+								})
+							}} />
+					),
+				})
 				}
 			/>
 			<Stack.Screen

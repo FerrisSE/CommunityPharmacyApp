@@ -5,7 +5,7 @@ import { BLACK, PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT, WHITE } from "../color
 
 export const PrimaryButton = ({ label, onPress, icon, iconSide, style }) => {
 	return (
-		<TouchableOpacity style={[styles.PrimaryButtonTouchable, { ...style }]} onPress={onPress ? onPress() : () => { }}>
+		<TouchableOpacity style={[styles.PrimaryButtonTouchable, { ...style }]} onPress={onPress ? () => onPress() : () => { }}>
 			{icon && iconSide == "left" && <Icon name={icon} size={25} color={WHITE} />}
 			<Text style={styles.PrimaryButtonText}>{label}</Text>
 			{icon && iconSide == "right" && <Icon name={icon} size={25} color={WHITE} />}
@@ -15,7 +15,7 @@ export const PrimaryButton = ({ label, onPress, icon, iconSide, style }) => {
 
 export const OutlineButton = ({ label, onPress, icon, iconSide, color, style }) => {
 	return (
-		<TouchableOpacity style={[styles.OutlineButtonTouchable, { borderColor: color }, { ...style }]} onPress={onPress ? onPress() : () => { }}>
+		<TouchableOpacity style={[styles.OutlineButtonTouchable, { borderColor: color }, { ...style }]} onPress={onPress ? () => onPress() : () => { }}>
 			{icon && iconSide == "left" && <Icon name={icon} size={25} color={color} />}
 			<Text style={[styles.OutlineButtonText, { color: color }]}>{label}</Text>
 			{icon && iconSide == "right" && <Icon name={icon} size={25} color={color} />}
@@ -27,7 +27,7 @@ export const CardButton = ({ label, depth, onPress, icon, style }) => {
 	return (
 		<TouchableOpacity
 			style={[styles.CardButtonTouchable, { borderRadius: 20 - (depth - 1) * 4 }, { ...style }]}
-			onPress={onPress ? onPress() : () => { }}
+			onPress={onPress ? () => onPress() : () => { }}
 		>
 			{icon && <Icon name={icon} size={25} color={PRIMARY_COLOR} />}
 			<Text style={styles.CardButtonText}>{label}</Text>
