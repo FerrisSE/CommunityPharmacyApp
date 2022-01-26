@@ -22,29 +22,29 @@ const testMeds = {
 			"pdf": []
 		},
 		{
-			"medicationName": "drug 2",
-			"drugPurpose": "does stuff",
-			"dose": "100 mg",
-			"instructions": "Take 1 tablets every other day with a meal.",
+			"medicationName": "Lisinopril",
+			"drugPurpose": "High blood pressure treatment and heat failure prevention.",
+			"dose": "10 mg",
+			"instructions": "Take 1 tablets every day",
 			"currentRefills": 4,
 			"totalRefills": 10,
 			"totalQuantity": 20,
 			"remainingQuantity": 3,
-			"sideEffects": ["drowsiness"],
+			"sideEffects": ["drowsiness", "cough", "cheast pain"],
 			"interactions": [],
 			"videoURL": "https://youtube.com/something",
 			"pdf": []
 		},
 		{
-			"medicationName": "drug 3",
-			"drugPurpose": "does stuff",
-			"dose": "100 mg",
-			"instructions": "Take 1 tablets every other day with a meal.",
+			"medicationName": "Albuterol",
+			"drugPurpose": "Treatment for asthma, COPD, and airway tightness",
+			"dose": "180 mcg",
+			"instructions": "Two puffs every 4 to 6 hours as needed.",
 			"currentRefills": 4,
-			"totalRefills": 10,
-			"totalQuantity": 20,
-			"remainingQuantity": 8,
-			"sideEffects": ["drowsiness"],
+			"totalRefills": 5,
+			"totalQuantity": 200,
+			"remainingQuantity": 80,
+			"sideEffects": ["racing heartbeat or pulse", "shakiness in the legs, arms, hands, or feet", "trembling or shaking of the hands or feet"],
 			"interactions": [],
 			"videoURL": "https://youtube.com/something",
 			"pdf": []
@@ -87,18 +87,18 @@ const CurrentMedicationScreen = ({ navigation }) => {
 		shownMeds = testMeds["patient-medications"].filter(m => m.medicationName.includes(searchText)) // fhirPatient["patient-medications"].filter(m => m.medicationName.includes(searchText))
 
 
-	if (error)
-		return (
-			<SafeAreaView style={mainStyles.center}>
-				<Text style={MedsStyles.errorText}>Something Went Wrong!</Text>
-			</SafeAreaView>
-		)
-	if (loading)
-		return (
-			<SafeAreaView style={mainStyles.center}>
-				<Text style={MedsStyles.loadingText}>Loading</Text>
-			</SafeAreaView>
-		)
+	// if (error)
+	// 	return (
+	// 		<SafeAreaView style={mainStyles.center}>
+	// 			<Text style={MedsStyles.errorText}>Something Went Wrong!</Text>
+	// 		</SafeAreaView>
+	// 	)
+	// if (loading)
+	// 	return (
+	// 		<SafeAreaView style={mainStyles.center}>
+	// 			<Text style={MedsStyles.loadingText}>Loading</Text>
+	// 		</SafeAreaView>
+	// 	)
 
 
 	return (
