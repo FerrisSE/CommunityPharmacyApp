@@ -5,53 +5,6 @@ import MedicationCard from '../../../components/medication-card';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 import mainStyles from '../../../main-styles';
 
-const testMeds = {
-	"patient-medications": [
-		{
-			"medicationName": "Acetaminophen",
-			"drugPurpose": "Treats minor aches and pains, reduces fever.",
-			"dose": "25 mg",
-			"instructions": "Take 1 tablets every 4 hours as needed.",
-			"currentRefills": 2,
-			"totalRefills": 4,
-			"totalQuantity": 20,
-			"remainingQuantity": 15,
-			"sideEffects": ["nausea", "loss of appetite"],
-			"interactions": ["Alcohol", "Something else..."],
-			"videoURL": "https://youtube.com",
-			"pdf": []
-		},
-		{
-			"medicationName": "Lisinopril",
-			"drugPurpose": "High blood pressure treatment and heat failure prevention.",
-			"dose": "10 mg",
-			"instructions": "Take 1 tablets every day",
-			"currentRefills": 4,
-			"totalRefills": 10,
-			"totalQuantity": 20,
-			"remainingQuantity": 3,
-			"sideEffects": ["drowsiness", "cough", "cheast pain"],
-			"interactions": [],
-			"videoURL": "https://youtube.com/something",
-			"pdf": []
-		},
-		{
-			"medicationName": "Albuterol",
-			"drugPurpose": "Treatment for asthma, COPD, and airway tightness",
-			"dose": "180 mcg",
-			"instructions": "Two puffs every 4 to 6 hours as needed.",
-			"currentRefills": 4,
-			"totalRefills": 5,
-			"totalQuantity": 200,
-			"remainingQuantity": 80,
-			"sideEffects": ["racing heartbeat or pulse", "shakiness in the legs, arms, hands, or feet", "trembling or shaking of the hands or feet"],
-			"interactions": [],
-			"videoURL": "https://youtube.com/something",
-			"pdf": []
-		}
-	]
-}
-
 const CurrentMedicationScreen = ({ navigation }) => {
 	let [fhirPatient, setFhirPatient] = React.useState('')
 	let [loading, setLoading] = React.useState(true)
@@ -82,23 +35,24 @@ const CurrentMedicationScreen = ({ navigation }) => {
 	// show every med if they aren't searching
 	let shownMeds = []
 	if (searchText == "")
-		shownMeds = testMeds["patient-medications"] //fhirPatient["patient-medications"]
+		shownMeds = fhirPatient["patient-medications"]
 	else
-		shownMeds = testMeds["patient-medications"].filter(m => m.medicationName.includes(searchText)) // fhirPatient["patient-medications"].filter(m => m.medicationName.includes(searchText))
+		shownMeds = fhirPatient["patient-medications"].filter(m => m.medicationName.includes(searchText))
 
 
-	// if (error)
-	// 	return (
-	// 		<SafeAreaView style={mainStyles.center}>
-	// 			<Text style={MedsStyles.errorText}>Something Went Wrong!</Text>
-	// 		</SafeAreaView>
-	// 	)
-	// if (loading)
-	// 	return (
-	// 		<SafeAreaView style={mainStyles.center}>
-	// 			<Text style={MedsStyles.loadingText}>Loading</Text>
-	// 		</SafeAreaView>
-	// 	)
+	if (error)
+		return (
+			<SafeAreaView style={mainStyles.center}>
+				<Text style={MedsStyles.errorText}>Something Went Wrong!</Text>
+				<Text>{error}</Text>
+			</SafeAreaView>
+		)
+	if (loading)
+		return (
+			<SafeAreaView style={mainStyles.center}>
+				<Text style={MedsStyles.loadingText}>Loading</Text>
+			</SafeAreaView>
+		)
 
 
 	return (
