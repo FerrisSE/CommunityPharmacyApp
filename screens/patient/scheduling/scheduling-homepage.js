@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button, ScrollView, StyleSheet, Text, TextInput, View, SafeAreaView } from 'react-native';
-import { FlatGrid } from 'react-native-super-grid';
-import { PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT, WHITE } from '../../../colors';
+import { ScrollView, TextInput, View, SafeAreaView } from 'react-native';
+import { PRIMARY_COLOR, WHITE } from '../../../colors';
 import { Card } from '../../../components/cards';
 import SchedulingButton from '../../../components/scheduling-card-button';
 import { UpcomingEvents } from '../../../components/scheduling-upcoming';
@@ -33,7 +32,7 @@ const SchedulingHomeScreen = ({ navigation }) => {
 
 	return (
 		<SafeAreaView style={{ backgroundColor: WHITE, flex: 1 }}>
-			<ScrollView style={[SchldStyles.container, { flex: 1 }]}>
+			<ScrollView style={{ padding: 12, flex: 1 }}>
 				<UpcomingEvents />
 
 				<TextSubHeader1 text="Services" style={{ marginTop: 24 }} />
@@ -71,7 +70,14 @@ const SchedulingHomeScreen = ({ navigation }) => {
 
 const RenderServicesGrid = ({ items, navigation }) => {
 	return (
-		<View style={SchldStyles.gridView}>
+		<View style={{
+			width: '100%',
+			marginTop: 10,
+			flex: 1,
+			flexDirection: 'row',
+			flexWrap: 'wrap',
+			justifyContent: 'flex-start',
+		}}>
 			{items.map(s => (
 				< SchedulingButton icon={s.icon} label={s.name} onClicked={() => {
 					navigation.navigate({
@@ -87,21 +93,3 @@ const RenderServicesGrid = ({ items, navigation }) => {
 }
 
 export default SchedulingHomeScreen;
-
-const SchldStyles = StyleSheet.create({
-	gridView: {
-		width: '100%',
-		marginTop: 10,
-		flex: 1,
-		flexDirection: 'row',
-		flexWrap: 'wrap',
-		justifyContent: 'flex-start',
-	},
-	container: {
-		padding: 12,
-	},
-	subtitle: {
-		fontSize: 24,
-		fontWeight: "600",
-	},
-})

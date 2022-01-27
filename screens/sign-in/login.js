@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Pressable, SafeAreaView, Text, View } from 'react-native';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { Pressable, SafeAreaView, Text, View } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import mainStyles from '../../main-styles';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';

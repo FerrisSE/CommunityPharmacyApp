@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, SafeAreaView, Text, View } from 'react-native';
+import { SafeAreaView, Text } from 'react-native';
 
 const RegisterAccountScreen = ({ navigation }) => {
 	return (

@@ -15,7 +15,7 @@ const MedicationScreenStack = ({ navigation }) => {
 			<Stack.Screen
 				name="My Meds"
 				component={CurrentMedicationScreen}
-				options={({ route }) => ({
+				options={({ }) => ({
 					headerShown: false
 				})}
 			/>
@@ -28,7 +28,7 @@ const MedicationScreenStack = ({ navigation }) => {
 					}
 				}}
 				options={({ route }) => ({
-					headerTitle: props => <View></View>,
+					headerTitle: _ => <View></View>,
 					headerRight: () => (
 						<OutlineButton
 							label="Refill"

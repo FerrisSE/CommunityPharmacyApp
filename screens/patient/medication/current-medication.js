@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { SafeAreaView, ScrollView, TextInput, View } from 'react-native';
 import { Card } from '../../../components/cards';
 import { TextSubHeader1 } from '../../../components/text';
 import { OutlineButton } from '../../../components/buttons';
@@ -92,15 +92,3 @@ const CurrentMedicationScreen = ({ navigation }) => {
 };
 
 export default CurrentMedicationScreen;
-
-const MedsStyles = StyleSheet.create({
-	errorText: {
-		fontWeight: "bold",
-		fontSize: 24,
-		color: "crimson"
-	},
-	loadingText: {
-		fontWeight: "bold",
-		fontSize: 24
-	},
-})

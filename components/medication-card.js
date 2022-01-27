@@ -1,6 +1,5 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { TouchableCard } from "./card.js"
 import pill from "../images/pill.png"
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 import * as Progress from 'react-native-progress'

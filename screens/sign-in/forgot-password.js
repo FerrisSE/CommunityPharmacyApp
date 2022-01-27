@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Text } from 'react-native';
 import { SafeAreaView } from 'react-native-web';
 
 const ForgotPasswordScreen = ({ navigation }) => {

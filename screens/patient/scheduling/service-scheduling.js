@@ -3,7 +3,7 @@ import { SafeAreaView, View } from 'react-native';
 import { PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT, WHITE } from '../../../colors';
 import { PrimaryButton } from '../../../components/buttons';
 import { CloseButton } from '../../../components/close-button';
-import { TextHeader2, TextHeader3, TextSubHeader2 } from '../../../components/text';
+import { TextHeader2, TextSubHeader2 } from '../../../components/text';
 import CalendarStrip from 'react-native-calendar-strip';
 import { TimePicker } from '../../../components/time-picker';
 
