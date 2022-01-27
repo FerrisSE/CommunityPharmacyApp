@@ -1,16 +1,19 @@
 import React from "react";
 import { View } from "react-native";
-import { HIGH_PRIORITY_TRANSPARENT, PRIMARY_COLOR_TRANSPARENT, SECONDARY_COLOR_TRANSPARENT } from "../colors";
+import { HIGH_PRIORITY, HIGH_PRIORITY_TRANSPARENT, PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT, SECONDARY_COLOR, SECONDARY_COLOR_TRANSPARENT } from "../colors";
 
 export const Card = ({ color, depth, outlined, children, style }) => {
 	let backgroundColor = PRIMARY_COLOR_TRANSPARENT;
+	let outlineColor = PRIMARY_COLOR;
 
 	if (color == 'secondary') {
 		backgroundColor = SECONDARY_COLOR_TRANSPARENT;
+		outlineColor = SECONDARY_COLOR;
 	}
 
 	if (color == 'priority') {
 		backgroundColor = HIGH_PRIORITY_TRANSPARENT;
+		outlineColor = HIGH_PRIORITY;
 	}
 
 	return (
@@ -18,8 +21,8 @@ export const Card = ({ color, depth, outlined, children, style }) => {
 			backgroundColor: backgroundColor,
 			borderRadius: 20 - (depth - 1) * 4,
 			padding: 4,
-			borderWidth: outlined ? 1 : 0,
-			borderColor: backgroundColor,
+			borderWidth: outlined ? 4 : 0,
+			borderColor: outlineColor,
 		}, { ...style }]}>
 			{children}
 		</View>
@@ -28,17 +31,19 @@ export const Card = ({ color, depth, outlined, children, style }) => {
 
 export const CardWithHeader = ({ color, depth, outlined, header, children, style }) => {
 	let backgroundColor = PRIMARY_COLOR_TRANSPARENT;
+	let outlineColor = PRIMARY_COLOR;
 
 	if (color == 'secondary') {
 		backgroundColor = SECONDARY_COLOR_TRANSPARENT;
+		outlineColor = SECONDARY_COLOR;
 	}
 
 	return (
 		<View style={[{
 			backgroundColor: backgroundColor,
 			borderRadius: 20 - (depth - 1) * 4,
-			borderWidth: outlined ? 1 : 0,
-			borderColor: backgroundColor,
+			borderWidth: outlined ? 4 : 0,
+			borderColor: outlineColor,
 		}, { ...style }]}>
 			<View style={{
 				backgroundColor: backgroundColor,

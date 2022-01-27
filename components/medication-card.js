@@ -4,6 +4,8 @@ import pill from "../images/pill.png"
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 import * as Progress from 'react-native-progress'
 import { Card } from "./cards.js";
+import { HIGH_PRIORITY, PRIMARY_COLOR } from "../colors";
+import { TextBody, TextNote, TextSubHeader1 } from "./text";
 
 const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 	let [requestRefill, setRequestRefill] = React.useState(false)
@@ -29,24 +31,24 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 			}}
 			style={{ margin: 8 }}
 		>
-			<Card depth={2} style={{ padding: 8 }}>
+			<Card depth={2} style={{ padding: 8 }} outlined={requestRefill}>
 				<View style={MedCardStyles.row}>
 					<View style={MedCardStyles.imageView}>
 						<Image source={pill} style={MedCardStyles.image} />
 						{precentLeft <= 0.25 &&
-							<Icon name="alert-circle" size={25} style={{ position: "absolute", alignSelf: "flex-end", marginTop: -48 }} color={'#FF3A45'} />
+							<Icon name="alert-circle" size={25} style={{ position: "absolute", alignSelf: "flex-end", marginTop: -48 }} color={HIGH_PRIORITY} />
 						}
 					</View>
 					<View style={MedCardStyles.textStack}>
-						<Text style={MedCardStyles.textBrandName}>{med.medicationName}</Text>
-						<Text style={MedCardStyles.textPurpose}>{med.drugPurpose}</Text>
+						<TextSubHeader1 text={med.medicationName} />
+						<TextBody text={med.drugPurpose} />
 
 						<View style={{ marginTop: 10, marginBottom: 10 }}>
-							<Text>{med.instructions}</Text>
-							<Text>Refills: {med.currentRefills}/{med.totalRefills}</Text>
+							<TextBody text={med.instructions} />
+							<TextBody text={`Refills: ${med.currentRefills}/${med.totalRefills}`} />
 						</View>
 
-						<Text>Amount Left:</Text>
+						<TextNote text="Amount Left:" />
 						<Progress.Bar
 							progress={precentLeft}
 							width={null}
@@ -67,7 +69,7 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 								setRequestRefill(!requestRefill);
 								updateCartFunction(med.medicationName, !requestRefill);
 							}}>
-							<Icon name={requestRefill ? "plus-circle" : "plus-circle-outline"} size={25} />
+							<Icon name={requestRefill ? "plus-circle" : "plus-circle-outline"} size={25} color={PRIMARY_COLOR} />
 						</TouchableOpacity>
 					}
 				</View>
@@ -106,12 +108,4 @@ const MedCardStyles = StyleSheet.create({
 		width: '60%',
 		height: '60%',
 	},
-	textBrandName: {
-		fontSize: 20,
-		fontWeight: "700",
-	},
-	textPurpose: {
-		fontSize: 14,
-		fontWeight: "700",
-	}
 })
