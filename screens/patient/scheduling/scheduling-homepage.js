@@ -1,11 +1,11 @@
 import React from 'react';
-import { ScrollView, TextInput, View, SafeAreaView } from 'react-native';
-import { PRIMARY_COLOR, WHITE } from '../../../colors';
+import { ScrollView, View, SafeAreaView } from 'react-native';
+import { WHITE } from '../../../colors';
 import { Card } from '../../../components/cards';
+import { Input } from '../../../components/input';
 import SchedulingButton from '../../../components/scheduling-card-button';
 import { UpcomingEvents } from '../../../components/scheduling-upcoming';
 import { TextSubHeader1, TextSubHeader2 } from '../../../components/text';
-import mainStyles from '../../../main-styles';
 
 const vaccines = [
 	{ name: "Covid-19 Vaccine", icon: "bandage" },
@@ -38,13 +38,7 @@ const SchedulingHomeScreen = ({ navigation }) => {
 				<TextSubHeader1 text="Services" style={{ marginTop: 24 }} />
 
 				<Card depth={1}>
-					<TextInput
-						style={mainStyles.textInput}
-						placeholder="Search"
-						placeholderTextColor={PRIMARY_COLOR}
-						onChangeText={text => setSearchText(text)}
-						defaultValue={searchText}
-					/>
+					<Input placeholder="Search" setText={setSearchText} defaultText={searchText} />
 
 					{searchText.length == 0 &&
 						<View>

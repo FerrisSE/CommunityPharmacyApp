@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { SafeAreaView, ScrollView, TextInput, View } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 import { Card } from '../../../components/cards';
 import { TextSubHeader1 } from '../../../components/text';
 import { OutlineButton } from '../../../components/buttons';
 import MedicationCard from '../../../components/medication-card';
-import mainStyles from '../../../main-styles';
 import { PRIMARY_COLOR, HIGH_PRIORITY } from '../../../colors';
+import { Input } from '../../../components/input';
 
 const CurrentMedicationScreen = ({ navigation }) => {
 	let [fhirPatient, setFhirPatient] = React.useState('')
@@ -51,13 +51,13 @@ const CurrentMedicationScreen = ({ navigation }) => {
 
 	if (error)
 		return (
-			<SafeAreaView style={mainStyles.center}>
+			<SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 				<TextSubHeader1 text="Something Went Wrong!" style={{ color: HIGH_PRIORITY }} />
 			</SafeAreaView>
 		)
 	if (loading)
 		return (
-			<SafeAreaView style={mainStyles.center}>
+			<SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 				<TextSubHeader1 text="Loading..." />
 			</SafeAreaView>
 		)
@@ -72,13 +72,7 @@ const CurrentMedicationScreen = ({ navigation }) => {
 				</View>
 
 				<Card depth={0}>
-					<TextInput
-						style={[mainStyles.textInput, { flex: 0 }]}
-						placeholder="search"
-						placeholderTextColor={PRIMARY_COLOR}
-						onChangeText={text => setSearchText(text)}
-						defaultValue={searchText}
-					/>
+					<Input placeholder="search" setText={setSearchText} defaultText={searchText} />
 					{
 						shownMeds.map(m => (
 							<MedicationCard med={m} navigation={navigation} updateCartFunction={ChangeMedCart} />

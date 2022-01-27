@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
 	OutlineButtonText: {
 		textAlign: 'center',
 		fontFamily: "Open Sans SemiBold",
-		fontSize: 18,
-		margin: 4,
+		fontSize: 14,
+		margin: 12,
 		marginLeft: 25,
 		marginRight: 25,
 		opacity: 1,
