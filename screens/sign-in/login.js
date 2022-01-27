@@ -9,6 +9,8 @@ import ForgotPasswordScreen from './forgot-password';
 import PrivacyAcceptanceScreen from './privacy-acceptance';
 import { changeStack } from '../../App.js';
 import Dialog, { DialogButton, DialogContent, DialogFooter } from 'react-native-popup-dialog';
+import { PRIMARY_COLOR } from '../../colors'
+import { PrimaryButton } from '../../components/buttons';
 
 const Stack = createNativeStackNavigator();
 
@@ -86,20 +88,18 @@ const LoginMainScreen = ({ navigation }) => {
 			/>
 
 			<View style={{ margin: 20 }}>
-				<BouncyCheckbox text="Keep me Logged in" onPress={(isChecked) => { }} fillColor="#2196F3" textStyle={{
+				<BouncyCheckbox text="Keep me Logged in" onPress={(isChecked) => { }} fillColor={PRIMARY_COLOR} textStyle={{
 					textDecorationLine: "none",
 				}} />
 			</View>
 
 			<View style={{ marginTop: 20, marginBottom: 40 }}>
-				<Button
-					title="Login"
-					onPress={() => {
-						// if it fails, show dialog
-						if (!Login(inputUsername, inputPassword, navigation)) {
-							setDialog(true)
-						}
-					}}
+				<PrimaryButton label="Login" onPress={() => {
+					// if it fails, show dialog
+					if (!Login(inputUsername, inputPassword, navigation)) {
+						setDialog(true)
+					}
+				}}
 				/>
 			</View>
 

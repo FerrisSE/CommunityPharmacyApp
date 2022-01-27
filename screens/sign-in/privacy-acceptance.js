@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { changeStack } from '../../App.js';
+import { PrimaryButton } from '../../components/buttons.js';
 import mainStyles from '../../main-styles';
 
 const PrivacyAcceptanceScreen = ({ navigation }) => {
@@ -17,8 +18,9 @@ const PrivacyAcceptanceScreen = ({ navigation }) => {
 				<TouchableOpacity onPress={() => { navigation.pop() }}>
 					<Text style={mainStyles.textImportant}>Decline</Text>
 				</TouchableOpacity>
-				<Button
-					title="Agree"
+				<PrimaryButton
+					label="Agree"
+					style={{ paddingLeft: 16, paddingRight: 16 }}
 					onPress={() => changeStack('Patient')}
 				/>
 			</View>
