@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		color: WHITE,
 		fontFamily: "Open Sans SemiBold",
-		fontSize: 14,
-		margin: 12,
+		fontSize: 16,
+		margin: 10,
 		opacity: 1,
 	},
 	OutlineButtonTouchable: {
@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
 	OutlineButtonText: {
 		textAlign: 'center',
 		fontFamily: "Open Sans SemiBold",
-		fontSize: 14,
-		margin: 12,
+		fontSize: 16,
+		margin: 10,
 		marginLeft: 25,
 		marginRight: 25,
 		opacity: 1,
