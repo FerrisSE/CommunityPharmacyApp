@@ -46,7 +46,7 @@ const CurrentMedicationScreen = ({ navigation }) => {
 	if (searchText == "")
 		shownMeds = fhirPatient["patient-medications"]
 	else
-		shownMeds = fhirPatient["patient-medications"].filter(m => m.medicationName.includes(searchText))
+		shownMeds = fhirPatient["patient-medications"].filter(m => m.medicationName.toLowerCase().includes(searchText))
 
 
 	if (error)
