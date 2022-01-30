@@ -18,6 +18,9 @@ const SchedulingScreenStack = ({ navigation }) => {
 			<Stack.Screen
 				name="Service Scheduling"
 				component={ServiceScheduling}
+				options={({ route }) => ({
+					headerShown: false
+				})}
 				initialParams={{
 					service: {
 						name: "Test Event"

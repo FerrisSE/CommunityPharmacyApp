@@ -1,8 +1,11 @@
 import React from 'react';
-import { Button, ScrollView, StyleSheet, Text, TextInput, View, SafeAreaView } from 'react-native';
-import { FlatGrid } from 'react-native-super-grid';
+import { ScrollView, View, SafeAreaView } from 'react-native';
+import { WHITE } from '../../../colors';
+import { Card } from '../../../components/cards';
+import { Input } from '../../../components/input';
 import SchedulingButton from '../../../components/scheduling-card-button';
-import mainStyles from '../../../main-styles';
+import { UpcomingEvents } from '../../../components/scheduling-upcoming';
+import { TextSubHeader1, TextSubHeader2 } from '../../../components/text';
 
 const vaccines = [
 	{ name: "Covid-19 Vaccine", icon: "bandage" },
@@ -28,33 +31,32 @@ const SchedulingHomeScreen = ({ navigation }) => {
 	}
 
 	return (
-		<SafeAreaView style={{ flex: 1 }}>
-			<ScrollView style={[SchldStyles.container, { flex: 1 }]}>
-				<Text style={[SchldStyles.title, { marginTop: 40 }]}>Services</Text>
+		<SafeAreaView style={{ backgroundColor: WHITE, flex: 1 }}>
+			<ScrollView style={{ padding: 12, flex: 1 }}>
+				<UpcomingEvents />
 
-				<TextInput
-					style={mainStyles.textInput}
-					placeholder="search"
-					onChangeText={text => setSearchText(text)}
-					defaultValue={searchText}
-				/>
+				<TextSubHeader1 text="Services" style={{ marginTop: 24 }} />
 
-				{searchText.length == 0 &&
-					<View>
-						<Text style={SchldStyles.subtitle}>Vaccines</Text>
-						<RenderServicesGrid items={vaccines} navigation={navigation} />
+				<Card depth={1}>
+					<Input placeholder="Search" setText={setSearchText} defaultText={searchText} />
 
-						<Text style={SchldStyles.subtitle}>Blood Tests</Text>
-						<RenderServicesGrid items={bloodTests} navigation={navigation} />
-					</View>
-				}
+					{searchText.length == 0 &&
+						<View>
+							<TextSubHeader2 text="Vaccines" style={{ marginLeft: 8, marginTop: 16 }} />
+							<RenderServicesGrid items={vaccines} navigation={navigation} />
 
-				{searchText.length != 0 &&
-					<View>
-						<Text style={SchldStyles.subtitle}>Search Results For {searchText}...</Text>
-						<RenderServicesGrid items={searchServices} navigation={navigation} />
-					</View>
-				}
+							<TextSubHeader2 text="Blood Tests" style={{ marginLeft: 8, marginTop: 16 }} />
+							<RenderServicesGrid items={bloodTests} navigation={navigation} />
+						</View>
+					}
+
+					{searchText.length != 0 &&
+						<View>
+							<TextSubHeader2 text={`Search Results For ${searchText}...`} style={{ marginLeft: 8 }} />
+							<RenderServicesGrid items={searchServices} navigation={navigation} />
+						</View>
+					}
+				</Card>
 			</ScrollView>
 		</SafeAreaView>
 	);
@@ -62,43 +64,26 @@ const SchedulingHomeScreen = ({ navigation }) => {
 
 const RenderServicesGrid = ({ items, navigation }) => {
 	return (
-		<FlatGrid
-			itemDimension={240}
-			data={items}
-			style={SchldStyles.gridView}
-			spacing={10}
-			scrollEnabled={false}
-			renderItem={({ item }) => (
-				<SchedulingButton icon={item.icon} label={item.name} onClicked={() => {
+		<View style={{
+			width: '100%',
+			marginTop: 10,
+			flex: 1,
+			flexDirection: 'row',
+			flexWrap: 'wrap',
+			justifyContent: 'flex-start',
+		}}>
+			{items.map(s => (
+				< SchedulingButton icon={s.icon} label={s.name} onClicked={() => {
 					navigation.navigate({
 						name: 'Service Scheduling',
 						params: {
-							service: item
+							service: s
 						}
 					})
 				}} />
-			)}
-		/>
+			))}
+		</View>
 	)
 }
 
 export default SchedulingHomeScreen;
-
-const SchldStyles = StyleSheet.create({
-	gridView: {
-		marginTop: 10,
-		flex: 1,
-	},
-	container: {
-		padding: 12,
-	},
-	title: {
-		fontSize: 32,
-		fontWeight: "600",
-		marginBottom: 16,
-	},
-	subtitle: {
-		fontSize: 24,
-		fontWeight: "600",
-	},
-})

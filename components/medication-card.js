@@ -1,9 +1,11 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { TouchableCard } from "./card.js"
 import pill from "../images/pill.png"
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 import * as Progress from 'react-native-progress'
+import { Card } from "./cards.js";
+import { HIGH_PRIORITY, PRIMARY_COLOR } from "../colors";
+import { TextBody, TextNote, TextSubHeader1 } from "./text";
 
 const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 	let [requestRefill, setRequestRefill] = React.useState(false)
@@ -18,8 +20,8 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 		barColor = '#FFA035';
 
 	return (
-		<TouchableCard
-			onClicked={() => {
+		<TouchableOpacity
+			onPress={() => {
 				navigation.navigate({
 					name: 'Medication',
 					params: {
@@ -27,50 +29,52 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 					}
 				})
 			}}
-			backgroundColor={requestRefill ? "#FFFFFF" : "#F0F1F4"}
+			style={{ margin: 8 }}
 		>
-			<View style={MedCardStyles.row}>
-				<View style={MedCardStyles.imageView}>
-					<Image source={pill} style={MedCardStyles.image} />
-					{precentLeft <= 0.25 &&
-						<Icon name="alert-circle" size={25} style={{ position: "absolute", alignSelf: "flex-end", marginTop: -48 }} color={'#FF3A45'} />
+			<Card depth={2} style={{ padding: 8 }} outlined={requestRefill}>
+				<View style={MedCardStyles.row}>
+					<View style={MedCardStyles.imageView}>
+						<Image source={pill} style={MedCardStyles.image} />
+						{precentLeft <= 0.25 &&
+							<Icon name="alert-circle" size={25} style={{ position: "absolute", alignSelf: "flex-end", marginTop: -48 }} color={HIGH_PRIORITY} />
+						}
+					</View>
+					<View style={MedCardStyles.textStack}>
+						<TextSubHeader1 text={med.medicationName} />
+						<TextBody text={med.drugPurpose} />
+
+						<View style={{ marginTop: 10, marginBottom: 10 }}>
+							<TextBody text={med.instructions} />
+							<TextBody text={`Refills: ${med.currentRefills}/${med.totalRefills}`} />
+						</View>
+
+						<TextNote text="Amount Left:" />
+						<Progress.Bar
+							progress={precentLeft}
+							width={null}
+							height={12}
+							animated={false}
+							color={barColor}
+							unfilledColor={'#E3E5EB'}
+							borderWidth={0}
+						/>
+					</View>
+					{updateCartFunction != null &&
+						<TouchableOpacity
+							style={{
+								height: "100%",
+								alignContent: "flex-start",
+							}}
+							onPress={() => {
+								setRequestRefill(!requestRefill);
+								updateCartFunction(med.medicationName, !requestRefill);
+							}}>
+							<Icon name={requestRefill ? "plus-circle" : "plus-circle-outline"} size={25} color={PRIMARY_COLOR} />
+						</TouchableOpacity>
 					}
 				</View>
-				<View style={MedCardStyles.textStack}>
-					<Text style={MedCardStyles.textBrandName}>{med.medicationName}</Text>
-					<Text style={MedCardStyles.textPurpose}>{med.drugPurpose}</Text>
-
-					<View style={{ marginTop: 10, marginBottom: 10 }}>
-						<Text>{med.instructions}</Text>
-						<Text>Refills: {med.currentRefills}/{med.totalRefills}</Text>
-					</View>
-
-					<Text>Amount Left:</Text>
-					<Progress.Bar
-						progress={precentLeft}
-						width={null}
-						height={12}
-						animated={false}
-						color={barColor}
-						unfilledColor={'#E3E5EB'}
-						borderWidth={0}
-					/>
-				</View>
-				{updateCartFunction != null &&
-					<TouchableOpacity
-						style={{
-							height: "100%",
-							alignContent: "flex-start",
-						}}
-						onPress={() => {
-							setRequestRefill(!requestRefill);
-							updateCartFunction(med.medicationName, !requestRefill);
-						}}>
-						<Icon name={requestRefill ? "plus-circle" : "plus-circle-outline"} size={25} />
-					</TouchableOpacity>
-				}
-			</View>
-		</TouchableCard>
+			</Card>
+		</TouchableOpacity>
 	);
 }
 
@@ -104,12 +108,4 @@ const MedCardStyles = StyleSheet.create({
 		width: '60%',
 		height: '60%',
 	},
-	textBrandName: {
-		fontSize: 20,
-		fontWeight: "700",
-	},
-	textPurpose: {
-		fontSize: 14,
-		fontWeight: "700",
-	}
 })

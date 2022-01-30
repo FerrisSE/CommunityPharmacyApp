@@ -1,21 +1,21 @@
 import React from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { SafeAreaView, Text, View } from 'react-native';
-import mainStyles from '../../../main-styles';
+import { View } from 'react-native';
 import YoutubePlayer from "react-native-youtube-iframe";
 import { TextBody, TextHeader2, TextHeader3, TextNote, TextSubHeader2 } from '../../../components/text';
 import { Card } from '../../../components/cards';
 import { CardButton } from '../../../components/buttons';
-import { WHITE } from '../../../colors';
+import { SECONDARY_COLOR_TRANSPARENT, WHITE } from '../../../colors';
 
 const SpecificMedicationScreen = ({ navigation, route }) => {
 	return (
-		<ScrollView style={{ backgroundColor: WHITE, flex: 1 }}>
-			<View style={[mainStyles.container, { flex: 1 }]}>
-				<View style={{ justifyContent: 'center', alignItems: 'center' }}>
-					<Icon name="pill" size={100} />
-				</View>
+		<ScrollView style={{ backgroundColor: SECONDARY_COLOR_TRANSPARENT, flex: 1 }}>
+			<View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+				<Icon name="pill" size={100} color={WHITE} />
+			</View>
+
+			<View style={{ backgroundColor: WHITE, borderTopLeftRadius: 20, borderTopRightRadius: 20, flex: 1, padding: 20 }}>
 				<TextHeader2 text={route.params.med.medicationName} />
 				<TextBody text={route.params.med.drugPurpose} />
 
@@ -55,10 +55,9 @@ const SpecificMedicationScreen = ({ navigation, route }) => {
 				</View>
 
 				<Card depth={1} >
-					<CardButton depth={2} label="Refill" />
-					<CardButton depth={2} label="Information" />
 					<CardButton depth={2} label="Side Effects" />
-					<CardButton depth={2} label="Reminders" />
+					<CardButton depth={2} label="Information" />
+					<CardButton depth={2} label="FAQ" />
 				</Card>
 
 				<View style={{ marginTop: 16, flex: 0 }}>
@@ -73,8 +72,8 @@ const SpecificMedicationScreen = ({ navigation, route }) => {
 						</View>
 					</Card>
 				</View>
-
 			</View>
+
 		</ScrollView>
 	);
 };

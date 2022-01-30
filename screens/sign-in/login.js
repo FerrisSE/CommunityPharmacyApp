@@ -1,14 +1,16 @@
 import React from 'react';
-import { Button, Pressable, SafeAreaView, Text, View } from 'react-native';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { SafeAreaView, View } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import mainStyles from '../../main-styles';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import RegisterAccountScreen from './register-account';
 import ForgotPasswordScreen from './forgot-password';
 import PrivacyAcceptanceScreen from './privacy-acceptance';
 import { changeStack } from '../../App.js';
 import Dialog, { DialogButton, DialogContent, DialogFooter } from 'react-native-popup-dialog';
+import { PRIMARY_COLOR } from '../../colors'
+import { PrimaryButton } from '../../components/buttons';
+import { Input } from '../../components/input';
+import { TextHeader1, TextSubHeader1, TextSubHeader2 } from '../../components/text';
 
 const Stack = createNativeStackNavigator();
 
@@ -63,53 +65,29 @@ const LoginMainScreen = ({ navigation }) => {
 	let [inputPassword, setInputPassword] = React.useState('')
 
 	return (
-		<SafeAreaView style={mainStyles.container}>
-			<Text style={[mainStyles.title, { marginTop: 40 }]}>Login</Text>
+		<SafeAreaView style={{ margin: 16 }}>
+			<TextHeader1 text="Login" style={{ marginTop: 40, marginBottom: 40 }} />
 
-			<View style={{ marginBottom: 40 }} />
+			<TextSubHeader1 text="Username" />
+			<Input placeholder="username" setText={setInputUsername} defaultValue={inputUsername} />
 
-			<Text style={mainStyles.subheader}>Username</Text>
-			<TextInput
-				style={mainStyles.textInput}
-				placeholder="username"
-				onChangeText={text => setInputUsername(text)}
-				defaultValue={inputUsername}
-			/>
-
-			<Text style={mainStyles.subheader}>Password</Text>
-			<TextInput
-				secureTextEntry={true}
-				style={mainStyles.textInput}
-				placeholder="password"
-				onChangeText={text => setInputPassword(text)}
-				defaultValue={inputPassword}
-			/>
+			<TextSubHeader1 text="Password" />
+			<Input placeholder="password" setText={setInputPassword} defaultValue={inputPassword} hideText={true} />
 
 			<View style={{ margin: 20 }}>
-				<BouncyCheckbox text="Keep me Logged in" onPress={(isChecked) => { }} fillColor="#2196F3" textStyle={{
+				<BouncyCheckbox text="Keep me Logged in" onPress={(isChecked) => { }} fillColor={PRIMARY_COLOR} textStyle={{
 					textDecorationLine: "none",
 				}} />
 			</View>
 
 			<View style={{ marginTop: 20, marginBottom: 40 }}>
-				<Button
-					title="Login"
-					onPress={() => {
-						// if it fails, show dialog
-						if (!Login(inputUsername, inputPassword, navigation)) {
-							setDialog(true)
-						}
-					}}
+				<PrimaryButton label="Login" onPress={() => {
+					// if it fails, show dialog
+					if (!Login(inputUsername, inputPassword, navigation)) {
+						setDialog(true)
+					}
+				}}
 				/>
-			</View>
-
-			<View style={mainStyles.rowFull}>
-				<Pressable style={mainStyles.center} onPress={() => { navigation.push("Register") }}>
-					<Text style={mainStyles.textImportant}>Register</Text>
-				</Pressable>
-				<Pressable style={mainStyles.center} onPress={() => { navigation.push("Forgot Password") }}>
-					<Text style={mainStyles.textImportant}>Forgot your Password?</Text>
-				</Pressable>
 			</View>
 
 			<Dialog
@@ -127,7 +105,7 @@ const LoginMainScreen = ({ navigation }) => {
 				}
 			>
 				<DialogContent>
-					<Text style={[mainStyles.textImportant, { padding: 8, fontSize: 16 }]}>Invalid Username or Password!</Text>
+					<TextSubHeader2 text="Invalid Username or Password!" style={{ margin: 8 }} />
 				</DialogContent>
 			</Dialog>
 		</SafeAreaView>

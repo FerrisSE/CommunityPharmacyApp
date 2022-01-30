@@ -19,6 +19,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-bouncy-checkbox": "^2.1.7",
     "react-native-bouncy-checkbox-group": "^0.1.0",
+    "react-native-calendar-strip": "^2.2.5",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-popup-dialog": "^0.18.3",
     "react-native-progress": "^5.0.0",

@@ -4,6 +4,7 @@ import MedicationScreenStack from "./medication/medication-screen-stack";
 import { View } from "react-native";
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 import SchedulingScreenStack from "./scheduling/scheduling-screen-stack";
+import { GRAY_5, PRIMARY_COLOR, WHITE } from "../../colors";
 
 const Tab = createBottomTabNavigator()
 
@@ -13,6 +14,9 @@ const PatientScreenStack = ({ navigation }) => {
 			screenOptions={({ route }) => ({
 				header: () => { <View></View> },
 				tabBarShowLabel: false,
+				tabBarActiveTintColor: WHITE,
+				tabBarInactiveTintColor: '#A8A8CB',
+				tabBarStyle: { backgroundColor: PRIMARY_COLOR },
 				tabBarIcon: ({ focused, color, size }) => {
 					let iconName;
 

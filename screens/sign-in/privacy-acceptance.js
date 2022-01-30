@@ -1,26 +1,29 @@
 import React from 'react';
-import { Button, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { changeStack } from '../../App.js';
-import mainStyles from '../../main-styles';
+import { PRIMARY_COLOR } from '../../colors.js';
+import { OutlineButton, PrimaryButton } from '../../components/buttons.js';
+import { TextHeader1, TextSubHeader2 } from '../../components/text.js';
 
 const PrivacyAcceptanceScreen = ({ navigation }) => {
 	return (
 		<SafeAreaView style={{ flex: 1, padding: 20, marginTop: 20 }}>
-			<Text style={mainStyles.title}>Privacy Consent Form</Text>
-			<Text style={[mainStyles.textImportant, { paddingBottom: 20, paddingTop: 20 }]}>Before being able to use our app, we need consent to use your medical information.</Text>
+			<TextHeader1 text="Privacy Consent Form" />
+			<TextSubHeader2 text="Before being able to use our app, we need consent to use your medical information." style={{ paddingBottom: 20, paddingTop: 20 }} />
 			<View style={{ flex: 10, paddingBottom: 20 }}>
 				<ScrollView style={{ padding: 20 }}>
 					<Text>{privacyAgreementText}</Text>
 				</ScrollView>
 			</View>
-			<View style={mainStyles.rowFull}>
-				<TouchableOpacity onPress={() => { navigation.pop() }}>
-					<Text style={mainStyles.textImportant}>Decline</Text>
-				</TouchableOpacity>
-				<Button
-					title="Agree"
-					onPress={() => changeStack('Patient')}
-				/>
+			<View style={{
+				margin: 10,
+				flex: 1,
+				flexDirection: "row",
+				justifyContent: "space-around",
+				alignItems: "center"
+			}}>
+				<OutlineButton label="Decline" onPress={() => navigation.pop()} color={PRIMARY_COLOR} />
+				<PrimaryButton label="Agree" style={{ paddingLeft: 24, paddingRight: 24 }} onPress={() => changeStack('Patient')} />
 			</View>
 
 		</SafeAreaView>
