@@ -3,10 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import ProfileScreen from './screens/patient/profile/profile';
-import LoginScreen from './screens/sign-in/login';
 import SearchScreen from './screens/pharmacist/search-screen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PatientScreenStack from './screens/patient/patient-screen-stack';
+import { LoginStack } from './screens/sign-in/login-stack';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -34,7 +34,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen
           name="Login"
-          component={LoginScreen}
+          component={LoginStack}
           options={({ route }) => ({
             headerShown: false
           })}
@@ -52,25 +52,6 @@ export default function App() {
           options={({ route }) => ({
             headerShown: false
           })}
-          /* just hardcoding patient user to be the following */
-          initialParams={{
-            patient: {
-              "givenName": "Joe",
-              "familyName": "Bob",
-              "phoneNumber": "123456789",
-              "gender": "male",
-              "birthdate": "2020-09-14",
-              "addressStreet": "nothing",
-              "addressZipcode": "456465",
-              "addressCity": "nothing",
-              "addressState": "nothing",
-              "status": true,
-              "consentTimeStamp": "2020-09-14",
-              "conditions": null,
-              "medications": null,
-              "allergies": null
-            }
-          }}
         />
       </Stack.Navigator>
 

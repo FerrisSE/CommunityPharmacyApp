@@ -1,10 +1,6 @@
 import React from 'react';
 import { SafeAreaView, View } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import RegisterAccountScreen from './register-account';
-import ForgotPasswordScreen from './forgot-password';
-import PrivacyAcceptanceScreen from './privacy-acceptance';
 import Dialog, { DialogButton, DialogContent, DialogFooter } from 'react-native-popup-dialog';
 import { PRIMARY_COLOR } from '../../colors'
 import { PrimaryButton } from '../../components/buttons';
@@ -12,40 +8,7 @@ import { Input } from '../../components/input';
 import { TextHeader1, TextSubHeader1, TextSubHeader2 } from '../../components/text';
 import axios from 'axios';
 
-const Stack = createNativeStackNavigator();
-
-const LoginScreen = ({ navigation }) => {
-	return (
-		<Stack.Navigator>
-			<Stack.Screen
-				name="Main"
-				component={LoginMainScreen}
-				options={({ route }) => ({
-					headerShown: false
-				})}
-			/>
-			<Stack.Screen
-				name="Register"
-				component={RegisterAccountScreen}
-			/>
-			<Stack.Screen
-				name="Forgot Password"
-				component={ForgotPasswordScreen}
-			/>
-			<Stack.Screen
-				name="Privacy Agreement"
-				component={PrivacyAcceptanceScreen}
-				options={({ route }) => ({
-					headerShown: false
-				})}
-			/>
-		</Stack.Navigator>
-	);
-};
-
-export default LoginScreen;
-
-const LoginMainScreen = ({ navigation }) => {
+export const LoginScreen = ({ navigation }) => {
 	let [showDialog, setDialog] = React.useState(false)
 	let [inputUsername, setInputUsername] = React.useState('')
 	let [inputPassword, setInputPassword] = React.useState('')
@@ -64,7 +27,7 @@ const LoginMainScreen = ({ navigation }) => {
 
 		axios(config)
 			.then(function (response) {
-				console.log(JSON.stringify(response.data));
+				console.log(response);
 				navigation.push('Privacy Agreement');
 			})
 			.catch(function (error) {
