@@ -5,12 +5,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import RegisterAccountScreen from './register-account';
 import ForgotPasswordScreen from './forgot-password';
 import PrivacyAcceptanceScreen from './privacy-acceptance';
-import { changeStack } from '../../App.js';
 import Dialog, { DialogButton, DialogContent, DialogFooter } from 'react-native-popup-dialog';
 import { PRIMARY_COLOR } from '../../colors'
 import { PrimaryButton } from '../../components/buttons';
 import { Input } from '../../components/input';
 import { TextHeader1, TextSubHeader1, TextSubHeader2 } from '../../components/text';
+import axios from 'axios';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,24 +45,35 @@ const LoginScreen = ({ navigation }) => {
 
 export default LoginScreen;
 
-// hardcoded users for patient and pharmacist
-const Login = (username, password, navigation) => {
-	if (username == "pharma1" && password == "password123") {
-		changeStack('Pharmacist')
-		return true
-	}
-	else if (username == "patient1" && password == "password123") {
-		navigation.push('Privacy Agreement')
-		return true
-	}
-
-	return false
-}
-
 const LoginMainScreen = ({ navigation }) => {
 	let [showDialog, setDialog] = React.useState(false)
 	let [inputUsername, setInputUsername] = React.useState('')
 	let [inputPassword, setInputPassword] = React.useState('')
+
+	let Login = () => {
+		let success = false;
+
+		var config = {
+			method: 'post',
+			url: 'http://localhost:8080/api/login',
+			auth: {
+				username: inputUsername,
+				password: inputPassword,
+			}
+		};
+
+		axios(config)
+			.then(function (response) {
+				console.log(JSON.stringify(response.data));
+				navigation.push('Privacy Agreement');
+			})
+			.catch(function (error) {
+				console.log(error);
+				setDialog(true);
+			});
+
+		return success;
+	};
 
 	return (
 		<SafeAreaView style={{ margin: 16 }}>
@@ -81,12 +92,7 @@ const LoginMainScreen = ({ navigation }) => {
 			</View>
 
 			<View style={{ marginTop: 20, marginBottom: 40 }}>
-				<PrimaryButton label="Login" onPress={() => {
-					// if it fails, show dialog
-					if (!Login(inputUsername, inputPassword, navigation)) {
-						setDialog(true)
-					}
-				}}
+				<PrimaryButton label="Login" onPress={Login}
 				/>
 			</View>
 
