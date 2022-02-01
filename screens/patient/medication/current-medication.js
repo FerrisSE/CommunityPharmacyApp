@@ -6,6 +6,8 @@ import { OutlineButton } from '../../../components/buttons';
 import MedicationCard from '../../../components/medication-card';
 import { PRIMARY_COLOR, HIGH_PRIORITY } from '../../../colors';
 import { Input } from '../../../components/input';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const CurrentMedicationScreen = ({ navigation }) => {
 	let [fhirPatient, setFhirPatient] = React.useState('')
@@ -13,6 +15,8 @@ const CurrentMedicationScreen = ({ navigation }) => {
 	let [error, setError] = React.useState(false)
 	let [searchText, setSearchText] = React.useState('')
 	let [refillCart, setRefillCart] = React.useState([])
+
+	const userToken = useSelector((state) => state.userToken.value);
 
 	const ChangeMedCart = (id, add) => {
 		if (add) // adding med to cart
@@ -22,16 +26,21 @@ const CurrentMedicationScreen = ({ navigation }) => {
 	}
 
 	useEffect(() => {
-		fetch('http://localhost:8080/api/patient/medications/0', {
-			"method": "GET",
-			"headers": {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-		}).then(response => response.json())
-			.then(response => setFhirPatient(response))
-			.catch(err => setError(err))
-			.finally(() => setLoading(false))
+		var config = {
+			method: 'get',
+			url: 'http://localhost:8080/api/patient/medications/0',
+			headers: {
+				Authorization: userToken,
+			}
+		};
+
+		axios(config)
+			.then(response => setFhirPatient(response.data))
+			.catch(err => {
+				console.error(err);
+				setError(true);
+			})
+			.finally(() => setLoading(false));
 	}, []);
 
 	const order = () => navigation.navigate({

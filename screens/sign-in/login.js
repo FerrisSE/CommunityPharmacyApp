@@ -7,35 +7,36 @@ import { PrimaryButton } from '../../components/buttons';
 import { Input } from '../../components/input';
 import { TextHeader1, TextSubHeader1, TextSubHeader2 } from '../../components/text';
 import axios from 'axios';
+import { setToken } from '../../redux/slices/user-token-slice';
+import { useDispatch } from 'react-redux';
 
 export const LoginScreen = ({ navigation }) => {
 	let [showDialog, setDialog] = React.useState(false)
 	let [inputUsername, setInputUsername] = React.useState('')
 	let [inputPassword, setInputPassword] = React.useState('')
 
+	const dispatch = useDispatch();
+
 	let Login = () => {
-		let success = false;
+		let token = 'Basic ' + Buffer.from(`${inputUsername}:${inputPassword}`).toString('base64');
 
 		var config = {
 			method: 'post',
 			url: 'http://localhost:8080/api/login',
-			auth: {
-				username: inputUsername,
-				password: inputPassword,
+			headers: {
+				Authorization: token
 			}
 		};
 
 		axios(config)
-			.then(function (response) {
-				console.log(response);
+			.then(_ => {
+				dispatch(setToken(token));
 				navigation.push('Privacy Agreement');
 			})
-			.catch(function (error) {
+			.catch(error => {
 				console.log(error);
 				setDialog(true);
 			});
-
-		return success;
 	};
 
 	return (
