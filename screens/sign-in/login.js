@@ -9,6 +9,7 @@ import { TextHeader1, TextNote, TextSubHeader1, TextSubHeader2 } from '../../com
 import axios from 'axios';
 import { setToken } from '../../redux/slices/user-token-slice';
 import { useDispatch } from 'react-redux';
+import { clearData } from '../../redux/slices/register-slice';
 
 export const LoginScreen = ({ navigation }) => {
 	let [showDialog, setDialog] = React.useState(false)
@@ -39,7 +40,10 @@ export const LoginScreen = ({ navigation }) => {
 			});
 	};
 
-	let goToRegister = () => navigation.push('Register Personal Info');
+	let goToRegister = () => {
+		dispatch(clearData());
+		navigation.push('Register Personal Info');
+	}
 
 	return (
 		<SafeAreaView style={{ margin: 16 }}>
