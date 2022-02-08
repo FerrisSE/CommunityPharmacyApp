@@ -1,11 +1,11 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { changeStack } from '../../App.js';
 import { PRIMARY_COLOR } from '../../colors.js';
 import { OutlineButton, PrimaryButton } from '../../components/buttons.js';
 import { TextHeader1, TextSubHeader2 } from '../../components/text.js';
 
-const PrivacyAcceptanceScreen = ({ navigation }) => {
+export const RegisterConsentFormScreen = ({ navigation }) => {
 	return (
 		<SafeAreaView style={{ flex: 1, padding: 20, marginTop: 20 }}>
 			<TextHeader1 text="Privacy Consent Form" />
@@ -23,14 +23,12 @@ const PrivacyAcceptanceScreen = ({ navigation }) => {
 				alignItems: "center"
 			}}>
 				<OutlineButton label="Decline" onPress={() => navigation.pop()} color={PRIMARY_COLOR} />
-				<PrimaryButton label="Agree" style={{ paddingLeft: 24, paddingRight: 24 }} onPress={() => changeStack('Patient')} />
+				<PrimaryButton label="Agree" style={{ paddingLeft: 24, paddingRight: 24 }} onPress={() => navigation.popToTop()} />
 			</View>
 
 		</SafeAreaView>
 	);
 };
-
-export default PrivacyAcceptanceScreen;
 
 const privacyAgreementText =
 	`NOTICE OF NONDISCRIMINATION:

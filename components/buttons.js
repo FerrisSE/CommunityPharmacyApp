@@ -14,6 +14,9 @@ export const PrimaryButton = ({ label, onPress, icon, iconSide, style }) => {
 }
 
 export const OutlineButton = ({ label, onPress, icon, iconSide, color, style }) => {
+	if (color == null)
+		color = PRIMARY_COLOR;
+
 	return (
 		<TouchableOpacity style={[styles.OutlineButtonTouchable, { borderColor: color }, { ...style }]} onPress={onPress ? () => onPress() : () => { }}>
 			{icon && iconSide == "left" && <Icon name={icon} size={25} color={color} />}
