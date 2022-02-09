@@ -1,11 +1,36 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
-import { changeStack } from '../../App.js';
 import { PRIMARY_COLOR } from '../../colors.js';
 import { OutlineButton, PrimaryButton } from '../../components/buttons.js';
 import { TextHeader1, TextSubHeader2 } from '../../components/text.js';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 export const RegisterConsentFormScreen = ({ navigation }) => {
+
+	const registerData = useSelector((state) => state.register);
+
+	let Register = () => {
+		let data = new FormData();
+		data.append("firstName", registerData.firstName);
+		data.append("lastName", registerData.lastName);
+		data.append("email", registerData.email);
+		data.append("password", registerData.password);
+
+		let config = {
+			method: 'post',
+			url: 'http://localhost:8080/api/register',
+		};
+
+		axios(config)
+			.then(_ => {
+				navigation.popToTop();
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	};
+
 	return (
 		<SafeAreaView style={{ flex: 1, padding: 20, marginTop: 20 }}>
 			<TextHeader1 text="Privacy Consent Form" />
@@ -23,7 +48,7 @@ export const RegisterConsentFormScreen = ({ navigation }) => {
 				alignItems: "center"
 			}}>
 				<OutlineButton label="Decline" onPress={() => navigation.pop()} color={PRIMARY_COLOR} />
-				<PrimaryButton label="Agree" style={{ paddingLeft: 24, paddingRight: 24 }} onPress={() => navigation.popToTop()} />
+				<PrimaryButton label="Agree" style={{ paddingLeft: 24, paddingRight: 24 }} onPress={Register} />
 			</View>
 
 		</SafeAreaView>
