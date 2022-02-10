@@ -73,8 +73,8 @@ const CurrentMedicationScreen = ({ navigation }) => {
 
 
 	return (
-		<SafeAreaView style={{ flex: 1, margin: 8 }}>
-			<ScrollView>
+		<ScrollView>
+			<SafeAreaView style={{ flex: 1, margin: 8 }}>
 				<View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', padding: 8, paddingTop: 16 }}>
 					<TextSubHeader1 text="Current Medications" style={{ marginBottom: 4 }} />
 					{refillCart.length != 0 && <OutlineButton label="Order" onPress={order} color={PRIMARY_COLOR} />}
@@ -88,8 +88,8 @@ const CurrentMedicationScreen = ({ navigation }) => {
 						))
 					}
 				</Card>
-			</ScrollView>
-		</SafeAreaView>
+			</SafeAreaView>
+		</ScrollView>
 
 	);
 };

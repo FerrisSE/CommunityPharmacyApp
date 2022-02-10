@@ -31,8 +31,8 @@ const SchedulingHomeScreen = ({ navigation }) => {
 	}
 
 	return (
-		<SafeAreaView style={{ backgroundColor: WHITE, flex: 1 }}>
-			<ScrollView style={{ padding: 12, flex: 1 }}>
+		<ScrollView style={{ backgroundColor: WHITE, flex: 1 }}>
+			<SafeAreaView style={{ flex: 1, padding: 12 }}>
 				<UpcomingEvents />
 
 				<TextSubHeader1 text="Services" style={{ marginTop: 24 }} />
@@ -57,8 +57,8 @@ const SchedulingHomeScreen = ({ navigation }) => {
 						</View>
 					}
 				</Card>
-			</ScrollView>
-		</SafeAreaView>
+			</SafeAreaView>
+		</ScrollView>
 	);
 };
 

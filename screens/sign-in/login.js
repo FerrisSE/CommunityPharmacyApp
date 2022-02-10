@@ -10,6 +10,7 @@ import axios from 'axios';
 import { setToken } from '../../redux/slices/user-token-slice';
 import { useDispatch } from 'react-redux';
 import { clearData } from '../../redux/slices/register-slice';
+import { changeStack } from '../../App';
 
 export const LoginScreen = ({ navigation }) => {
 	let [showDialog, setDialog] = React.useState(false)
