@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import pill from "../images/pill.png"
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
@@ -6,9 +6,15 @@ import * as Progress from 'react-native-progress'
 import { Card } from "./cards.js";
 import { HIGH_PRIORITY, PRIMARY_COLOR } from "../colors";
 import { TextBody, TextNote, TextSubHeader1 } from "./text";
+import { useSelector } from "react-redux";
 
 const MedicationCard = ({ navigation, med, updateCartFunction }) => {
-	let [requestRefill, setRequestRefill] = React.useState(false)
+	const cart = useSelector((state) => state.cart.meds);
+	let [requestRefill, setRequestRefill] = React.useState(false);
+
+	useEffect(() => {
+		setRequestRefill(cart.some(m => m.medicationName == med.medicationName));
+	})
 
 	let precentLeft = med.remainingQuantity / med.totalQuantity;
 
@@ -67,7 +73,7 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 							}}
 							onPress={() => {
 								setRequestRefill(!requestRefill);
-								updateCartFunction(med.medicationName, !requestRefill);
+								updateCartFunction(med, !requestRefill);
 							}}>
 							<Icon name={requestRefill ? "plus-circle" : "plus-circle-outline"} size={25} color={PRIMARY_COLOR} />
 						</TouchableOpacity>
