@@ -11,15 +11,15 @@ export const RegisterConsentFormScreen = ({ navigation }) => {
 	const registerData = useSelector((state) => state.register);
 
 	let Register = () => {
-		let data = new FormData();
-		data.append("firstName", registerData.firstName);
-		data.append("lastName", registerData.lastName);
-		data.append("email", registerData.email);
-		data.append("password", registerData.password);
-
 		let config = {
 			method: 'post',
 			url: 'http://localhost:8080/api/register',
+			data: {
+				firstName: registerData.firstName,
+				lastName: registerData.lastName,
+				email: registerData.email,
+				password: registerData.password,
+			},
 		};
 
 		axios(config)
