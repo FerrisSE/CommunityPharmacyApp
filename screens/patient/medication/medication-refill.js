@@ -6,6 +6,7 @@ import { OutlineButton, PrimaryButton } from '../../../components/buttons';
 import { TextSubHeader1 } from '../../../components/text';
 import { PRIMARY_COLOR } from '../../../colors';
 import { Card } from '../../../components/cards';
+import { useSelector } from 'react-redux';
 
 const DeliverOptions = [
 	{
@@ -29,13 +30,15 @@ const DeliverOptions = [
 ]
 
 const MedicationRefillScreen = ({ navigation, route }) => {
+	const cart = useSelector((state) => state.cart.meds);
+
 	return (
-		<SafeAreaView style={{ margin: 16, flex: 1 }}>
-			<ScrollView style={{ flex: 1 }}>
+		<ScrollView style={{ flex: 1 }}>
+			<SafeAreaView style={{ margin: 16, flex: 1 }}>
 				<Card depth={1}>
 					<TextSubHeader1 text="Shopping Cart" style={{ marginLeft: 12, marginTop: 8 }} />
 					<FlatList
-						data={route.params.meds}
+						data={cart}
 						renderItem={(med) => <MedicationCard med={med.item} navigation={navigation} />}
 						keyExtractor={item => item.display}
 					/>
@@ -50,8 +53,8 @@ const MedicationRefillScreen = ({ navigation, route }) => {
 					<PrimaryButton label="Confirm Order" style={{ margin: 6 }} />
 					<OutlineButton label="Cancel Order" style={{ margin: 6 }} color={PRIMARY_COLOR} />
 				</View>
-			</ScrollView>
-		</SafeAreaView>
+			</SafeAreaView>
+		</ScrollView>
 	);
 };
 

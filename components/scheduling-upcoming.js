@@ -1,27 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card } from "./cards";
-import { TextHeader3, TextNote, TextSubHeader2 } from "./text";
-import { OutlineButton } from "./buttons";
-import { HIGH_PRIORITY } from "../colors";
-import { View } from "react-native";
+import { TextSubHeader2 } from "./text";
+import { TouchableOpacity, View } from "react-native";
+
+const DefaultCountShown = 2;
 
 export const UpcomingEvents = ({ events }) => {
-	return (
-		<Card depth={1} color='priority'>
-			<View style={{ margin: 4 }}>
-				<TextHeader3 text="Upcoming Events" style={{ marginLeft: 12, marginBottom: 12 }} />
+	let [expanded, setExpanded] = useState(false);
 
-				<TextSubHeader2 text="Covid-19 Vaccine" style={{ marginLeft: 12 }} />
-				<TextNote text="Pfizer Vaccine, First dose" style={{ marginLeft: 12, marginBottom: 6 }} />
-				<Card depth={2} color='priority'>
-					<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', margin: 8 }}>
-						<View>
-							<TextSubHeader2 text="Thu. Oct 15" />
-							<TextSubHeader2 text="9:45am" />
-						</View>
-						<OutlineButton label="Reschedule" color={HIGH_PRIORITY} />
-					</View>
-				</Card>
+	let shownEvents = events.slice(0, expanded ? events.length : DefaultCountShown);
+
+	return (
+		<Card depth={1} color='secondary'>
+			<View>
+
+				{ // show list of events
+					shownEvents.map(e =>
+						<Card depth={2} color='secondary' style={{ margin: 4 }}>
+							<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', margin: 8 }}>
+								<View>
+									<TextSubHeader2 text={e.date} />
+									<TextSubHeader2 text={e.time} />
+								</View>
+								<TextSubHeader2 text={e.name} />
+							</View>
+						</Card>
+					)
+				}
+
+				{ // show either collapse or expand button
+					expanded ?
+						<TouchableOpacity style={{ margin: 4 }} onPress={() => setExpanded(false)}>
+							<Card depth={2} color='secondary'>
+								<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', margin: 8 }}>
+									<TextSubHeader2 text="Close List" />
+								</View>
+							</Card>
+						</TouchableOpacity>
+						:
+						<TouchableOpacity style={{ margin: 4 }} onPress={() => setExpanded(true)}>
+							<Card depth={2} color='secondary'>
+								<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', margin: 8 }}>
+									<TextSubHeader2 text={`View All ${events.length} Appointments`} />
+								</View>
+							</Card>
+						</TouchableOpacity>
+				}
 			</View>
 		</Card>
 	)

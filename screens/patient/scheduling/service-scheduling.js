@@ -66,19 +66,24 @@ const ServiceScheduling = ({ navigation, route }) => {
 
 				<View style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: WHITE, flex: 1, alignItems: 'center' }}>
 					<CalendarStrip
-						style={{ width: "90%", height: 150, paddingTop: 32, paddingBottom: 32 }}
+						style={{ width: "90%", paddingTop: 32, paddingBottom: 32 }}
 						calendarHeaderStyle={{ fontFamily: "Open Sans SemiBold", fontSize: 24 }}
-						highlightDateContainerStyle={{ backgroundColor: PRIMARY_COLOR, borderRadius: 16, padding: 8 }}
+						scrollable={true}
+						calendarHeaderContainerStyle={{ padding: 4 }}
+						highlightDateContainerStyle={{ backgroundColor: PRIMARY_COLOR, borderRadius: 16, padding: 4 }}
 						highlightDateNumberStyle={{ color: WHITE }}
 						highlightDateNameStyle={{ color: WHITE }}
-						dayContainerStyle={{ backgroundColor: PRIMARY_COLOR_TRANSPARENT, borderRadius: 16, padding: 8 }}
+						dayContainerStyle={{ backgroundColor: PRIMARY_COLOR_TRANSPARENT, borderRadius: 16, padding: 4 }}
 						dateNameStyle={{ color: PRIMARY_COLOR }}
 						dateNumberStyle={{ color: PRIMARY_COLOR }}
 					/>
 
 					<TimePicker title="Available Appointments" subtitle="location name" times={times} activeId={pickedId} setActive={setPickedId} style={{ marginTop: 24, marginBottom: 24, width: '90%', flex: 1 }} />
 
-					<PrimaryButton label="CONFIRM APPOINTMENT" style={{ width: '75%', marginTop: 32, marginBottom: 32 }} />
+					<PrimaryButton
+						label="CONFIRM APPOINTMENT"
+						style={{ width: '75%', marginTop: 32, marginBottom: 32 }}
+						onPress={() => navigation.goBack()} />
 				</View>
 			</SafeAreaView>
 		</View>

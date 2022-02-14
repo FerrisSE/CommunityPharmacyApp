@@ -5,7 +5,7 @@ import { Card } from '../../../components/cards';
 import { Input } from '../../../components/input';
 import SchedulingButton from '../../../components/scheduling-card-button';
 import { UpcomingEvents } from '../../../components/scheduling-upcoming';
-import { TextSubHeader1, TextSubHeader2 } from '../../../components/text';
+import { TextHeader3, TextSubHeader1, TextSubHeader2 } from '../../../components/text';
 
 const vaccines = [
 	{ name: "Covid-19 Vaccine", icon: "bandage" },
@@ -17,6 +17,13 @@ const bloodTests = [
 	{ name: "AC-1 Test", icon: "water-outline" },
 	{ name: "Whole Blood Glucose", icon: "water-outline" },
 	{ name: "Hemoglobin Test", icon: "water-outline" }
+]
+
+const events = [
+	{ name: "Covid-19 Vaccine", date: "Thu. Oct 15", "time": "9:45am" },
+	{ name: "Flu Vaccine", date: "Fri. Oct 16", "time": "10:00am" },
+	{ name: "Flu Vaccine 2", date: "Fri. Oct 16", "time": "10:00am" },
+	{ name: "Flu Vaccine 3", date: "Fri. Oct 16", "time": "10:00am" },
 ]
 
 const SchedulingHomeScreen = ({ navigation }) => {
@@ -31,9 +38,10 @@ const SchedulingHomeScreen = ({ navigation }) => {
 	}
 
 	return (
-		<SafeAreaView style={{ backgroundColor: WHITE, flex: 1 }}>
-			<ScrollView style={{ padding: 12, flex: 1 }}>
-				<UpcomingEvents />
+		<ScrollView style={{ backgroundColor: WHITE, flex: 1 }}>
+			<SafeAreaView style={{ flex: 1, padding: 12 }}>
+				<TextHeader3 text="Upcoming Events" style={{ marginLeft: 12, marginBottom: 12 }} />
+				<UpcomingEvents events={events} />
 
 				<TextSubHeader1 text="Services" style={{ marginTop: 24 }} />
 
@@ -57,8 +65,8 @@ const SchedulingHomeScreen = ({ navigation }) => {
 						</View>
 					}
 				</Card>
-			</ScrollView>
-		</SafeAreaView>
+			</SafeAreaView>
+		</ScrollView>
 	);
 };
 

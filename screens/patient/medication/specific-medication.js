@@ -5,10 +5,31 @@ import { View } from 'react-native';
 import YoutubePlayer from "react-native-youtube-iframe";
 import { TextBody, TextHeader2, TextHeader3, TextNote, TextSubHeader2 } from '../../../components/text';
 import { Card } from '../../../components/cards';
-import { CardButton } from '../../../components/buttons';
+import { CardButton, OutlineButton } from '../../../components/buttons';
 import { SECONDARY_COLOR_TRANSPARENT, WHITE } from '../../../colors';
+import { useDispatch } from 'react-redux';
+import { PRIMARY_COLOR } from '../../../colors';
+import { addMed } from '../../../redux/slices/cart-slice';
 
 const SpecificMedicationScreen = ({ navigation, route }) => {
+	const dispatch = useDispatch();
+
+	React.useLayoutEffect(() => {
+		navigation.setOptions({
+			headerTitle: _ => <View></View>,
+			headerRight: () => (
+				<OutlineButton
+					label="Refill"
+					color={PRIMARY_COLOR}
+					style={{ marginRight: 8 }}
+					onPress={() => {
+						dispatch(addMed(route.params.med));
+						navigation.navigate("Refill Order");
+					}} />
+			),
+		});
+	}, [navigation]);
+
 	return (
 		<ScrollView style={{ backgroundColor: SECONDARY_COLOR_TRANSPARENT, flex: 1 }}>
 			<View style={{ justifyContent: 'center', alignItems: 'center', padding: 24 }}>

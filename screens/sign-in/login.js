@@ -1,68 +1,50 @@
 import React from 'react';
 import { SafeAreaView, View } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import RegisterAccountScreen from './register-account';
-import ForgotPasswordScreen from './forgot-password';
-import PrivacyAcceptanceScreen from './privacy-acceptance';
-import { changeStack } from '../../App.js';
 import Dialog, { DialogButton, DialogContent, DialogFooter } from 'react-native-popup-dialog';
 import { PRIMARY_COLOR } from '../../colors'
 import { PrimaryButton } from '../../components/buttons';
 import { Input } from '../../components/input';
-import { TextHeader1, TextSubHeader1, TextSubHeader2 } from '../../components/text';
+import { TextHeader1, TextNote, TextSubHeader1, TextSubHeader2 } from '../../components/text';
+import axios from 'axios';
+import { setToken } from '../../redux/slices/user-token-slice';
+import { useDispatch } from 'react-redux';
+import { clearData } from '../../redux/slices/register-slice';
+import { changeStack } from '../../App';
 
-const Stack = createNativeStackNavigator();
-
-const LoginScreen = ({ navigation }) => {
-	return (
-		<Stack.Navigator>
-			<Stack.Screen
-				name="Main"
-				component={LoginMainScreen}
-				options={({ route }) => ({
-					headerShown: false
-				})}
-			/>
-			<Stack.Screen
-				name="Register"
-				component={RegisterAccountScreen}
-			/>
-			<Stack.Screen
-				name="Forgot Password"
-				component={ForgotPasswordScreen}
-			/>
-			<Stack.Screen
-				name="Privacy Agreement"
-				component={PrivacyAcceptanceScreen}
-				options={({ route }) => ({
-					headerShown: false
-				})}
-			/>
-		</Stack.Navigator>
-	);
-};
-
-export default LoginScreen;
-
-// hardcoded users for patient and pharmacist
-const Login = (username, password, navigation) => {
-	if (username == "pharma1" && password == "password123") {
-		changeStack('Pharmacist')
-		return true
-	}
-	else if (username == "patient1" && password == "password123") {
-		navigation.push('Privacy Agreement')
-		return true
-	}
-
-	return false
-}
-
-const LoginMainScreen = ({ navigation }) => {
+export const LoginScreen = ({ navigation }) => {
 	let [showDialog, setDialog] = React.useState(false)
 	let [inputUsername, setInputUsername] = React.useState('')
 	let [inputPassword, setInputPassword] = React.useState('')
+
+	const dispatch = useDispatch();
+
+	let Login = () => {
+		let token = 'Basic ' + Buffer.from(`${inputUsername}:${inputPassword}`).toString('base64');
+
+		var config = {
+			method: 'post',
+			url: 'http://localhost:8080/api/login',
+			headers: {
+				Authorization: token
+			}
+		};
+
+		axios(config)
+			.then(_ => {
+				dispatch(setToken(token));
+				changeStack('Patient');
+			})
+			.catch(error => {
+				console.log(error);
+				setDialog(true);
+			});
+	};
+
+	let goToRegister = () => {
+		dispatch(clearData());
+		navigation.push('Register Personal Info');
+	}
 
 	return (
 		<SafeAreaView style={{ margin: 16 }}>
@@ -81,13 +63,13 @@ const LoginMainScreen = ({ navigation }) => {
 			</View>
 
 			<View style={{ marginTop: 20, marginBottom: 40 }}>
-				<PrimaryButton label="Login" onPress={() => {
-					// if it fails, show dialog
-					if (!Login(inputUsername, inputPassword, navigation)) {
-						setDialog(true)
-					}
-				}}
+				<PrimaryButton label="Login" onPress={Login}
 				/>
+			</View>
+
+			<View style={{ flex: 1, flexGrow: 0, alignItems: 'center' }}>
+				<TextNote text="Don't have an account?" style={{ margin: 8 }} />
+				<PrimaryButton label="Sign Up" onPress={goToRegister} style={{ paddingLeft: 16, paddingRight: 16 }} />
 			</View>
 
 			<Dialog
