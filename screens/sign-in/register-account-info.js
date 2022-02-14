@@ -7,8 +7,13 @@ import { TextHeader2, TextNote } from '../../components/text';
 import { setEmail, setPassword } from '../../redux/slices/register-slice';
 
 export const RegisterAccountInfoScreen = ({ navigation }) => {
-	let navNext = () => navigation.push("Register Privacy Consent");
 	let navBack = () => navigation.pop();
+	let navNext = () => {
+		if (password != passwordConfirm || email == "" || password == "")
+			return;
+
+		navigation.push("Register Privacy Consent");
+	}
 
 	let [passwordConfirm, setPasswordConfirm] = React.useState('');
 

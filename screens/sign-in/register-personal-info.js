@@ -7,8 +7,13 @@ import { TextHeader2, TextNote } from '../../components/text';
 import { setFirstName, setLastName, setMiddleName } from '../../redux/slices/register-slice';
 
 export const RegisterPersonalInfoScreen = ({ navigation }) => {
-	let navNext = () => navigation.push("Register Account Info");
 	let navBack = () => navigation.pop();
+	let navNext = () => {
+		if (firstName == "" || middleName == "" || lastName == "")
+			return;
+
+		navigation.push("Register Account Info");
+	}
 
 	const dispatch = useDispatch();
 
