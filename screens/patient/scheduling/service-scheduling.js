@@ -19,7 +19,6 @@ const ServiceScheduling = ({ navigation, route }) => {
 	const userToken = useSelector((state) => state.userToken.value);
 
 	const GenerateTimeslots = (info, date) => {
-		console.log("this");
 		let config = {
 			method: 'get',
 			url: `http://localhost:8080/api/schedule/0/${date}`,
@@ -56,7 +55,6 @@ const ServiceScheduling = ({ navigation, route }) => {
 	}
 
 	useEffect(() => {
-		console.log("called");
 		let config = {
 			method: 'get',
 			url: 'http://localhost:8080/api/schedule/0/settings',
