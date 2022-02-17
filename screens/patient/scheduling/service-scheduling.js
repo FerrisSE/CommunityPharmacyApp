@@ -14,10 +14,12 @@ const ServiceScheduling = ({ navigation, route }) => {
 	let [pickedId, setPickedId] = React.useState(-1);
 	let [pharmacyInfo, setPharmacyInfo] = React.useState();
 	let [timeSlots, setTimeSlots] = React.useState([]);
+	let [enabledWeekdays, setEnabledWeekdays] = React.useState([false, false, false, false, false, false, false]);
 
 	const userToken = useSelector((state) => state.userToken.value);
 
 	const GenerateTimeslots = (info, date) => {
+		console.log("this");
 		let config = {
 			method: 'get',
 			url: `http://localhost:8080/api/schedule/0/${date}`,
@@ -46,6 +48,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 				}
 
 				setTimeSlots(slots);
+				setPickedId(-1);
 			})
 			.catch(err => {
 				console.error(err);
@@ -53,6 +56,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 	}
 
 	useEffect(() => {
+		console.log("called");
 		let config = {
 			method: 'get',
 			url: 'http://localhost:8080/api/schedule/0/settings',
@@ -64,12 +68,31 @@ const ServiceScheduling = ({ navigation, route }) => {
 		axios(config)
 			.then(response => {
 				setPharmacyInfo(response.data);
+
+				setEnabledWeekdays([
+					response.data.days.sun,
+					response.data.days.mon,
+					response.data.days.tue,
+					response.data.days.wed,
+					response.data.days.thu,
+					response.data.days.fri,
+					response.data.days.sat,
+				]);
+
 				GenerateTimeslots(response.data, "2022-02-19");
 			})
 			.catch(err => {
 				console.error(err);
 			});
 	}, []);
+
+	const datesBlacklistFunc = date => {
+		return !enabledWeekdays[date.isoWeekday()] || date.isBefore(moment());
+	}
+
+	const OnDateSelected = date => {
+		GenerateTimeslots(pharmacyInfo, date.format("YYYY-MM-DD"));
+	}
 
 	return (
 		<ScrollView style={{ backgroundColor: "#A9A9CC", flex: 1 }}>
@@ -87,6 +110,8 @@ const ServiceScheduling = ({ navigation, route }) => {
 						style={{ width: "90%", paddingTop: 32, paddingBottom: 32 }}
 						calendarHeaderStyle={{ fontFamily: "Open Sans SemiBold", fontSize: 24 }}
 						scrollable={true}
+						datesBlacklist={datesBlacklistFunc}
+						onDateSelected={OnDateSelected}
 						calendarHeaderContainerStyle={{ padding: 4 }}
 						highlightDateContainerStyle={{ backgroundColor: PRIMARY_COLOR, borderRadius: 16, padding: 4 }}
 						highlightDateNumberStyle={{ color: WHITE }}
@@ -100,7 +125,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 
 					<PrimaryButton
 						label="CONFIRM APPOINTMENT"
-						style={{ width: '75%', marginTop: 32, marginBottom: 32 }}
+						style={{ width: '75%', marginBottom: 32 }}
 						onPress={() => navigation.goBack()} />
 				</View>
 			</SafeAreaView>
