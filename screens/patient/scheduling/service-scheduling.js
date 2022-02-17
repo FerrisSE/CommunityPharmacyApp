@@ -1,60 +1,78 @@
-import React from 'react';
-import { SafeAreaView, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 import { PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT, WHITE } from '../../../colors';
 import { PrimaryButton } from '../../../components/buttons';
 import { CloseButton } from '../../../components/close-button';
 import { TextHeader2, TextSubHeader2 } from '../../../components/text';
 import CalendarStrip from 'react-native-calendar-strip';
 import { TimePicker } from '../../../components/time-picker';
-
-let times = [
-	{
-		time: "8:00",
-		am: true,
-		available: true,
-	},
-	{
-		time: "8:30",
-		am: true,
-		available: true,
-	},
-	{
-		time: "9:00",
-		am: true,
-		available: false,
-	},
-	{
-		time: "9:30",
-		am: true,
-		available: true,
-	},
-	{
-		time: "10:00",
-		am: true,
-		available: true,
-	},
-	{
-		time: "10:30",
-		am: true,
-		available: false,
-	},
-	{
-		time: "11:00",
-		am: true,
-		available: false,
-	},
-	{
-		time: "11:30",
-		am: true,
-		available: true,
-	}
-];
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import moment from 'moment';
 
 const ServiceScheduling = ({ navigation, route }) => {
 	let [pickedId, setPickedId] = React.useState(-1);
+	let [pharmacyInfo, setPharmacyInfo] = React.useState();
+	let [timeSlots, setTimeSlots] = React.useState([]);
+
+	const userToken = useSelector((state) => state.userToken.value);
+
+	const GenerateTimeslots = (info, date) => {
+		let config = {
+			method: 'get',
+			url: `http://localhost:8080/api/schedule/0/${date}`,
+			headers: {
+				Authorization: userToken,
+			}
+		};
+
+		axios(config)
+			.then(response => {
+				let unavailable = response.data;
+
+				let open = moment(info.open, "hh:mm:ss");
+				let close = moment(info.close, "hh:mm:ss");
+				let slots = [];
+
+				let currentMoment = open;
+
+				while (currentMoment < close) {
+					slots.push({
+						time: currentMoment.format('h:mm'),
+						meridiem: currentMoment.format('a'),
+						available: !unavailable.some(s => moment(s.start, "hh:mm:ss").isSame(currentMoment)),
+					});
+					currentMoment.add(info.slotDuration + info.slotBuffer, 'minutes');
+				}
+
+				setTimeSlots(slots);
+			})
+			.catch(err => {
+				console.error(err);
+			});
+	}
+
+	useEffect(() => {
+		let config = {
+			method: 'get',
+			url: 'http://localhost:8080/api/schedule/0/settings',
+			headers: {
+				Authorization: userToken,
+			}
+		};
+
+		axios(config)
+			.then(response => {
+				setPharmacyInfo(response.data);
+				GenerateTimeslots(response.data, "2022-02-19");
+			})
+			.catch(err => {
+				console.error(err);
+			});
+	}, []);
 
 	return (
-		<View style={{ backgroundColor: "#A9A9CC", flex: 1 }}>
+		<ScrollView style={{ backgroundColor: "#A9A9CC", flex: 1 }}>
 			<SafeAreaView style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: "#EEEEF4", marginTop: 8, flex: 1 }}>
 				<View style={{ margin: 16 }}>
 					<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -78,7 +96,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 						dateNumberStyle={{ color: PRIMARY_COLOR }}
 					/>
 
-					<TimePicker title="Available Appointments" subtitle="location name" times={times} activeId={pickedId} setActive={setPickedId} style={{ marginTop: 24, marginBottom: 24, width: '90%', flex: 1 }} />
+					<TimePicker title="Available Appointments" subtitle="location name" times={timeSlots} activeId={pickedId} setActive={setPickedId} style={{ marginTop: 24, marginBottom: 24, width: '90%', flex: 1 }} />
 
 					<PrimaryButton
 						label="CONFIRM APPOINTMENT"
@@ -86,7 +104,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 						onPress={() => navigation.goBack()} />
 				</View>
 			</SafeAreaView>
-		</View>
+		</ScrollView>
 	);
 };
 
