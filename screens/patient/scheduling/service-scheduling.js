@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { SafeAreaView, ScrollView, View } from 'react-native';
 import { PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT, WHITE } from '../../../colors';
 import { PrimaryButton } from '../../../components/buttons';
@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import moment from 'moment';
 
 const ServiceScheduling = ({ navigation, route }) => {
+	const calendarRef = useRef();
 	let [pickedId, setPickedId] = React.useState(-1);
 	let [pharmacyInfo, setPharmacyInfo] = React.useState();
 	let [timeSlots, setTimeSlots] = React.useState([]);
@@ -54,6 +55,10 @@ const ServiceScheduling = ({ navigation, route }) => {
 			});
 	}
 
+	const datesBlacklistFunc = date => {
+		return !enabledWeekdays[date.day()] || date.isBefore(moment());
+	}
+
 	useEffect(() => {
 		let config = {
 			method: 'get',
@@ -67,7 +72,9 @@ const ServiceScheduling = ({ navigation, route }) => {
 			.then(response => {
 				setPharmacyInfo(response.data);
 
-				setEnabledWeekdays([
+				// you can't set the state and use the new state in the same function
+				// as it needs time to update I guess?
+				let days = [
 					response.data.days.sun,
 					response.data.days.mon,
 					response.data.days.tue,
@@ -75,18 +82,22 @@ const ServiceScheduling = ({ navigation, route }) => {
 					response.data.days.thu,
 					response.data.days.fri,
 					response.data.days.sat,
-				]);
+				];
 
-				GenerateTimeslots(response.data, "2022-02-19");
+				setEnabledWeekdays(days);
+
+				// get the first avaiable date to view
+				let startDate = moment().add(1, 'days');
+				while (!days[startDate.day()]) {
+					startDate.add(1, "days");
+				}
+
+				calendarRef.current.setSelectedDate(startDate);
 			})
 			.catch(err => {
 				console.error(err);
 			});
 	}, []);
-
-	const datesBlacklistFunc = date => {
-		return !enabledWeekdays[date.isoWeekday()] || date.isBefore(moment());
-	}
 
 	const OnDateSelected = date => {
 		GenerateTimeslots(pharmacyInfo, date.format("YYYY-MM-DD"));
@@ -105,6 +116,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 
 				<View style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: WHITE, flex: 1, alignItems: 'center' }}>
 					<CalendarStrip
+						ref={calendarRef}
 						style={{ width: "90%", paddingTop: 32, paddingBottom: 32 }}
 						calendarHeaderStyle={{ fontFamily: "Open Sans SemiBold", fontSize: 24 }}
 						scrollable={true}
