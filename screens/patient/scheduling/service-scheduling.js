@@ -14,45 +14,35 @@ const ServiceScheduling = ({ navigation, route }) => {
 	const calendarRef = useRef();
 	let [pickedId, setPickedId] = React.useState(-1);
 	let [pharmacyInfo, setPharmacyInfo] = React.useState();
+	let [bookedSlots, setBookedSlots] = React.useState([]);
 	let [timeSlots, setTimeSlots] = React.useState([]);
 	let [enabledWeekdays, setEnabledWeekdays] = React.useState([false, false, false, false, false, false, false]);
 
 	const userToken = useSelector((state) => state.userToken.value);
 
 	const GenerateTimeslots = (info, date) => {
-		let config = {
-			method: 'get',
-			url: `http://localhost:8080/api/schedule/0/${date}`,
-			headers: {
-				Authorization: userToken,
-			}
-		};
+		let openTime = info.open.split(":");
+		let open = moment(date).add(openTime[0], "hours").add(openTime[1], "minutes");
 
-		axios(config)
-			.then(response => {
-				let unavailable = response.data;
+		let closeTime = info.close.split(":");
+		let close = moment(date).add(closeTime[0], "hours").add(closeTime[1], "minutes");
 
-				let open = moment(info.open, "hh:mm:ss");
-				let close = moment(info.close, "hh:mm:ss");
-				let slots = [];
+		let unavailable = bookedSlots.map(s => moment(s.start + s.day, "hh:mm:ssYYYY-MM-DD")).filter(t => t.isSame(date, 'day'));
+		let slots = [];
 
-				let currentMoment = open;
+		let currentMoment = open;
 
-				while (currentMoment < close) {
-					slots.push({
-						time: currentMoment.format('h:mm'),
-						meridiem: currentMoment.format('a'),
-						available: !unavailable.some(s => moment(s.start, "hh:mm:ss").isSame(currentMoment)),
-					});
-					currentMoment.add(info.slotDuration + info.slotBuffer, 'minutes');
-				}
-
-				setTimeSlots(slots);
-				setPickedId(-1);
-			})
-			.catch(err => {
-				console.error(err);
+		while (currentMoment < close) {
+			slots.push({
+				time: currentMoment.format('h:mm'),
+				meridiem: currentMoment.format('a'),
+				available: !unavailable.some(s => s.isSame(currentMoment)),
 			});
+			currentMoment.add(info.slotDuration + info.slotBuffer, 'minutes');
+		}
+
+		setTimeSlots(slots);
+		setPickedId(-1);
 	}
 
 	const datesBlacklistFunc = date => {
@@ -60,31 +50,41 @@ const ServiceScheduling = ({ navigation, route }) => {
 	}
 
 	useEffect(() => {
-		let config = {
+		// first get pharamacy information
+		axios({
 			method: 'get',
 			url: 'http://localhost:8080/api/schedule/0/settings',
 			headers: {
 				Authorization: userToken,
 			}
-		};
+		}).then(response => {
+			setPharmacyInfo(response.data);
 
-		axios(config)
-			.then(response => {
-				setPharmacyInfo(response.data);
+			// set open days
+			// you can't set the state and use the new state in the same function
+			// as it needs time to update I guess?
+			let days = [
+				response.data.days.sun,
+				response.data.days.mon,
+				response.data.days.tue,
+				response.data.days.wed,
+				response.data.days.thu,
+				response.data.days.fri,
+				response.data.days.sat,
+			];
 
-				// you can't set the state and use the new state in the same function
-				// as it needs time to update I guess?
-				let days = [
-					response.data.days.sun,
-					response.data.days.mon,
-					response.data.days.tue,
-					response.data.days.wed,
-					response.data.days.thu,
-					response.data.days.fri,
-					response.data.days.sat,
-				];
+			setEnabledWeekdays(days);
 
-				setEnabledWeekdays(days);
+			// get booked time slots
+			let date = moment().add(1, 'month');
+			axios({
+				method: 'get',
+				url: `http://localhost:8080/api/schedule/0/${date.format('YYYY-MM-DD')}`,
+				headers: {
+					Authorization: userToken,
+				}
+			}).then(response => {
+				setBookedSlots(response.data);
 
 				// get the first avaiable date to view
 				let startDate = moment().add(1, 'days');
@@ -92,16 +92,17 @@ const ServiceScheduling = ({ navigation, route }) => {
 					startDate.add(1, "days");
 				}
 
+				// view that first date
 				calendarRef.current.setSelectedDate(startDate);
-			})
-			.catch(err => {
+			}).catch(err => {
 				console.error(err);
 			});
+		}).catch(err => {
+			console.error(err);
+		});
 	}, []);
 
-	const OnDateSelected = date => {
-		GenerateTimeslots(pharmacyInfo, date.format("YYYY-MM-DD"));
-	}
+	const OnDateSelected = date => GenerateTimeslots(pharmacyInfo, date.format("YYYY-MM-DD"));
 
 	return (
 		<ScrollView style={{ backgroundColor: "#A9A9CC", flex: 1 }}>
@@ -119,7 +120,8 @@ const ServiceScheduling = ({ navigation, route }) => {
 						ref={calendarRef}
 						style={{ width: "90%", paddingTop: 32, paddingBottom: 32 }}
 						calendarHeaderStyle={{ fontFamily: "Open Sans SemiBold", fontSize: 24 }}
-						scrollable={true}
+						minDate={moment()}
+						maxDate={moment().add(1, "month")}
 						datesBlacklist={datesBlacklistFunc}
 						onDateSelected={OnDateSelected}
 						calendarHeaderContainerStyle={{ padding: 4 }}
