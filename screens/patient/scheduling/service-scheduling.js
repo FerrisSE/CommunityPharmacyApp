@@ -34,8 +34,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 
 		while (currentMoment < close) {
 			slots.push({
-				time: currentMoment.format('h:mm'),
-				meridiem: currentMoment.format('a'),
+				time: currentMoment.clone(),
 				available: !unavailable.some(s => s.isSame(currentMoment)),
 			});
 			currentMoment.add(info.slotDuration + info.slotBuffer, 'minutes');
@@ -104,6 +103,36 @@ const ServiceScheduling = ({ navigation, route }) => {
 
 	const OnDateSelected = date => GenerateTimeslots(pharmacyInfo, date.format("YYYY-MM-DD"));
 
+	const requestAppointment = () => {
+		if (pickedId == -1)
+			return;
+
+		let pickedSlot = timeSlots[pickedId];
+
+		let data = {
+			patientNotes: '',
+			patientId: 0,
+			day: pickedSlot.time.format("YYYY-MM-DD"),
+			start: pickedSlot.time.format("hh:mm:ss"),
+			end: pickedSlot.time.clone().add(pharmacyInfo.slotDuration, 'minutes').format("hh:mm:ss"),
+			category: route.params.service.name,
+		};
+
+		console.log(data);
+
+		axios({
+			method: 'post',
+			url: `http://localhost:8080/api/schedule/0`,
+			headers: {
+				Authorization: userToken,
+			},
+			data: data
+		}).then(response => {
+			console.log(response);
+			navigation.goBack();
+		}).catch(error => console.error(error));
+	}
+
 	return (
 		<ScrollView style={{ backgroundColor: "#A9A9CC", flex: 1 }}>
 			<SafeAreaView style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: "#EEEEF4", marginTop: 8, flex: 1 }}>
@@ -138,7 +167,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 					<PrimaryButton
 						label="CONFIRM APPOINTMENT"
 						style={{ width: '75%', marginBottom: 32 }}
-						onPress={() => navigation.goBack()} />
+						onPress={requestAppointment} />
 				</View>
 			</SafeAreaView>
 		</ScrollView>
