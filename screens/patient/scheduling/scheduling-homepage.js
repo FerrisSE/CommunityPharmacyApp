@@ -81,7 +81,7 @@ const RenderServicesGrid = ({ items, navigation }) => {
 			justifyContent: 'flex-start',
 		}}>
 			{items.map(s => (
-				< SchedulingButton icon={s.icon} label={s.name} onClicked={() => {
+				< SchedulingButton icon={s.icon} label={s.name} key={s.name} onClicked={() => {
 					navigation.navigate({
 						name: 'Service Scheduling',
 						params: {

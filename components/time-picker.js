@@ -17,7 +17,7 @@ export const TimePicker = ({ title, subtitle, times, style, activeId, setActive 
 		>
 			<View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
 				{
-					times.map((t, i) => <TimeSlot id={i} time={t.time} active={i == activeId} available={t.available} setActive={setActive} />)
+					times.map((t, i) => <TimeSlot key={i} id={i} time={t.time} active={i == activeId} available={t.available} setActive={setActive} />)
 				}
 			</View>
 

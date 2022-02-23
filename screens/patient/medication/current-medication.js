@@ -77,7 +77,7 @@ const CurrentMedicationScreen = ({ navigation }) => {
 					<Input placeholder="search" setText={setSearchText} defaultText={searchText} />
 					{
 						shownMeds.map(m => (
-							<MedicationCard med={m} navigation={navigation} updateCartFunction={changeCart} />
+							<MedicationCard med={m} navigation={navigation} updateCartFunction={changeCart} key={m.medicationName} />
 						))
 					}
 				</Card>
