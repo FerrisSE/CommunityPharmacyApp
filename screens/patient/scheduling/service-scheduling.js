@@ -113,8 +113,8 @@ const ServiceScheduling = ({ navigation, route }) => {
 			patientNotes: '',
 			patientId: 0,
 			day: pickedSlot.time.format("YYYY-MM-DD"),
-			start: pickedSlot.time.format("hh:mm:ss"),
-			end: pickedSlot.time.clone().add(pharmacyInfo.slotDuration, 'minutes').format("hh:mm:ss"),
+			start: pickedSlot.time.format("HH:mm:ss"),
+			end: pickedSlot.time.clone().add(pharmacyInfo.slotDuration, 'minutes').format("HH:mm:ss"),
 			category: route.params.service.name,
 		};
 
