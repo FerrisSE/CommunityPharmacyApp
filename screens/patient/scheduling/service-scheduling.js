@@ -3,12 +3,13 @@ import { SafeAreaView, ScrollView, View } from 'react-native';
 import { PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT, WHITE } from '../../../colors';
 import { PrimaryButton } from '../../../components/buttons';
 import { CloseButton } from '../../../components/close-button';
-import { TextHeader2, TextSubHeader2 } from '../../../components/text';
+import { TextBody, TextHeader2, TextHeader3, TextSubHeader2 } from '../../../components/text';
 import CalendarStrip from 'react-native-calendar-strip';
 import { TimePicker } from '../../../components/time-picker';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
+import { Modal, ModalFooter, ModalButton, ModalContent } from 'react-native-modals';
 
 const ServiceScheduling = ({ navigation, route }) => {
 	const calendarRef = useRef();
@@ -17,6 +18,10 @@ const ServiceScheduling = ({ navigation, route }) => {
 	let [bookedSlots, setBookedSlots] = React.useState([]);
 	let [timeSlots, setTimeSlots] = React.useState([]);
 	let [enabledWeekdays, setEnabledWeekdays] = React.useState([false, false, false, false, false, false, false]);
+
+	let [popUpVisible, setPopUpVisible] = React.useState(false);
+	let [popUpText, setPopUpText] = React.useState('');
+	let [popUpFailed, setPopUpFailed] = React.useState(true);
 
 	const userToken = useSelector((state) => state.userToken.value);
 
@@ -118,8 +123,6 @@ const ServiceScheduling = ({ navigation, route }) => {
 			category: route.params.service.name,
 		};
 
-		console.log(data);
-
 		axios({
 			method: 'post',
 			url: `http://localhost:8080/api/schedule/0`,
@@ -128,9 +131,14 @@ const ServiceScheduling = ({ navigation, route }) => {
 			},
 			data: data
 		}).then(response => {
-			console.log(response);
-			navigation.goBack();
-		}).catch(error => console.error(error));
+			setPopUpText("Scheduled time successfully");
+			setPopUpFailed(false);
+			setPopUpVisible(true);
+		}).catch(error => {
+			setPopUpText("Failed to schedule time!");
+			setPopUpFailed(true);
+			setPopUpVisible(true);
+		});
 	}
 
 	return (
@@ -169,6 +177,26 @@ const ServiceScheduling = ({ navigation, route }) => {
 						style={{ width: '75%', marginBottom: 32 }}
 						onPress={requestAppointment} />
 				</View>
+
+				<Modal
+					visible={popUpVisible}
+					footer={
+						<ModalFooter>
+							<ModalButton
+								text="Ok"
+								onPress={() => {
+									if (popUpFailed)
+										setPopUpVisible(false);
+									else
+										navigation.goBack();
+								}}
+							/>
+						</ModalFooter>
+					}>
+					<ModalContent>
+						<TextSubHeader2 text={popUpText} />
+					</ModalContent>
+				</Modal>
 			</SafeAreaView>
 		</ScrollView>
 	);

@@ -5342,6 +5342,14 @@
     "invariant" "^2.2.4"
     "prop-types" "^15.7.2"
 
+"react-native-modals@^0.22.3":
+  "integrity" "sha512-tdjUfvgBhXFTt9p5kQcuAc1BS83H1yrD3p6hHL62LCnJl9rwUdiPlMX0Hmoeac5jw88FzmZv1M20wxgV8mh3ng=="
+  "resolved" "https://registry.npmjs.org/react-native-modals/-/react-native-modals-0.22.3.tgz"
+  "version" "0.22.3"
+  dependencies:
+    "babel-plugin-flow-react-proptypes" "^9.1.1"
+    "prop-types" "^15.6.0"
+
 "react-native-popup-dialog@^0.18.3":
   "integrity" "sha512-ZvqixSEfMlcX2sm9rSRk/KkgWXwvnj7xqq4fIpSGlYGX48FfL8b3Xf2/uT9SvK2H7MX79b7sic53zzwJ+aBh3g=="
   "resolved" "https://registry.npmjs.org/react-native-popup-dialog/-/react-native-popup-dialog-0.18.3.tgz"
