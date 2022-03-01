@@ -3,7 +3,7 @@ import { SafeAreaView, ScrollView, View } from 'react-native';
 import { PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT, WHITE } from '../../../colors';
 import { PrimaryButton } from '../../../components/buttons';
 import { CloseButton } from '../../../components/close-button';
-import { TextBody, TextHeader2, TextHeader3, TextSubHeader2 } from '../../../components/text';
+import { TextHeader2, TextSubHeader2 } from '../../../components/text';
 import CalendarStrip from 'react-native-calendar-strip';
 import { TimePicker } from '../../../components/time-picker';
 import axios from 'axios';
@@ -50,7 +50,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 	}
 
 	const datesBlacklistFunc = date => {
-		return !enabledWeekdays[date.day()] || date.isBefore(moment());
+		return !enabledWeekdays[date.day()] || date.isBefore(moment()) || date.isAfter(moment().add(1, 'month'));
 	}
 
 	useEffect(() => {
@@ -130,11 +130,11 @@ const ServiceScheduling = ({ navigation, route }) => {
 				Authorization: userToken,
 			},
 			data: data
-		}).then(response => {
+		}).then(_ => {
 			setPopUpText("Scheduled time successfully");
 			setPopUpFailed(false);
 			setPopUpVisible(true);
-		}).catch(error => {
+		}).catch(_ => {
 			setPopUpText("Failed to schedule time!");
 			setPopUpFailed(true);
 			setPopUpVisible(true);
@@ -157,8 +157,6 @@ const ServiceScheduling = ({ navigation, route }) => {
 						ref={calendarRef}
 						style={{ width: "90%", paddingTop: 32, paddingBottom: 32 }}
 						calendarHeaderStyle={{ fontFamily: "Open Sans SemiBold", fontSize: 24 }}
-						minDate={moment()}
-						maxDate={moment().add(1, "month")}
 						datesBlacklist={datesBlacklistFunc}
 						onDateSelected={OnDateSelected}
 						calendarHeaderContainerStyle={{ padding: 4 }}
