@@ -5350,15 +5350,6 @@
     "babel-plugin-flow-react-proptypes" "^9.1.1"
     "prop-types" "^15.6.0"
 
-"react-native-popup-dialog@^0.18.3":
-  "integrity" "sha512-ZvqixSEfMlcX2sm9rSRk/KkgWXwvnj7xqq4fIpSGlYGX48FfL8b3Xf2/uT9SvK2H7MX79b7sic53zzwJ+aBh3g=="
-  "resolved" "https://registry.npmjs.org/react-native-popup-dialog/-/react-native-popup-dialog-0.18.3.tgz"
-  "version" "0.18.3"
-  dependencies:
-    "babel-plugin-flow-react-proptypes" "^9.1.1"
-    "prop-types" "^15.6.0"
-    "react-native-root-siblings" "^3.2.1"
-
 "react-native-progress@^5.0.0":
   "integrity" "sha512-KjnGIt3r9i5Kn2biOD9fXLJocf0bwxPRxOyAgXEnZTJQU2O+HyzgGFRCbM5h3izm9kKIkSc1txh8aGmMafCD9A=="
   "resolved" "https://registry.npmjs.org/react-native-progress/-/react-native-progress-5.0.0.tgz"
@@ -5375,14 +5366,6 @@
     "fbjs" "^3.0.0"
     "mockdate" "^3.0.2"
     "string-hash-64" "^1.0.3"
-
-"react-native-root-siblings@^3.2.1":
-  "integrity" "sha512-wOCCtKJteaSIW3K++hzhkfdWRikTqjrG34DnhNDVSzKatuNQyFY1fPBD1YFT/3+kxOIUmNsJdiaPMao9QgoZMA=="
-  "resolved" "https://registry.npmjs.org/react-native-root-siblings/-/react-native-root-siblings-3.2.3.tgz"
-  "version" "3.2.3"
-  dependencies:
-    "prop-types" "^15.6.2"
-    "static-container" "^1.0.0"
 
 "react-native-safe-area-context@>= 3.0.0", "react-native-safe-area-context@3.2.0":
   "integrity" "sha512-k2Nty4PwSnrg9HwrYeeE+EYqViYJoOFwEy9LxL5RIRfoqxAq/uQXNGwpUg2/u4gnKpBbEPa9eRh15KKMe/VHkA=="
@@ -6129,11 +6112,6 @@
   "version" "0.1.10"
   dependencies:
     "type-fest" "^0.7.1"
-
-"static-container@^1.0.0":
-  "integrity" "sha512-rsUMpoUZ4sHsFyy+Wp9Kqnv3HU+LD5ShPRd+ocg8US9juKckq+7VgDEK+ZbG8sQ1EOaw2LBpF8XLwpozqGHGBQ=="
-  "resolved" "https://registry.npmjs.org/static-container/-/static-container-1.7.1.tgz"
-  "version" "1.7.1"
 
 "static-extend@^0.1.1":
   "integrity" "sha1-YICcOcv/VTNyJv1eC1IPNB8ftcY="

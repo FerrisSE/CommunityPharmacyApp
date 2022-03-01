@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, View } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import Dialog, { DialogButton, DialogContent, DialogFooter } from 'react-native-popup-dialog';
+import { Modal, ModalFooter, ModalButton, ModalContent } from 'react-native-modals';
 import { PRIMARY_COLOR } from '../../colors'
 import { PrimaryButton } from '../../components/buttons';
 import { Input } from '../../components/input';
@@ -72,13 +72,13 @@ export const LoginScreen = ({ navigation }) => {
 				<PrimaryButton label="Sign Up" onPress={goToRegister} style={{ paddingLeft: 16, paddingRight: 16 }} />
 			</View>
 
-			<Dialog
+			<Modal
 				visible={showDialog}
 				onTouchOutside={() => setDialog(false)}
 				footer={
-					<DialogFooter
+					<ModalFooter
 						children={
-							<DialogButton
+							<ModalButton
 								text="OK"
 								onPress={() => setDialog(false)}
 							/>
@@ -86,10 +86,10 @@ export const LoginScreen = ({ navigation }) => {
 					/>
 				}
 			>
-				<DialogContent>
-					<TextSubHeader2 text="Invalid Username or Password!" style={{ margin: 8 }} />
-				</DialogContent>
-			</Dialog>
+				<ModalContent>
+					<TextSubHeader2 text="Invalid Username or Password!" />
+				</ModalContent>
+			</Modal>
 		</SafeAreaView>
 	)
 }

@@ -5,8 +5,12 @@ import { OutlineButton, PrimaryButton } from '../../components/buttons.js';
 import { TextHeader1, TextSubHeader2 } from '../../components/text.js';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import Modal, { ModalButton, ModalContent, ModalFooter } from 'react-native-modals';
 
 export const RegisterConsentFormScreen = ({ navigation }) => {
+	let [modalVisible, setModalVisible] = React.useState(false);
+	let [registerFailed, setRegisterFailed] = React.useState(true);
+	let [modalText, setModalText] = React.useState('');
 
 	const registerData = useSelector((state) => state.register);
 
@@ -24,10 +28,14 @@ export const RegisterConsentFormScreen = ({ navigation }) => {
 
 		axios(config)
 			.then(_ => {
-				navigation.popToTop();
+				setModalText("Created Account Successfully!");
+				setRegisterFailed(false);
+				setModalVisible(true);
 			})
 			.catch(error => {
-				console.log(error);
+				setModalText("Failed to Create Account!");
+				setRegisterFailed(true);
+				setModalVisible(true);
 			});
 	};
 
@@ -51,6 +59,28 @@ export const RegisterConsentFormScreen = ({ navigation }) => {
 				<PrimaryButton label="Agree" style={{ paddingLeft: 24, paddingRight: 24 }} onPress={Register} />
 			</View>
 
+			<Modal
+				visible={modalVisible}
+				footer={
+					<ModalFooter
+						children={
+							<ModalButton
+								text="OK"
+								onPress={() => {
+									if (registerFailed)
+										setModalVisible(false);
+									else
+										navigation.popToTop();
+								}}
+							/>
+						}
+					/>
+				}
+			>
+				<ModalContent>
+					<TextSubHeader2 text={modalText} />
+				</ModalContent>
+			</Modal>
 		</SafeAreaView>
 	);
 };
