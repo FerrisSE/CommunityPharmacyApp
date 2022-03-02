@@ -8,15 +8,28 @@ import { UpcomingEvents } from '../../../components/scheduling-upcoming';
 import { TextHeader3, TextSubHeader1, TextSubHeader2 } from '../../../components/text';
 
 const vaccines = [
-	{ name: "Covid-19 Vaccine", icon: "bandage" },
-	{ name: "Influenza Vaccine", icon: "bandage" },
-	{ name: "Flu Vaccine", icon: "bandage" }
+	{
+		name: "Covid-19 Vaccine",
+		icon: "bandage",
+		desc: "You can get a COVID-19 vaccine and other vaccines, including a flu vaccine, at the same visit. Experience with other vaccines has shown that the way our bodies develop protection, known as an immune response, and possible side effects after getting vaccinated are generally the same when given alone or with other vaccines."
+	},
+	{
+		name:
+			"Influenza Vaccine",
+		icon: "bandage",
+		desc: "test description"
+	},
+	{
+		name: "Flu Vaccine",
+		icon: "bandage",
+		desc: "Influenza (flu) vaccines (often called “flu shots”) are vaccines that protect against the four influenza viruses that research indicates most common during the upcoming season. Most flu vaccines are “flu shots” given with a needle, usually in the arm, but there also is also a nasal spray flu vaccine."
+	}
 ]
 
 const bloodTests = [
-	{ name: "AC-1 Test", icon: "water-outline" },
-	{ name: "Whole Blood Glucose", icon: "water-outline" },
-	{ name: "Hemoglobin Test", icon: "water-outline" }
+	{ name: "AC-1 Test", icon: "water-outline", desc: "test description" },
+	{ name: "Whole Blood Glucose", icon: "water-outline", desc: "test description" },
+	{ name: "Hemoglobin Test", icon: "water-outline", desc: "test description" }
 ]
 
 const events = [

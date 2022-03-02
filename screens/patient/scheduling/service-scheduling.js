@@ -1,18 +1,22 @@
 import React, { useEffect, useRef } from 'react';
-import { SafeAreaView, ScrollView, View } from 'react-native';
+import { Pressable, SafeAreaView, ScrollView, View } from 'react-native';
 import { PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT, WHITE } from '../../../colors';
 import { PrimaryButton } from '../../../components/buttons';
 import { CloseButton } from '../../../components/close-button';
-import { TextHeader2, TextSubHeader2 } from '../../../components/text';
+import { TextHeader2, TextNote, TextSubHeader2 } from '../../../components/text';
 import CalendarStrip from 'react-native-calendar-strip';
 import { TimePicker } from '../../../components/time-picker';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { Modal, ModalFooter, ModalButton, ModalContent } from 'react-native-modals';
+import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 
 const ServiceScheduling = ({ navigation, route }) => {
 	const calendarRef = useRef();
+
+	let [descVisible, setDescVisible] = React.useState(false);
+
 	let [pickedId, setPickedId] = React.useState(-1);
 	let [pharmacyInfo, setPharmacyInfo] = React.useState();
 	let [bookedSlots, setBookedSlots] = React.useState([]);
@@ -149,7 +153,13 @@ const ServiceScheduling = ({ navigation, route }) => {
 						<TextSubHeader2 text="Service Scheduling" />
 						<CloseButton />
 					</View>
-					<TextHeader2 text={route.params.service.name} />
+					<View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+						<TextHeader2 text={route.params.service.name} />
+						<Pressable onPress={() => setDescVisible(!descVisible)}>
+							<Icon name='help-circle' size={25} />
+						</Pressable>
+					</View>
+					{descVisible && <TextNote text={route.params.service.desc} style={{ margin: 4 }} />}
 				</View>
 
 				<View style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: WHITE, flex: 1, alignItems: 'center' }}>
