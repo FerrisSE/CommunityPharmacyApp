@@ -7,30 +7,11 @@ import { TextSubHeader1 } from '../../../components/text';
 import { PRIMARY_COLOR } from '../../../colors';
 import { Card } from '../../../components/cards';
 import { useSelector } from 'react-redux';
-
-const DeliverOptions = [
-	{
-		id: 0,
-		text: "Pick-up",
-		fillColor: PRIMARY_COLOR,
-		textStyle: {
-			fontSize: 24,
-			textDecorationLine: "none",
-		},
-	},
-	{
-		id: 1,
-		text: "Delivery",
-		fillColor: PRIMARY_COLOR,
-		textStyle: {
-			fontSize: 24,
-			textDecorationLine: "none",
-		},
-	}
-]
+import { RefillDeliveryCard } from '../../../components/refill-delivery-card';
 
 const MedicationRefillScreen = ({ navigation, route }) => {
 	const cart = useSelector((state) => state.cart.meds);
+	const [selectedOption, setSelectedOption] = React.useState(-1);
 
 	return (
 		<ScrollView style={{ flex: 1 }}>
@@ -41,9 +22,21 @@ const MedicationRefillScreen = ({ navigation, route }) => {
 				</Card>
 
 				<View style={{ marginTop: 16 }}>
-					<BouncyCheckboxGroup
-						data={DeliverOptions}
-						style={{ flexDirection: "column", margin: 6, paddingBottom: 12 }}
+					<RefillDeliveryCard
+						label="Pick-up"
+						time="Monday, 10/15"
+						location={"Patient Name\nStreet Address\nCity, State"}
+						selected={selectedOption == 0}
+						onPress={() => setSelectedOption(0)}
+						style={{ margin: 4 }}
+					/>
+					<RefillDeliveryCard
+						label="Delivery"
+						time="Wednesday, 10/17"
+						location={"Pharmacy Name\nStreet Address\nCity, State"}
+						selected={selectedOption == 1}
+						onPress={() => setSelectedOption(1)}
+						style={{ margin: 4 }}
 					/>
 
 					<PrimaryButton label="Confirm Order" style={{ margin: 6 }} />
