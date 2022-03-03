@@ -2,6 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SchedulingHomeScreen from "./scheduling-homepage";
 import ServiceScheduling from "./service-scheduling";
+import { SchedulingConfirmScreen } from "./scheduling-confirm";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,16 @@ const SchedulingScreenStack = ({ navigation }) => {
 					service: {
 						name: "Test Event"
 					}
+				}}
+			/>
+			<Stack.Screen
+				name="Confirmation"
+				component={SchedulingConfirmScreen}
+				options={({ route }) => ({
+					headerShown: false
+				})}
+				initialParams={{
+					services: []
 				}}
 			/>
 		</Stack.Navigator>

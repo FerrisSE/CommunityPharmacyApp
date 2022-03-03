@@ -1,7 +1,6 @@
 import React from 'react';
-import { FlatList, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 import MedicationCard from '../../../components/medication-card';
-import BouncyCheckboxGroup from "react-native-bouncy-checkbox-group";
 import { OutlineButton, PrimaryButton } from '../../../components/buttons';
 import { TextSubHeader1 } from '../../../components/text';
 import { PRIMARY_COLOR } from '../../../colors';

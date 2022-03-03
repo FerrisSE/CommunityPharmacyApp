@@ -9,7 +9,6 @@ import { TimePicker } from '../../../components/time-picker';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-import { Modal, ModalFooter, ModalButton, ModalContent } from 'react-native-modals';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 
 const ServiceScheduling = ({ navigation, route }) => {
@@ -22,10 +21,6 @@ const ServiceScheduling = ({ navigation, route }) => {
 	let [bookedSlots, setBookedSlots] = React.useState([]);
 	let [timeSlots, setTimeSlots] = React.useState([]);
 	let [enabledWeekdays, setEnabledWeekdays] = React.useState([false, false, false, false, false, false, false]);
-
-	let [popUpVisible, setPopUpVisible] = React.useState(false);
-	let [popUpText, setPopUpText] = React.useState('');
-	let [popUpFailed, setPopUpFailed] = React.useState(true);
 
 	const userToken = useSelector((state) => state.userToken.value);
 
@@ -112,36 +107,24 @@ const ServiceScheduling = ({ navigation, route }) => {
 
 	const OnDateSelected = date => GenerateTimeslots(pharmacyInfo, date.format("YYYY-MM-DD"));
 
-	const requestAppointment = () => {
+	const selectAppointment = () => {
 		if (pickedId == -1)
 			return;
 
 		let pickedSlot = timeSlots[pickedId];
 
 		let data = {
-			patientNotes: '',
 			patientId: 0,
-			day: pickedSlot.time.format("YYYY-MM-DD"),
-			start: pickedSlot.time.format("HH:mm:ss"),
-			end: pickedSlot.time.clone().add(pharmacyInfo.slotDuration, 'minutes').format("HH:mm:ss"),
-			category: route.params.service.name,
+			start: pickedSlot.time,
+			end: pickedSlot.time.clone().add(pharmacyInfo.slotDuration, 'minutes'),
+			name: route.params.service.name,
 		};
 
-		axios({
-			method: 'post',
-			url: `http://localhost:8080/api/schedule/0`,
-			headers: {
-				Authorization: userToken,
-			},
-			data: data
-		}).then(_ => {
-			setPopUpText("Scheduled time successfully");
-			setPopUpFailed(false);
-			setPopUpVisible(true);
-		}).catch(_ => {
-			setPopUpText("Failed to schedule time!");
-			setPopUpFailed(true);
-			setPopUpVisible(true);
+		navigation.navigate({
+			name: 'Confirmation',
+			params: {
+				services: [data]
+			}
 		});
 	}
 
@@ -181,30 +164,10 @@ const ServiceScheduling = ({ navigation, route }) => {
 					<TimePicker title="Available Appointments" subtitle="location name" times={timeSlots} activeId={pickedId} setActive={setPickedId} style={{ marginTop: 24, marginBottom: 24, width: '90%', flex: 1 }} />
 
 					<PrimaryButton
-						label="CONFIRM APPOINTMENT"
+						label="SELECT APPOINTMENT"
 						style={{ width: '75%', marginBottom: 32 }}
-						onPress={requestAppointment} />
+						onPress={selectAppointment} />
 				</View>
-
-				<Modal
-					visible={popUpVisible}
-					footer={
-						<ModalFooter>
-							<ModalButton
-								text="Ok"
-								onPress={() => {
-									if (popUpFailed)
-										setPopUpVisible(false);
-									else
-										navigation.goBack();
-								}}
-							/>
-						</ModalFooter>
-					}>
-					<ModalContent>
-						<TextSubHeader2 text={popUpText} />
-					</ModalContent>
-				</Modal>
 			</SafeAreaView>
 		</ScrollView>
 	);
