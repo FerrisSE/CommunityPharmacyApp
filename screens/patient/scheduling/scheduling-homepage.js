@@ -1,11 +1,14 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
 import { ScrollView, View, SafeAreaView } from 'react-native';
+import { useSelector } from 'react-redux';
 import { WHITE } from '../../../colors';
 import { Card } from '../../../components/cards';
 import { Input } from '../../../components/input';
 import SchedulingButton from '../../../components/scheduling-card-button';
 import { UpcomingEvents } from '../../../components/scheduling-upcoming';
 import { TextHeader3, TextSubHeader1, TextSubHeader2 } from '../../../components/text';
+import moment from 'moment';
 
 const vaccines = [
 	{
@@ -32,15 +35,9 @@ const bloodTests = [
 	{ name: "Hemoglobin Test", icon: "water-outline", desc: "test description" }
 ]
 
-const events = [
-	{ name: "Covid-19 Vaccine", date: "Thu. Oct 15", "time": "9:45am" },
-	{ name: "Flu Vaccine", date: "Fri. Oct 16", "time": "10:00am" },
-	{ name: "Flu Vaccine 2", date: "Fri. Oct 16", "time": "10:00am" },
-	{ name: "Flu Vaccine 3", date: "Fri. Oct 16", "time": "10:00am" },
-]
-
 const SchedulingHomeScreen = ({ navigation }) => {
-	let [searchText, setSearchText] = React.useState('')
+	let [searchText, setSearchText] = React.useState('');
+	let [events, setEvents] = React.useState([]);
 
 	let searchServices = []
 	if (searchText.length != 0) {
@@ -49,6 +46,28 @@ const SchedulingHomeScreen = ({ navigation }) => {
 			...bloodTests.filter(v => v.name.toLowerCase().includes(searchText.toLowerCase()))
 		);
 	}
+
+	const userToken = useSelector((state) => state.userToken.value);
+
+	useEffect(() => {
+		// get the clients list of scheduled events
+		axios({
+			method: 'get',
+			url: 'http://localhost:8080/api/schedule/0', // hardcoded to first user
+			headers: {
+				Authorization: userToken,
+			}
+		}).then(response => {
+			console.log(response);
+			setEvents(response.data.map(t => {
+				return {
+					name: "test event",
+					date: moment(t.day).format("MMM Do"),
+					time: moment(t.start, "HH:mm:ss").format("h:mm a")
+				}
+			}));
+		});
+	});
 
 	return (
 		<ScrollView style={{ backgroundColor: WHITE, flex: 1 }}>
