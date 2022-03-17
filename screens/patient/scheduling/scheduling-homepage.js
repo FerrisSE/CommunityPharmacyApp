@@ -53,7 +53,7 @@ const SchedulingHomeScreen = ({ navigation }) => {
 		// get the clients list of scheduled events
 		axios({
 			method: 'get',
-			url: 'http://localhost:8080/api/schedule/0', // hardcoded to first user
+			url: 'http://localhost:8080/api/schedule/patient/0', // hardcoded to first user
 			headers: {
 				Authorization: userToken,
 			}
@@ -61,7 +61,7 @@ const SchedulingHomeScreen = ({ navigation }) => {
 			console.log(response);
 			setEvents(response.data.map(t => {
 				return {
-					name: "test event",
+					name: t.category,
 					date: moment(t.day).format("MMM Do"),
 					time: moment(t.start, "HH:mm:ss").format("h:mm a")
 				}
@@ -72,8 +72,12 @@ const SchedulingHomeScreen = ({ navigation }) => {
 	return (
 		<ScrollView style={{ backgroundColor: WHITE, flex: 1 }}>
 			<SafeAreaView style={{ flex: 1, padding: 12 }}>
-				<TextHeader3 text="Upcoming Events" style={{ marginLeft: 12, marginBottom: 12 }} />
-				<UpcomingEvents events={events} />
+				{events.length != 0 &&
+					<View>
+						<TextHeader3 text="Upcoming Events" style={{ marginLeft: 12, marginBottom: 12 }} />
+						<UpcomingEvents events={events} />
+					</View>
+				}
 
 				<TextSubHeader1 text="Services" style={{ marginTop: 24 }} />
 
