@@ -21,7 +21,7 @@ export const Card = ({ color, depth, outlined, children, style }) => {
 			backgroundColor: backgroundColor,
 			borderRadius: 20 - (depth - 1) * 4,
 			padding: 4,
-			borderWidth: outlined ? 4 : 0,
+			borderWidth: outlined ? 3 : 0,
 			borderColor: outlineColor,
 		}, { ...style }]}>
 			{children}
@@ -42,7 +42,7 @@ export const CardWithHeader = ({ color, depth, outlined, header, children, style
 		<View style={[{
 			backgroundColor: backgroundColor,
 			borderRadius: 20 - (depth - 1) * 4,
-			borderWidth: outlined ? 4 : 0,
+			borderWidth: outlined ? 3 : 0,
 			borderColor: outlineColor,
 		}, { ...style }]}>
 			<View style={{

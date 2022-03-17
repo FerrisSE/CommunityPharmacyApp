@@ -37,7 +37,7 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 			}}
 			style={{ margin: 8 }}
 		>
-			<Card depth={2} style={{ padding: 8 }} outlined={requestRefill}>
+			<Card depth={2} style={{ padding: 8 }} outlined={updateCartFunction != null && requestRefill}>
 				<View style={MedCardStyles.row}>
 					<View style={MedCardStyles.imageView}>
 						<Image source={pill} style={MedCardStyles.image} />

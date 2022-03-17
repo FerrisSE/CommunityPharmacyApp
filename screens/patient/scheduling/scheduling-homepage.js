@@ -1,33 +1,43 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
 import { ScrollView, View, SafeAreaView } from 'react-native';
+import { useSelector } from 'react-redux';
 import { WHITE } from '../../../colors';
 import { Card } from '../../../components/cards';
 import { Input } from '../../../components/input';
 import SchedulingButton from '../../../components/scheduling-card-button';
 import { UpcomingEvents } from '../../../components/scheduling-upcoming';
 import { TextHeader3, TextSubHeader1, TextSubHeader2 } from '../../../components/text';
+import moment from 'moment';
 
 const vaccines = [
-	{ name: "Covid-19 Vaccine", icon: "bandage" },
-	{ name: "Influenza Vaccine", icon: "bandage" },
-	{ name: "Flu Vaccine", icon: "bandage" }
+	{
+		name: "Covid-19 Vaccine",
+		icon: "bandage",
+		desc: "You can get a COVID-19 vaccine and other vaccines, including a flu vaccine, at the same visit. Experience with other vaccines has shown that the way our bodies develop protection, known as an immune response, and possible side effects after getting vaccinated are generally the same when given alone or with other vaccines."
+	},
+	{
+		name:
+			"Influenza Vaccine",
+		icon: "bandage",
+		desc: "test description"
+	},
+	{
+		name: "Flu Vaccine",
+		icon: "bandage",
+		desc: "Influenza (flu) vaccines (often called “flu shots”) are vaccines that protect against the four influenza viruses that research indicates most common during the upcoming season. Most flu vaccines are “flu shots” given with a needle, usually in the arm, but there also is also a nasal spray flu vaccine."
+	}
 ]
 
 const bloodTests = [
-	{ name: "AC-1 Test", icon: "water-outline" },
-	{ name: "Whole Blood Glucose", icon: "water-outline" },
-	{ name: "Hemoglobin Test", icon: "water-outline" }
-]
-
-const events = [
-	{ name: "Covid-19 Vaccine", date: "Thu. Oct 15", "time": "9:45am" },
-	{ name: "Flu Vaccine", date: "Fri. Oct 16", "time": "10:00am" },
-	{ name: "Flu Vaccine 2", date: "Fri. Oct 16", "time": "10:00am" },
-	{ name: "Flu Vaccine 3", date: "Fri. Oct 16", "time": "10:00am" },
+	{ name: "AC-1 Test", icon: "water-outline", desc: "test description" },
+	{ name: "Whole Blood Glucose", icon: "water-outline", desc: "test description" },
+	{ name: "Hemoglobin Test", icon: "water-outline", desc: "test description" }
 ]
 
 const SchedulingHomeScreen = ({ navigation }) => {
-	let [searchText, setSearchText] = React.useState('')
+	let [searchText, setSearchText] = React.useState('');
+	let [events, setEvents] = React.useState([]);
 
 	let searchServices = []
 	if (searchText.length != 0) {
@@ -37,11 +47,37 @@ const SchedulingHomeScreen = ({ navigation }) => {
 		);
 	}
 
+	const userToken = useSelector((state) => state.userToken.value);
+
+	useEffect(() => {
+		// get the clients list of scheduled events
+		axios({
+			method: 'get',
+			url: 'http://localhost:8080/api/schedule/patient/0', // hardcoded to first user
+			headers: {
+				Authorization: userToken,
+			}
+		}).then(response => {
+			console.log(response);
+			setEvents(response.data.map(t => {
+				return {
+					name: t.category,
+					date: moment(t.day).format("MMM Do"),
+					time: moment(t.start, "HH:mm:ss").format("h:mm a")
+				}
+			}));
+		});
+	});
+
 	return (
 		<ScrollView style={{ backgroundColor: WHITE, flex: 1 }}>
 			<SafeAreaView style={{ flex: 1, padding: 12 }}>
-				<TextHeader3 text="Upcoming Events" style={{ marginLeft: 12, marginBottom: 12 }} />
-				<UpcomingEvents events={events} />
+				{events.length != 0 &&
+					<View>
+						<TextHeader3 text="Upcoming Events" style={{ marginLeft: 12, marginBottom: 12 }} />
+						<UpcomingEvents events={events} />
+					</View>
+				}
 
 				<TextSubHeader1 text="Services" style={{ marginTop: 24 }} />
 
@@ -81,7 +117,7 @@ const RenderServicesGrid = ({ items, navigation }) => {
 			justifyContent: 'flex-start',
 		}}>
 			{items.map(s => (
-				< SchedulingButton icon={s.icon} label={s.name} onClicked={() => {
+				< SchedulingButton icon={s.icon} label={s.name} key={s.name} onClicked={() => {
 					navigation.navigate({
 						name: 'Service Scheduling',
 						params: {

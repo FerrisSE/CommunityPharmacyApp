@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { ModalPortal } from 'react-native-modals';
 
 import ProfileScreen from './screens/patient/profile/profile';
 import SearchScreen from './screens/pharmacist/search-screen';
@@ -58,6 +59,7 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
+      <ModalPortal />
     </Provider>
   );
 }

@@ -16,7 +16,7 @@ export const UpcomingEvents = ({ events }) => {
 
 				{ // show list of events
 					shownEvents.map(e =>
-						<Card depth={2} color='secondary' style={{ margin: 4 }}>
+						<Card depth={2} color='secondary' style={{ margin: 4 }} key={e.name + e.date}>
 							<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', margin: 8 }}>
 								<View>
 									<TextSubHeader2 text={e.date} />
@@ -28,23 +28,25 @@ export const UpcomingEvents = ({ events }) => {
 					)
 				}
 
-				{ // show either collapse or expand button
-					expanded ?
-						<TouchableOpacity style={{ margin: 4 }} onPress={() => setExpanded(false)}>
-							<Card depth={2} color='secondary'>
-								<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', margin: 8 }}>
-									<TextSubHeader2 text="Close List" />
-								</View>
-							</Card>
-						</TouchableOpacity>
-						:
-						<TouchableOpacity style={{ margin: 4 }} onPress={() => setExpanded(true)}>
-							<Card depth={2} color='secondary'>
-								<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', margin: 8 }}>
-									<TextSubHeader2 text={`View All ${events.length} Appointments`} />
-								</View>
-							</Card>
-						</TouchableOpacity>
+				{ // show either collapse or expand button, so long as there are enough events to warrant a dropdown
+					events.length > DefaultCountShown && (
+						expanded ?
+							<TouchableOpacity style={{ margin: 4 }} onPress={() => setExpanded(false)}>
+								<Card depth={2} color='secondary'>
+									<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', margin: 8 }}>
+										<TextSubHeader2 text="Close List" />
+									</View>
+								</Card>
+							</TouchableOpacity>
+							:
+							<TouchableOpacity style={{ margin: 4 }} onPress={() => setExpanded(true)}>
+								<Card depth={2} color='secondary'>
+									<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', margin: 8 }}>
+										<TextSubHeader2 text={`View All ${events.length} Appointments`} />
+									</View>
+								</Card>
+							</TouchableOpacity>
+					)
 				}
 			</View>
 		</Card>
