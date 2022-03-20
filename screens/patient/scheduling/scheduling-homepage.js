@@ -9,6 +9,7 @@ import SchedulingButton from '../../../components/scheduling-card-button';
 import { UpcomingEvents } from '../../../components/scheduling-upcoming';
 import { TextHeader3, TextSubHeader1, TextSubHeader2 } from '../../../components/text';
 import moment from 'moment';
+import { useIsFocused } from "@react-navigation/native";
 
 const vaccines = [
 	{
@@ -49,6 +50,7 @@ const SchedulingHomeScreen = ({ navigation }) => {
 
 	const userToken = useSelector((state) => state.userToken.value);
 
+	const isFocused = useIsFocused();
 	useEffect(() => {
 		// get the clients list of scheduled events
 		axios({
@@ -67,7 +69,7 @@ const SchedulingHomeScreen = ({ navigation }) => {
 				}
 			}));
 		});
-	});
+	}, [isFocused]);
 
 	return (
 		<ScrollView style={{ backgroundColor: WHITE, flex: 1 }}>
