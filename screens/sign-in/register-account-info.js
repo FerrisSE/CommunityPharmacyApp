@@ -12,7 +12,7 @@ export const RegisterAccountInfoScreen = ({ navigation }) => {
 		if (password != passwordConfirm || email == "" || password == "")
 			return;
 
-		navigation.push("Register Privacy Consent");
+		navigation.push("Register Preferred Pharmacy");
 	}
 
 	let [passwordConfirm, setPasswordConfirm] = React.useState('');

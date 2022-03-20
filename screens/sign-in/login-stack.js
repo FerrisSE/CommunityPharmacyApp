@@ -5,6 +5,7 @@ import ForgotPasswordScreen from './forgot-password';
 import { LoginScreen } from './login';
 import { RegisterPersonalInfoScreen } from './register-personal-info';
 import { RegisterAccountInfoScreen } from './register-account-info';
+import { RegisterPharmacyScreen } from './register-pharmacy';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,13 @@ export const LoginStack = ({ navigation }) => {
 			<Stack.Screen
 				name="Register Account Info"
 				component={RegisterAccountInfoScreen}
+				options={({ route }) => ({
+					headerShown: false
+				})}
+			/>
+			<Stack.Screen
+				name="Register Preferred Pharmacy"
+				component={RegisterPharmacyScreen}
 				options={({ route }) => ({
 					headerShown: false
 				})}
