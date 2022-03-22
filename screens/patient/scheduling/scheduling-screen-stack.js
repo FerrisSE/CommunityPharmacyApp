@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SchedulingHomeScreen from "./scheduling-homepage";
 import ServiceScheduling from "./service-scheduling";
 import { SchedulingConfirmScreen } from "./scheduling-confirm";
+import { Header } from "../../../components/header";
 
 const Stack = createNativeStackNavigator();
 
@@ -13,7 +14,7 @@ const SchedulingScreenStack = ({ navigation }) => {
 				name="Schedule"
 				component={SchedulingHomeScreen}
 				options={({ route }) => ({
-					headerShown: false
+					header: () => <Header title="Scheduling" nav={navigation} />
 				})}
 			/>
 			<Stack.Screen

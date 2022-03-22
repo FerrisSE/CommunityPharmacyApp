@@ -72,7 +72,7 @@ const SchedulingHomeScreen = ({ navigation }) => {
 	}, [isFocused]);
 
 	return (
-		<ScrollView style={{ backgroundColor: WHITE, flex: 1 }}>
+		<ScrollView style={{ flex: 1 }}>
 			<SafeAreaView style={{ flex: 1, padding: 12 }}>
 				{events.length != 0 &&
 					<View>

@@ -19,7 +19,7 @@ const PatientScreenStack = ({ navigation }) => {
 				tabBarActiveTintColor: WHITE,
 				tabBarInactiveTintColor: '#A8A8CB',
 				tabBarStyle: { backgroundColor: PRIMARY_COLOR },
-				tabBarButton: route.name == 'Profile' ? () => null : undefined,
+				tabBarButton: route.name == 'Profile' ? () => null : undefined, // don't show profile on tab nav (it's in the header)
 				tabBarIcon: ({ focused, color, size }) => {
 					let iconName;
 
@@ -29,7 +29,6 @@ const PatientScreenStack = ({ navigation }) => {
 						iconName = 'calendar-blank-multiple';
 					}
 
-					// You can return any component that you like here!
 					return <Icon name={iconName} size={size} color={color} />;
 				},
 			})}
