@@ -45,6 +45,7 @@ const PatientScreenStack = ({ navigation }) => {
 			<Tab.Screen
 				name="Profile"
 				component={ProfileScreen}
+				initialParams={{ nav: navigation }}
 				options={({ }) => ({
 					header: () => <Header title="Profile" nav={navigation} />
 				})}
