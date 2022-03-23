@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SafeAreaView, Text, View } from 'react-native';
-import { Pressable } from 'react-native-web';
+import { Pressable } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { OutlineButton, PrimaryButton } from '../../components/buttons';
 import { Card } from '../../components/cards';

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
+import { SERVER_URL } from '../../constants';
 
 const SearchForPatient = (firstName, familyName, birthdate, setPatients) => {
-	fetch(`http://localhost:8080/api/patient/name/${firstName}/${familyName}/${birthdate}`, {
+	fetch(`${SERVER_URL}/api/patient/name/${firstName}/${familyName}/${birthdate}`, {
 		"method": "GET",
 		"headers": {
 			'Accept': 'application/json',

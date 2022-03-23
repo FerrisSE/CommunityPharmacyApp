@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, View } from "react-native-web";
+import { Pressable, View } from "react-native";
 import { TextSubHeader1 } from "./text";
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 import { PRIMARY_COLOR } from "../colors";

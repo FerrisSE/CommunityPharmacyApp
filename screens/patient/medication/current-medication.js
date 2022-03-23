@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { addMed, removeMed } from '../../../redux/slices/cart-slice';
 import { ShoppingCart } from '../../../components/shopping-cart';
+import { SERVER_URL } from '../../../constants';
 
 const CurrentMedicationScreen = ({ navigation }) => {
 	let [fhirPatient, setFhirPatient] = React.useState('')
@@ -25,7 +26,7 @@ const CurrentMedicationScreen = ({ navigation }) => {
 	useEffect(() => {
 		var config = {
 			method: 'get',
-			url: 'http://localhost:8080/api/patient/medications/0',
+			url: `${SERVER_URL}/api/patient/medications/0`,
 			headers: {
 				Authorization: userToken,
 			}

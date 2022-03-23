@@ -10,6 +10,7 @@ import { UpcomingEvents } from '../../../components/scheduling-upcoming';
 import { TextHeader3, TextSubHeader1, TextSubHeader2 } from '../../../components/text';
 import moment from 'moment';
 import { useIsFocused } from "@react-navigation/native";
+import { SERVER_URL } from '../../../constants';
 
 const vaccines = [
 	{
@@ -55,7 +56,7 @@ const SchedulingHomeScreen = ({ navigation }) => {
 		// get the clients list of scheduled events
 		axios({
 			method: 'get',
-			url: 'http://localhost:8080/api/schedule/patient/0', // hardcoded to first user
+			url: `${SERVER_URL}/api/schedule/patient/0`, // hardcoded to first user
 			headers: {
 				Authorization: userToken,
 			}

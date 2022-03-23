@@ -13,6 +13,8 @@ import { clearData } from '../../redux/slices/register-slice';
 import { changeStack } from '../../App';
 import * as WebBrowser from 'expo-web-browser';
 import * as Linking from 'expo-linking';
+import base64 from 'react-native-base64';
+import { SERVER_URL } from '../../constants';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -25,11 +27,11 @@ export const LoginScreen = ({ navigation }) => {
 	const dispatch = useDispatch();
 
 	let Login = () => {
-		let token = 'Basic ' + Buffer.from(`${inputUsername}:${inputPassword}`).toString('base64');
+		let token = 'Basic ' + base64.encode(`${inputUsername}:${inputPassword}`);
 
 		var config = {
 			method: 'post',
-			url: 'http://localhost:8080/api/login',
+			url: `${SERVER_URL}/api/login`,
 			headers: {
 				Authorization: token
 			}

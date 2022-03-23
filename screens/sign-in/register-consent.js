@@ -6,6 +6,7 @@ import { TextHeader1, TextSubHeader2 } from '../../components/text.js';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import Modal, { ModalButton, ModalContent, ModalFooter } from 'react-native-modals';
+import { SERVER_URL } from '../../constants.js';
 
 export const RegisterConsentFormScreen = ({ navigation }) => {
 	let [modalVisible, setModalVisible] = React.useState(false);
@@ -17,7 +18,7 @@ export const RegisterConsentFormScreen = ({ navigation }) => {
 	let Register = () => {
 		let config = {
 			method: 'post',
-			url: 'http://localhost:8080/api/register',
+			url: `${SERVER_URL}/api/register`,
 			data: {
 				firstName: registerData.firstName,
 				lastName: registerData.lastName,

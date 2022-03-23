@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { SECONDARY_COLOR, WHITE } from "../../../colors";
 import { Card } from "../../../components/cards";
 import { TextInput } from "react-native-gesture-handler";
+import { SERVER_URL } from "../../../constants";
 
 export const SchedulingConfirmScreen = ({ navigation, route }) => {
 	// variables needed for the popup modal
@@ -33,7 +34,7 @@ export const SchedulingConfirmScreen = ({ navigation, route }) => {
 
 		axios({
 			method: 'post',
-			url: `http://localhost:8080/api/schedule/0`,
+			url: `${SERVER_URL}/api/schedule/0`,
 			headers: {
 				Authorization: userToken,
 			},
