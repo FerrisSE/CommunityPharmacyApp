@@ -150,7 +150,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 					<CalendarStrip
 						ref={calendarRef}
 						style={{ width: "90%", paddingTop: 32, paddingBottom: 32 }}
-						calendarHeaderStyle={{ fontFamily: "Open Sans SemiBold", fontSize: 24 }}
+						calendarHeaderStyle={{ fontFamily: "OpenSans-SemiBold", fontSize: 24 }}
 						datesBlacklist={datesBlacklistFunc}
 						onDateSelected={OnDateSelected}
 						calendarHeaderContainerStyle={{ padding: 4 }}
