@@ -7,8 +7,11 @@ import SchedulingScreenStack from "./scheduling/scheduling-screen-stack";
 import { PRIMARY_COLOR, WHITE } from "../../colors";
 import ProfileScreen from "./profile/profile";
 import { Header } from "../../components/header";
+import { HomeScreen } from "./home";
 
-const Tab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator();
+
+const hiddenTabs = ['Profile', 'Home'];
 
 const PatientScreenStack = ({ navigation }) => {
 	return (
@@ -19,7 +22,7 @@ const PatientScreenStack = ({ navigation }) => {
 				tabBarActiveTintColor: WHITE,
 				tabBarInactiveTintColor: '#A8A8CB',
 				tabBarStyle: { backgroundColor: PRIMARY_COLOR },
-				tabBarButton: route.name == 'Profile' ? () => null : undefined, // don't show profile on tab nav (it's in the header)
+				tabBarButton: hiddenTabs.includes(route.name) ? () => null : undefined,
 				tabBarIcon: ({ focused, color, size }) => {
 					let iconName;
 
@@ -33,6 +36,13 @@ const PatientScreenStack = ({ navigation }) => {
 				},
 			})}
 		>
+			<Tab.Screen
+				name="Home"
+				component={HomeScreen}
+				options={({ }) => ({
+					header: () => <Header title="Dashboard" nav={navigation} />
+				})}
+			/>
 			<Tab.Screen
 				name="My Rx"
 				component={MedicationScreenStack}

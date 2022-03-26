@@ -1,16 +1,12 @@
 import React from 'react';
 import { Button, SafeAreaView, Text, View } from 'react-native';
+import { TextSubHeader2 } from '../../components/text';
 
-const HomeScreen = ({ navigation }) => {
+export const HomeScreen = ({ navigation }) => {
 	return (
-		<SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-			<Text>Home Screen</Text>
-			<Button
-				title="Patient Profile Screen"
-				onPress={() => navigation.navigate('Profile')}
-			/>
-		</SafeAreaView>
+		<View style={{ padding: 8 }}>
+			<TextSubHeader2 text="Notifications" />
+			<TextSubHeader2 text="Your next medication" />
+		</View>
 	);
 };
-
-export default HomeScreen;
