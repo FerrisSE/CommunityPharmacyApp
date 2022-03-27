@@ -6,7 +6,7 @@ export const Input = ({ placeholder, setText, defaultText, style, hideText }) =>
 	return (
 		<TextInput
 			style={[{
-				fontFamily: 'Open Sans Regular',
+				fontFamily: 'OpenSans-Regular',
 				fontSize: 18,
 				padding: 10,
 				margin: 16,

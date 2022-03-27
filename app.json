@@ -10,6 +10,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "scheme": "expo.ferris.pharmacyapp",
     "updates": {
       "fallbackToCacheTimeout": 0
     },

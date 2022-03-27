@@ -4,9 +4,14 @@ import MedicationScreenStack from "./medication/medication-screen-stack";
 import { View } from "react-native";
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 import SchedulingScreenStack from "./scheduling/scheduling-screen-stack";
-import { GRAY_5, PRIMARY_COLOR, WHITE } from "../../colors";
+import { PRIMARY_COLOR, WHITE } from "../../colors";
+import ProfileScreen from "./profile/profile";
+import { Header } from "../../components/header";
+import { HomeScreen } from "./home";
 
-const Tab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator();
+
+const hiddenTabs = ['Profile', 'Home'];
 
 const PatientScreenStack = ({ navigation }) => {
 	return (
@@ -17,6 +22,7 @@ const PatientScreenStack = ({ navigation }) => {
 				tabBarActiveTintColor: WHITE,
 				tabBarInactiveTintColor: '#A8A8CB',
 				tabBarStyle: { backgroundColor: PRIMARY_COLOR },
+				tabBarButton: hiddenTabs.includes(route.name) ? () => null : undefined,
 				tabBarIcon: ({ focused, color, size }) => {
 					let iconName;
 
@@ -26,11 +32,17 @@ const PatientScreenStack = ({ navigation }) => {
 						iconName = 'calendar-blank-multiple';
 					}
 
-					// You can return any component that you like here!
 					return <Icon name={iconName} size={size} color={color} />;
 				},
 			})}
 		>
+			<Tab.Screen
+				name="Home"
+				component={HomeScreen}
+				options={({ }) => ({
+					header: () => <Header title="Dashboard" nav={navigation} />
+				})}
+			/>
 			<Tab.Screen
 				name="My Rx"
 				component={MedicationScreenStack}
@@ -38,6 +50,14 @@ const PatientScreenStack = ({ navigation }) => {
 			<Tab.Screen
 				name="Scheduling"
 				component={SchedulingScreenStack}
+			/>
+			<Tab.Screen
+				name="Profile"
+				component={ProfileScreen}
+				initialParams={{ nav: navigation }}
+				options={({ }) => ({
+					header: () => <Header title="Profile" nav={navigation} />
+				})}
 			/>
 		</Tab.Navigator>
 	)

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView, View } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Modal, ModalFooter, ModalButton, ModalContent } from 'react-native-modals';
@@ -11,20 +11,27 @@ import { setToken } from '../../redux/slices/user-token-slice';
 import { useDispatch } from 'react-redux';
 import { clearData } from '../../redux/slices/register-slice';
 import { changeStack } from '../../App';
+import * as WebBrowser from 'expo-web-browser';
+import * as Linking from 'expo-linking';
+import base64 from 'react-native-base64';
+import { SERVER_URL } from '../../constants';
+
+WebBrowser.maybeCompleteAuthSession();
 
 export const LoginScreen = ({ navigation }) => {
 	let [showDialog, setDialog] = React.useState(false)
+	let [dialogText, setDialogText] = React.useState('');
 	let [inputUsername, setInputUsername] = React.useState('')
 	let [inputPassword, setInputPassword] = React.useState('')
 
 	const dispatch = useDispatch();
 
 	let Login = () => {
-		let token = 'Basic ' + Buffer.from(`${inputUsername}:${inputPassword}`).toString('base64');
+		let token = 'Basic ' + base64.encode(`${inputUsername}:${inputPassword}`);
 
 		var config = {
 			method: 'post',
-			url: 'http://localhost:8080/api/login',
+			url: `${SERVER_URL}/api/login`,
 			headers: {
 				Authorization: token
 			}
@@ -37,6 +44,7 @@ export const LoginScreen = ({ navigation }) => {
 			})
 			.catch(error => {
 				console.log(error);
+				setDialogText('Invalid username or password!');
 				setDialog(true);
 			});
 	};
@@ -44,6 +52,24 @@ export const LoginScreen = ({ navigation }) => {
 	let goToRegister = () => {
 		dispatch(clearData());
 		navigation.push('Register Personal Info');
+	}
+
+	let openMyChartLogin = async () => {
+		try {
+			let result = await WebBrowser.openAuthSessionAsync(
+				`https://fhir.epic.com/interconnect-fhir-oauth/oauth2/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A19006%2F&client_id=2b0103c4-4389-4f1a-843d-a0e132fcb5c3&aud=https://fhir.epic.com/interconnect-fhir-oauth/api/fhir/r4`
+			);
+
+			let redirectData;
+			if (result.url) {
+				redirectData = Linking.parse(result.url);
+				console.log(redirectData);
+				setDialogText("Got Token back");
+				setDialog(true);
+			}
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
 	return (
@@ -70,24 +96,25 @@ export const LoginScreen = ({ navigation }) => {
 			<View style={{ flex: 1, flexGrow: 0, alignItems: 'center' }}>
 				<TextNote text="Don't have an account?" style={{ margin: 8 }} />
 				<PrimaryButton label="Sign Up" onPress={goToRegister} style={{ paddingLeft: 16, paddingRight: 16 }} />
+
+				<TextNote text="or" style={{ margin: 8 }} />
+				<PrimaryButton label="Login with MyChart" onPress={openMyChartLogin} style={{ paddingLeft: 16, paddingRight: 16 }} />
 			</View>
 
 			<Modal
 				visible={showDialog}
 				onTouchOutside={() => setDialog(false)}
 				footer={
-					<ModalFooter
-						children={
-							<ModalButton
-								text="OK"
-								onPress={() => setDialog(false)}
-							/>
-						}
-					/>
+					<ModalFooter>
+						<ModalButton
+							text="OK"
+							onPress={() => setDialog(false)}
+						/>
+					</ModalFooter>
 				}
 			>
 				<ModalContent>
-					<TextSubHeader2 text="Invalid Username or Password!" />
+					<TextSubHeader2 text={dialogText} />
 				</ModalContent>
 			</Modal>
 		</SafeAreaView>

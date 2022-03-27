@@ -6,14 +6,17 @@ import { CloseButton } from "../../../components/close-button";
 import { TextHeader2, TextHeader3, TextNote, TextSubHeader1, TextSubHeader2 } from "../../../components/text";
 import { Modal, ModalFooter, ModalButton, ModalContent } from 'react-native-modals';
 import { useSelector } from "react-redux";
-import { WHITE } from "../../../colors";
+import { SECONDARY_COLOR, WHITE } from "../../../colors";
 import { Card } from "../../../components/cards";
+import { TextInput } from "react-native-gesture-handler";
+import { SERVER_URL } from "../../../constants";
 
 export const SchedulingConfirmScreen = ({ navigation, route }) => {
 	// variables needed for the popup modal
 	let [popUpVisible, setPopUpVisible] = useState(false);
 	let [popUpText, setPopUpText] = useState('');
 	let [popUpFailed, setPopUpFailed] = useState(true);
+	let [notes, setNotes] = useState('');
 
 	const userToken = useSelector((state) => state.userToken.value);
 
@@ -21,7 +24,7 @@ export const SchedulingConfirmScreen = ({ navigation, route }) => {
 
 	const confirmAppointment = () => {
 		let data = {
-			patientNotes: '',
+			patientNotes: notes,
 			patientId: services[0].patientId,
 			day: services[0].start.format("YYYY-MM-DD"),
 			start: services[0].start.format("HH:mm:ss"),
@@ -31,7 +34,7 @@ export const SchedulingConfirmScreen = ({ navigation, route }) => {
 
 		axios({
 			method: 'post',
-			url: `http://localhost:8080/api/schedule/0`,
+			url: `${SERVER_URL}/api/schedule/0`,
 			headers: {
 				Authorization: userToken,
 			},
@@ -76,7 +79,13 @@ export const SchedulingConfirmScreen = ({ navigation, route }) => {
 
 					<TextNote text="Notes for Pharmacy" style={{ marginTop: 24 }} />
 					<View style={{ flex: 1, alignItems: 'center' }}>
-						<Card color='secondary' depth={1} style={{ width: '90%', height: 128, marginTop: 4, marginBottom: 48 }} />
+						<Card color='secondary' depth={1} style={{ width: '90%', height: 128, marginTop: 4, marginBottom: 48 }}>
+							<TextInput
+								value={notes}
+								onChangeText={t => setNotes(t)}
+								multiline={true}
+								style={{ flex: 1 }} />
+						</Card>
 					</View>
 
 					<View style={{ alignItems: 'center' }}>

@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
+import { SERVER_URL } from '../../../constants';
 
 const ServiceScheduling = ({ navigation, route }) => {
 	const calendarRef = useRef();
@@ -56,7 +57,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 		// first get pharamacy information
 		axios({
 			method: 'get',
-			url: 'http://localhost:8080/api/schedule/0/settings',
+			url: `${SERVER_URL}/api/schedule/0/settings`,
 			headers: {
 				Authorization: userToken,
 			}
@@ -82,7 +83,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 			let date = moment().add(1, 'month');
 			axios({
 				method: 'get',
-				url: `http://localhost:8080/api/schedule/0/${date.format('YYYY-MM-DD')}`,
+				url: `${SERVER_URL}/api/schedule/0/${date.format('YYYY-MM-DD')}`,
 				headers: {
 					Authorization: userToken,
 				}
@@ -149,7 +150,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 					<CalendarStrip
 						ref={calendarRef}
 						style={{ width: "90%", paddingTop: 32, paddingBottom: 32 }}
-						calendarHeaderStyle={{ fontFamily: "Open Sans SemiBold", fontSize: 24 }}
+						calendarHeaderStyle={{ fontFamily: "OpenSans-SemiBold", fontSize: 24 }}
 						datesBlacklist={datesBlacklistFunc}
 						onDateSelected={OnDateSelected}
 						calendarHeaderContainerStyle={{ padding: 4 }}

@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 	PrimaryButtonText: {
 		textAlign: 'center',
 		color: WHITE,
-		fontFamily: "Open Sans SemiBold",
+		fontFamily: "OpenSans-SemiBold",
 		fontSize: 16,
 		margin: 10,
 		opacity: 1,
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
 	},
 	OutlineButtonText: {
 		textAlign: 'center',
-		fontFamily: "Open Sans SemiBold",
+		fontFamily: "OpenSans-SemiBold",
 		fontSize: 16,
 		margin: 10,
 		marginLeft: 25,
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
 	},
 	CardButtonText: {
 		color: BLACK,
-		fontFamily: "Open Sans SemiBold",
+		fontFamily: "OpenSans-SemiBold",
 		fontSize: 18,
 		opacity: 1,
 		paddingTop: 14,

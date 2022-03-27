@@ -8,6 +8,7 @@ export const registerSlice = createSlice({
 		lastName: "",
 		email: "",
 		password: "",
+		pharmacy: -1,
 	},
 	reducers: {
 		clearData: (state) => {
@@ -16,6 +17,7 @@ export const registerSlice = createSlice({
 			state.lastName = "";
 			state.email = "";
 			state.password = "";
+			state.pharmacy = -1;
 		},
 		setFirstName: (state, action) => {
 			state.firstName = action.payload;
@@ -38,9 +40,12 @@ export const registerSlice = createSlice({
 		setPassword: (state, action) => {
 			state.password = action.payload;
 		},
+		setPharmacy: (state, action) => {
+			state.pharmacy = action.payload;
+		}
 	},
 });
 
-export const { clearData, setFirstName, setMiddleName, setLastName, setEmail, setPassword } = registerSlice.actions;
+export const { clearData, setFirstName, setMiddleName, setLastName, setEmail, setPassword, setPharmacy } = registerSlice.actions;
 
 export default registerSlice.reducer;

@@ -10,6 +10,7 @@ import PatientScreenStack from './screens/patient/patient-screen-stack';
 import { LoginStack } from './screens/sign-in/login-stack';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import { useFonts } from 'expo-font';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -32,6 +33,25 @@ const resetRoot = (routeName) => {
 }
 
 export default function App() {
+  const [loaded] = useFonts({
+    'OpenSans-Bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+    'OpenSans-BoldItalic': require('./assets/fonts/OpenSans-BoldItalic.ttf'),
+    'OpenSans-ExtraBold': require('./assets/fonts/OpenSans-ExtraBold.ttf'),
+    'OpenSans-ExtraBoldItalic': require('./assets/fonts/OpenSans-ExtraBoldItalic.ttf'),
+    'OpenSans-Italic': require('./assets/fonts/OpenSans-Italic.ttf'),
+    'OpenSans-Light': require('./assets/fonts/OpenSans-Light.ttf'),
+    'OpenSans-LightItalic': require('./assets/fonts/OpenSans-LightItalic.ttf'),
+    'OpenSans-Medium': require('./assets/fonts/OpenSans-Medium.ttf'),
+    'OpenSans-MediumItalic': require('./assets/fonts/OpenSans-MediumItalic.ttf'),
+    'OpenSans-Regular': require('./assets/fonts/OpenSans-Regular.ttf'),
+    'OpenSans-SemiBold': require('./assets/fonts/OpenSans-SemiBold.ttf'),
+    'OpenSans-SemiBoldItalic': require('./assets/fonts/OpenSans-SemiBoldItalic.ttf'),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <Provider store={store}>
       <NavigationContainer ref={navigationRef}>

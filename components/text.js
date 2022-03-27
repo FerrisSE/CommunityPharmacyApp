@@ -60,39 +60,39 @@ export const TextNote = ({ text, style }) => {
 
 const styles = StyleSheet.create({
 	Header1: {
-		fontFamily: "Open Sans SemiBold",
+		fontFamily: "OpenSans-SemiBold",
 		fontSize: 48,
 		color: BLACK,
 	},
 	Header2: {
-		fontFamily: "Open Sans",
+		fontFamily: "OpenSans-Regular",
 		fontWeight: "bold",
 		fontSize: 36,
 		color: BLACK,
 	},
 	Header3: {
-		fontFamily: "Open Sans SemiBold",
+		fontFamily: "OpenSans-SemiBold",
 		fontSize: 24,
 		color: BLACK,
 	},
 	SubHeader1: {
-		fontFamily: "Open Sans",
+		fontFamily: "OpenSans-Regular",
 		fontWeight: "bold",
 		fontSize: 20,
 		color: BLACK,
 	},
 	SubHeader2: {
-		fontFamily: "Open Sans SemiBold",
+		fontFamily: "OpenSans-SemiBold",
 		fontSize: 16,
 		color: BLACK,
 	},
 	Body: {
-		fontFamily: "Open Sans Regular",
+		fontFamily: "OpenSans-Regular",
 		fontSize: 14,
 		color: BLACK,
 	},
 	Note: {
-		fontFamily: "Open Sans Light",
+		fontFamily: "OpenSans-Light",
 		fontSize: 14,
 		color: BLACK,
 		color: GRAY_3,
