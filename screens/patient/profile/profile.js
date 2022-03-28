@@ -11,11 +11,10 @@ const Stack = createNativeStackNavigator();
 
 const ProfileScreen = ({ navigation, route }) => {
 	// we need the nav of the patient/pharmacist/login stack in order to logout, not the patient stack
-	const { nav } = route.params;
 
 	const logout = () => {
 		//TODO: remove sign in details from redux
-		nav.navigate("Login");
+		navigation.navigate("Login");
 	}
 
 	return (
