@@ -52,3 +52,36 @@ export const AdherenceButtonLarge = ({ navigation }) => {
 		</Pressable>
 	)
 }
+
+export const AdherenceButtonSmall = ({ navigation }) => {
+	const toAdherence = () => navigation.navigate("Adherence");
+
+	return (
+		<Pressable onPress={toAdherence}>
+			<Card depth={1} color="secondary" style={{ padding: 16, flex: 1, aspectRatio: 1, margin: 8 }}>
+				<View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+					<Icon name="arrow-expand" size={20} color={SECONDARY_COLOR} />
+				</View>
+
+				<View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+					<Progress.Circle
+						animated={false}
+						size={148}
+						progress={0.33}
+						showsText={true}
+						color="#79DCAD"
+						unfilledColor="#FFFFFF"
+						textStyle={{
+							color: "#000",
+							fontFamily: "OpenSans-Light",
+							fontSize: 26,
+						}}
+						thickness={8}
+						fill="#00000000"
+						borderWidth={0}
+					/>
+				</View>
+			</Card>
+		</Pressable>
+	)
+}
