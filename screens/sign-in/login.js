@@ -27,19 +27,18 @@ export const LoginScreen = ({ navigation }) => {
 	const dispatch = useDispatch();
 
 	let Login = () => {
-		let token = 'Basic ' + base64.encode(`${inputUsername}:${inputPassword}`);
-
 		var config = {
 			method: 'post',
 			url: `${SERVER_URL}/auth/login`,
-			headers: {
-				Authorization: token
+			data: {
+				email: inputUsername,
+				password: inputPassword,
 			}
 		};
 
 		axios(config)
-			.then(_ => {
-				dispatch(setToken(token));
+			.then(resp => {
+				dispatch(setToken(`Bearer ${resp.data.accessToken}`));
 				changeStack('Patient');
 			})
 			.catch(error => {
