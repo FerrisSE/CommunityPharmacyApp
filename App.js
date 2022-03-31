@@ -11,6 +11,7 @@ import { LoginStack } from './screens/sign-in/login-stack';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import { useFonts } from 'expo-font';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -53,34 +54,36 @@ export default function App() {
   }
 
   return (
-    <Provider store={store}>
-      <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Login"
-            component={LoginStack}
-            options={({ route }) => ({
-              headerShown: false
-            })}
-          />
-          <Stack.Screen
-            name="Pharmacist"
-            component={PharmacistApp}
-            options={({ route }) => ({
-              headerShown: false
-            })}
-          />
-          <Stack.Screen
-            name="Patient"
-            component={PatientScreenStack}
-            options={({ route }) => ({
-              headerShown: false
-            })}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-      <ModalPortal />
-    </Provider>
+    <SafeAreaProvider>
+      <Provider store={store}>
+        <NavigationContainer ref={navigationRef}>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Login"
+              component={LoginStack}
+              options={({ route }) => ({
+                headerShown: false
+              })}
+            />
+            <Stack.Screen
+              name="Pharmacist"
+              component={PharmacistApp}
+              options={({ route }) => ({
+                headerShown: false
+              })}
+            />
+            <Stack.Screen
+              name="Patient"
+              component={PatientScreenStack}
+              options={({ route }) => ({
+                headerShown: false
+              })}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+        <ModalPortal />
+      </Provider>
+    </SafeAreaProvider>
   );
 }
 
