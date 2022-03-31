@@ -13,7 +13,6 @@ import { clearData } from '../../redux/slices/register-slice';
 import { changeStack } from '../../App';
 import * as WebBrowser from 'expo-web-browser';
 import * as Linking from 'expo-linking';
-import base64 from 'react-native-base64';
 import { SERVER_URL } from '../../constants';
 
 WebBrowser.maybeCompleteAuthSession();
@@ -56,15 +55,14 @@ export const LoginScreen = ({ navigation }) => {
 	let openMyChartLogin = async () => {
 		try {
 			let result = await WebBrowser.openAuthSessionAsync(
-				`https://fhir.epic.com/interconnect-fhir-oauth/oauth2/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A19006%2F&client_id=2b0103c4-4389-4f1a-843d-a0e132fcb5c3&aud=https://fhir.epic.com/interconnect-fhir-oauth/api/fhir/r4`
+				`http://localhost:8080/oauth2/authorize/epic?redirect_uri=http%3A%2F%2Flocalhost%3A19006%2F`
 			);
 
 			let redirectData;
 			if (result.url) {
 				redirectData = Linking.parse(result.url);
-				console.log(redirectData);
-				setDialogText("Got Token back");
-				setDialog(true);
+				dispatch(setToken(`Bearer ${redirectData.queryParams.token}`));
+				changeStack('Patient');
 			}
 		} catch (error) {
 			console.error(error);
