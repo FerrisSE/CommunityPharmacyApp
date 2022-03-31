@@ -31,7 +31,7 @@ export const LoginScreen = ({ navigation }) => {
 
 		var config = {
 			method: 'post',
-			url: `${SERVER_URL}/api/login`,
+			url: `${SERVER_URL}/auth/login`,
 			headers: {
 				Authorization: token
 			}
