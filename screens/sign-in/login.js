@@ -95,7 +95,13 @@ export const LoginScreen = ({ navigation }) => {
 				<PrimaryButton label="Sign Up" onPress={goToRegister} style={{ paddingLeft: 16, paddingRight: 16 }} />
 
 				<TextNote text="or" style={{ margin: 8 }} />
-				<PrimaryButton label="Login with MyChart" onPress={openMyChartLogin} style={{ paddingLeft: 16, paddingRight: 16 }} />
+				<PrimaryButton
+					label="Login with MyChart"
+					onPress={openMyChartLogin}
+					style={{ backgroundColor: "#CE3545", paddingLeft: 16, paddingRight: 16 }}
+					icon="folder-heart"
+					iconSide="left"
+				/>
 			</View>
 
 			<Modal

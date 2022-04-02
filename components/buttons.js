@@ -43,6 +43,8 @@ const styles = StyleSheet.create({
 		backgroundColor: PRIMARY_COLOR,
 		borderRadius: 35,
 		justifyContent: 'center',
+		alignItems: "center",
+		flexDirection: "row",
 		opacity: 1,
 	},
 	PrimaryButtonText: {
