@@ -41,8 +41,6 @@ export const HomeScreen = ({ navigation }) => {
 
 	return (
 		<View style={{ padding: 8 }}>
-			<TextSubHeader2 text="Notifications" />
-			<TextSubHeader2 text="Your next medication" />
 
 			<View style={{
 				width: '100%',
