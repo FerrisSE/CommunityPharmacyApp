@@ -44,7 +44,7 @@ export const registerSlice = createSlice({
 			state.address = action.payload;
 		},
 		setPhone: (state, action) => {
-			state.phone = action.payload;
+			state.phoneNumber = action.payload;
 		},
 		setBirthDate: (state, action) => {
 			state.birthDate = action.payload;
