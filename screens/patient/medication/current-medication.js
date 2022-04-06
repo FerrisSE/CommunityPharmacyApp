@@ -9,7 +9,7 @@ import axios from 'axios';
 import { addMed, removeMed } from '../../../redux/slices/cart-slice';
 import { ShoppingCart } from '../../../components/shopping-cart';
 import { SERVER_URL } from '../../../constants';
-import { AdherenceButtonLarge } from '../../../components/adherence-button';
+import { AdherenceButtonLarge } from '../../../components/adherence-components';
 
 const CurrentMedicationScreen = ({ navigation, route }) => {
 	let [fhirPatient, setFhirPatient] = React.useState('')

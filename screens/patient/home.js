@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Pressable, SafeAreaView, Text, View } from 'react-native';
-import { AdherenceButtonSmall } from '../../components/adherence-button';
+import { AdherenceButtonSmall } from '../../components/adherence-components';
 import { TextBody, TextHeader2, TextSubHeader1, TextSubHeader2 } from '../../components/text';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
 import { Card } from '../../components/cards';

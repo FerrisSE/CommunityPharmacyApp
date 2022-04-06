@@ -63,7 +63,7 @@ const PatientScreenStack = ({ navigation }) => {
 				name="Adherence"
 				component={AdherenceScreen}
 				options={({ }) => ({
-					header: () => <Header title="My Adherence" nav={navigation} />
+					header: () => <Header title="My Med Score" nav={navigation} />
 				})}
 			/>
 		</Tab.Navigator>

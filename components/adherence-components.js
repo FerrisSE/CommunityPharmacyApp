@@ -12,25 +12,10 @@ export const AdherenceButtonLarge = ({ navigation }) => {
 		<Pressable onPress={toAdherence}>
 			<Card depth={1} color="secondary" style={{ padding: 16, marginBottom: 12 }}>
 				<View style={{ flex: 1, flexDirection: "row", }}>
-					<Progress.Circle
-						animated={false}
-						size={110}
-						progress={0.33}
-						showsText={true}
-						color="#79DCAD"
-						unfilledColor="#FFFFFF"
-						textStyle={{
-							color: "#000",
-							fontFamily: "OpenSans-Light",
-							fontSize: 26,
-						}}
-						thickness={6}
-						fill="#00000000"
-						borderWidth={0}
-					/>
+					<AdherenceGraph size={110} percent={0.33} />
 
 					<View style={{ marginLeft: 24 }}>
-						<TextSubHeader1 text="My Adherence" />
+						<TextSubHeader1 text="My Med Score" />
 						<TextNote text="tap to view more" />
 						<View style={{ flex: 1, flexDirection: "row", marginTop: 8, alignContent: "space-between" }}>
 							<View style={{ margin: 8 }}>
@@ -64,24 +49,40 @@ export const AdherenceButtonSmall = ({ navigation }) => {
 				</View>
 
 				<View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-					<Progress.Circle
-						animated={false}
-						size={148}
-						progress={0.33}
-						showsText={true}
-						color="#79DCAD"
-						unfilledColor="#FFFFFF"
-						textStyle={{
-							color: "#000",
-							fontFamily: "OpenSans-Light",
-							fontSize: 26,
-						}}
-						thickness={8}
-						fill="#00000000"
-						borderWidth={0}
-					/>
+					<AdherenceGraph size={148} percent={0.33} />
 				</View>
 			</Card>
 		</Pressable>
+	)
+}
+
+export const AdherenceGraph = ({ size, percent }) => {
+	let fontSize = Math.floor(size / 4);
+	let thickness = Math.floor(size / 16);
+	let font = size > 180 ? "OpenSans-SemiBold" : "OpenSans-Light";
+
+	let color = "#79DCAD";
+	if (percent < 0.8)
+		color = "#FFBF48"
+	if (percent < 0.5)
+		color = "#F56A4C"
+
+	return (
+		<Progress.Circle
+			animated={false}
+			size={size}
+			progress={percent}
+			showsText={true}
+			color={color}
+			unfilledColor="#FFFFFF"
+			textStyle={{
+				color: "#000",
+				fontFamily: "OpenSans-SemiBold",
+				fontSize: fontSize,
+			}}
+			thickness={thickness}
+			fill="#00000000"
+			borderWidth={0}
+		/>
 	)
 }
