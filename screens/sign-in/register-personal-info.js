@@ -1,6 +1,5 @@
-import { format } from 'date-fns';
 import React, { useState } from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { OutlineButton, PrimaryButton } from '../../components/buttons';
 import { DatePicker } from '../../components/date-picker';

@@ -27,7 +27,7 @@ export const RegisterAccountInfoScreen = ({ navigation }) => {
 		if (password != passwordConfirm || email == "" || password == "" || !isPossiblePhoneNumber(phoneNumber))
 			return;
 
-		navigation.push("Register Preferred Pharmacy");
+		navigation.push("Register Address");
 	}
 
 	return (
