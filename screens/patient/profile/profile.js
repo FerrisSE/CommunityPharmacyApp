@@ -8,7 +8,7 @@ import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcon
 import { useSelector } from 'react-redux';
 import { PRIMARY_COLOR } from '../../../colors';
 import { Card } from '../../../components/cards';
-import { TextBody, TextHeader3, TextSubHeader1, TextSubHeader2 } from '../../../components/text';
+import { TextBody, TextSubHeader1, TextSubHeader2 } from '../../../components/text';
 import { SERVER_URL } from '../../../constants';
 
 const Stack = createNativeStackNavigator();
@@ -24,7 +24,7 @@ const ProfileScreen = ({ navigation, route }) => {
 	const userToken = useSelector((state) => state.userToken.value);
 	const isFocused = useIsFocused();
 	useEffect(() => {
-		// get the clients list of scheduled events
+		// get the profile data
 		axios({
 			method: 'get',
 			url: `${SERVER_URL}/user/me`,
@@ -37,10 +37,20 @@ const ProfileScreen = ({ navigation, route }) => {
 		});
 	}, [isFocused]);
 
+	const EditProfile = () => {
+		navigation.navigate("Edit Profile");
+	}
+
 	return (
 		<ScrollView>
 			<View style={{ margin: 16 }}>
-				<TextHeader3 text={`${profileData.firstName} ${profileData.lastName}`} />
+				<View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+					<TextSubHeader1 text={`${profileData.firstName} ${profileData.lastName}`} />
+					<Pressable onPress={EditProfile} style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
+						<Icon name='pencil-box-outline' size={16} color={PRIMARY_COLOR} />
+						<TextBody style={{ color: PRIMARY_COLOR }} text="Edit Profile" />
+					</Pressable>
+				</View>
 
 				<TextSubHeader2 text="Date of Birth" style={{ marginTop: 8 }} />
 				<Card depth={1} style={{ padding: 14, margin: 4 }}>
