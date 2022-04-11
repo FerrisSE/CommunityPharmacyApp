@@ -70,38 +70,40 @@ export const LoginScreen = ({ navigation }) => {
 	}
 
 	return (
-		<SafeAreaView style={{ margin: 16 }}>
-			<TextHeader1 text="Login" style={{ marginTop: 40, marginBottom: 40 }} />
+		<SafeAreaView style={{ alignItems: "center" }}>
+			<View style={{ margin: 8, width: "100%", maxWidth: "30rem" }}>
+				<TextHeader1 text="Login" style={{ marginTop: 40, marginBottom: 40 }} />
 
-			<TextSubHeader1 text="Username" />
-			<Input placeholder="username" setText={setInputUsername} defaultValue={inputUsername} />
+				<TextSubHeader1 text="Username" />
+				<Input placeholder="username" setText={setInputUsername} defaultValue={inputUsername} />
 
-			<TextSubHeader1 text="Password" />
-			<Input placeholder="password" setText={setInputPassword} defaultValue={inputPassword} hideText={true} />
+				<TextSubHeader1 text="Password" />
+				<Input placeholder="password" setText={setInputPassword} defaultValue={inputPassword} hideText={true} />
 
-			<View style={{ margin: 20 }}>
-				<BouncyCheckbox text="Keep me Logged in" onPress={(isChecked) => { }} fillColor={PRIMARY_COLOR} textStyle={{
-					textDecorationLine: "none",
-				}} />
-			</View>
+				<View style={{ margin: 20 }}>
+					<BouncyCheckbox text="Keep me Logged in" onPress={(isChecked) => { }} fillColor={PRIMARY_COLOR} textStyle={{
+						textDecorationLine: "none",
+					}} />
+				</View>
 
-			<View style={{ marginTop: 20, marginBottom: 40 }}>
-				<PrimaryButton label="Login" onPress={Login}
-				/>
-			</View>
+				<View style={{ marginTop: 20, marginBottom: 40 }}>
+					<PrimaryButton label="Login" onPress={Login}
+					/>
+				</View>
 
-			<View style={{ flex: 1, flexGrow: 0, alignItems: 'center' }}>
-				<TextNote text="Don't have an account?" style={{ margin: 8 }} />
-				<PrimaryButton label="Sign Up" onPress={goToRegister} style={{ paddingLeft: 16, paddingRight: 16 }} />
+				<View style={{ flex: 1, flexGrow: 0, alignItems: 'center' }}>
+					<TextNote text="Don't have an account?" style={{ margin: 8 }} />
+					<PrimaryButton label="Sign Up" onPress={goToRegister} style={{ paddingLeft: 16, paddingRight: 16 }} />
 
-				<TextNote text="or" style={{ margin: 8 }} />
-				<PrimaryButton
-					label="Login with MyChart"
-					onPress={openMyChartLogin}
-					style={{ backgroundColor: "#CE3545", paddingLeft: 16, paddingRight: 16 }}
-					icon="folder-heart"
-					iconSide="left"
-				/>
+					<TextNote text="or" style={{ margin: 8 }} />
+					<PrimaryButton
+						label="Login with MyChart"
+						onPress={openMyChartLogin}
+						style={{ backgroundColor: "#CE3545", paddingLeft: 16, paddingRight: 16 }}
+						icon="folder-heart"
+						iconSide="left"
+					/>
+				</View>
 			</View>
 
 			<Modal
