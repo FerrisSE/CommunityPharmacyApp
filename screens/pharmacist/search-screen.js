@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
+import { TextHeader1 } from '../../components/text';
 import { SERVER_URL } from '../../constants';
 
 const SearchForPatient = (firstName, familyName, birthdate, setPatients) => {
@@ -17,7 +18,7 @@ const SearchForPatient = (firstName, familyName, birthdate, setPatients) => {
 		})
 }
 
-const SearchScreen = ({ navigation }) => {
+export const SearchScreen = ({ navigation }) => {
 	let [patients, setPatients] = React.useState([])
 	let [givenName, setGivenName] = React.useState('')
 	let [familyName, setFamilyName] = React.useState('')
@@ -26,8 +27,12 @@ const SearchScreen = ({ navigation }) => {
 	let [birthMonth, setBirthMonth] = React.useState('')
 	let [birthYear, setBirthYear] = React.useState('')
 
-	return (<View></View>);
-	// TODO: comeback to this when working on the pharmacy side. For it is just disabled
+	return (
+		<View style={{ margin: 12 }}>
+			<TextHeader1 text="Patient Search" />
+		</View>
+	)
+	// TODO: comeback to this when working on the pharmacy side. For now it is just disabled
 	// 	<View style={mainStyles.container}>
 	// 		<Text style={mainStyles.title}>Patient Search</Text>
 
@@ -92,5 +97,3 @@ const SearchScreen = ({ navigation }) => {
 	// 	</View>
 	// );
 };
-
-export default SearchScreen;

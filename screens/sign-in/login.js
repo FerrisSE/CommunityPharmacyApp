@@ -103,6 +103,11 @@ export const LoginScreen = ({ navigation }) => {
 						icon="folder-heart"
 						iconSide="left"
 					/>
+					<PrimaryButton
+						style={{ margin: 8 }}
+						label="to pharmacists screens"
+						onPress={() => changeStack('Pharmacist')}
+					/>
 				</View>
 			</View>
 
