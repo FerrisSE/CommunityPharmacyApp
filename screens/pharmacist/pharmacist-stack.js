@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { PharmacistTabNavigator } from '../../components/pharmacist-tabs';
 import { PharmacistSchedule } from './pharmacist-schedule';
-import { SearchScreen } from "./search-screen";
+import { SearchScreen } from "./patient-search";
 
 const nav = createNativeStackNavigator();
 

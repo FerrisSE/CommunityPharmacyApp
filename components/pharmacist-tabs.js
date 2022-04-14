@@ -61,7 +61,7 @@ export const PharmacistTabNavigator = ({ initialRouteName, children, screenOptio
 				</View>
 
 				{/* Render Selected Screen */}
-				<View>
+				<View style={{ flex: 1 }}>
 					{descriptors[state.routes[state.index].key].render()}
 				</View>
 
