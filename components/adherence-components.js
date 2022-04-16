@@ -5,8 +5,18 @@ import { TextBody, TextNote, TextSubHeader1 } from "./text";
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
 import { SECONDARY_COLOR } from "../colors";
 
+const meds = [
+	{ name: "Amoxicillian", taken: 24.0, skipped: 6.0 },
+	{ name: "Test Med", taken: 10.0, skipped: 5.0 }
+]
+
+const GetMedAdherence = (med) => med.taken / (med.taken + med.skipped);
+
 export const AdherenceButtonLarge = ({ navigation }) => {
 	const toAdherence = () => navigation.navigate("Adherence");
+
+	let mostMissed = meds.reduce((c, m) => GetMedAdherence(c) < GetMedAdherence(m) ? c : m);
+	let leastMissed = meds.reduce((c, m) => GetMedAdherence(c) > GetMedAdherence(m) ? c : m);
 
 	return (
 		<Pressable onPress={toAdherence}>
@@ -20,11 +30,11 @@ export const AdherenceButtonLarge = ({ navigation }) => {
 						<View style={{ flex: 1, flexDirection: "row", marginTop: 8, alignContent: "space-between" }}>
 							<View style={{ margin: 8 }}>
 								<TextNote text="Most Missed" />
-								<TextBody text="Med Name" />
+								<TextBody text={mostMissed.name} />
 							</View>
 							<View style={{ margin: 8 }}>
-								<TextNote text="Most Missed" />
-								<TextBody text="Med Name" />
+								<TextNote text="Least Missed" />
+								<TextBody text={leastMissed.name} />
 							</View>
 						</View>
 					</View>
