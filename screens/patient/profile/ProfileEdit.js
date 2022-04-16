@@ -14,37 +14,49 @@ import { SERVER_URL } from "../../../constants";
 export const ProfileEdit = ({ navigation }) => {
 	const [firstName, setFirstname] = useState('');
 	const [lastName, setLastname] = useState('');
-	const [birthDate, setBirthDate] = useState('');
 	const [address, setAddress] = useState('');
 	const [phoneNumber, setPhoneNumber] = useState('');
 	const [email, setEmail] = useState('');
 
 	const userToken = useSelector((state) => state.userToken.value);
 	const isFocused = useIsFocused();
-	useEffect(() => {
+	useEffect(async () => {
 		// get the profile data
-		axios({
+		let profile = (await axios({
 			method: 'get',
 			url: `${SERVER_URL}/user/me`,
 			headers: {
 				Authorization: userToken,
 			}
-		}).then(resp => {
-			setFirstname(resp.data.firstName);
-			setLastname(resp.data.lastName);
-			setBirthDate(resp.data.birthDate);
-			setAddress(resp.data.address);
-			setPhoneNumber(resp.data.phoneNumber);
-			setEmail(resp.data.email);
-		});
+		})).data;
+
+		setFirstname(profile.firstName);
+		setLastname(profile.lastName);
+		setAddress(profile.address);
+		setPhoneNumber(profile.phoneNumber);
+		setEmail(profile.email);
 	}, [isFocused]);
 
 	const PressCancel = () => {
 		navigation.navigate("Profile");
 	}
 
-	const PressSave = () => {
-		// save
+	const PressSave = async () => {
+		await axios({
+			method: 'patch',
+			url: `${SERVER_URL}/user/me`,
+			headers: {
+				Authorization: userToken,
+			},
+			data: {
+				firstName: firstName,
+				lastName: lastName,
+				address: address,
+				phoneNumber: phoneNumber,
+				email: email,
+			}
+		});
+
 		navigation.navigate("Profile");
 	}
 
@@ -57,14 +69,6 @@ export const ProfileEdit = ({ navigation }) => {
 
 			<TextNote text="Last Name" />
 			<Input placeholder="Last Name" defaultText={lastName} setText={setLastname} />
-
-			<TextNote text="Birth Date" />
-			<DatePicker
-				date={birthDate}
-				setDate={setBirthDate}
-				minimumDate={new Date(1800, 1)}
-				maximumDate={new Date()}
-			/>
 
 			<TextNote text="Address" />
 			<Input placeholder="Address" defaultText={address} setText={setAddress} />

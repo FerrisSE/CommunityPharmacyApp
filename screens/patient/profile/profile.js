@@ -31,10 +31,7 @@ const ProfileScreen = ({ navigation, route }) => {
 			headers: {
 				Authorization: userToken,
 			}
-		}).then(response => {
-			console.log(response);
-			setProfileData(response.data);
-		});
+		}).then(response => setProfileData(response.data));
 	}, [isFocused]);
 
 	const EditProfile = () => {

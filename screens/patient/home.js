@@ -28,7 +28,6 @@ export const HomeScreen = ({ navigation }) => {
 				Authorization: userToken,
 			}
 		}).then(response => {
-			console.log(response.data.length);
 			if (response.data.length > 0) {
 				setNextEvent({
 					name: response.data[0].category,
