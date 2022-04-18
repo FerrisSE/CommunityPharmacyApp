@@ -69,7 +69,6 @@ export const AdherenceButtonSmall = ({ navigation }) => {
 export const AdherenceGraph = ({ size, percent }) => {
 	let fontSize = Math.floor(size / 4);
 	let thickness = Math.floor(size / 16);
-	let font = size > 180 ? "OpenSans-SemiBold" : "OpenSans-Light";
 
 	let color = "#79DCAD";
 	if (percent < 0.8)
