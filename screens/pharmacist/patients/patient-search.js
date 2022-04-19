@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { TextHeader2, TextHeader3, TextSubHeader2 } from '../../../components/text';
-import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
+import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
 import { SERVER_URL } from '../../../constants';
 import { Card } from '../../../components/cards';
 import { Input } from '../../../components/input';
@@ -11,7 +11,15 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
 
-const PatientResult = ({ patient }) => {
+const PatientResult = ({ patient, nav }) => {
+	const viewPatient = () =>
+		nav.navigate({
+			name: 'Patient View',
+			params: {
+				patient: patient
+			}
+		});
+
 	return (
 		<View>
 			<View style={{ flexDirection: 'row', alignContent: 'center' }}>
@@ -22,7 +30,7 @@ const PatientResult = ({ patient }) => {
 				</View>
 				<View style={{ flex: 1, flexDirection: 'row', alignContent: 'center', justifyContent: 'flex-end' }}>
 					<OutlineButton label="Schedule" style={{ margin: 4 }} />
-					<OutlineButton label="View Profile" style={{ margin: 4, marginLeft: 12 }} />
+					<OutlineButton label="View Profile" onPress={viewPatient} style={{ margin: 4, marginLeft: 12 }} />
 				</View>
 			</View>
 
@@ -70,8 +78,8 @@ export const PharmacistPatientSearchScreen = ({ navigation }) => {
 
 						<Card style={{ backgroundColor: WHITE, padding: 16, flex: 1 }} depth={0}>
 							<ScrollView>
-								{patients.map((patient) => (
-									<PatientResult patient={patient} />
+								{patients.map((patient, index) => (
+									<PatientResult key={index} patient={patient} nav={navigation} />
 								))}
 							</ScrollView>
 						</Card>
