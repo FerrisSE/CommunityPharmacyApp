@@ -9,12 +9,15 @@ import axios from 'axios';
 import { addMed, removeMed } from '../../../redux/slices/cart-slice';
 import { ShoppingCart } from '../../../components/shopping-cart';
 import { SERVER_URL } from '../../../constants';
+import { AdherenceButtonLarge } from '../../../components/adherence-components';
 
-const CurrentMedicationScreen = ({ navigation }) => {
+const CurrentMedicationScreen = ({ navigation, route }) => {
 	let [fhirPatient, setFhirPatient] = React.useState('')
 	let [loading, setLoading] = React.useState(true)
 	let [error, setError] = React.useState(false)
 	let [searchText, setSearchText] = React.useState('')
+
+	const { nav } = route.params; // access to tab navigator
 
 	const userToken = useSelector((state) => state.userToken.value);
 	const cart = useSelector((state) => state.cart);
@@ -66,6 +69,9 @@ const CurrentMedicationScreen = ({ navigation }) => {
 	return (
 		<ScrollView>
 			<SafeAreaView style={{ flex: 1, margin: 8 }}>
+
+				<AdherenceButtonLarge navigation={nav} />
+
 				<View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', padding: 8, paddingTop: 16 }}>
 					<TextSubHeader1 text="Current Medications" style={{ marginBottom: 4 }} />
 					<ShoppingCart navigation={navigation} numbInCart={cart.meds.length} />

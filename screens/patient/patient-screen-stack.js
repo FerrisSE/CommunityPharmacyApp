@@ -8,10 +8,12 @@ import { PRIMARY_COLOR, WHITE } from "../../colors";
 import ProfileScreen from "./profile/profile";
 import { Header } from "../../components/header";
 import { HomeScreen } from "./home";
+import { AdherenceScreen } from "./adherence";
+import { ProfileEdit } from "./profile/ProfileEdit";
 
 const Tab = createBottomTabNavigator();
 
-const hiddenTabs = ['Profile', 'Home'];
+const hiddenTabs = ['Profile', 'Home', 'Adherence', 'Edit Profile'];
 
 const PatientScreenStack = ({ navigation }) => {
 	return (
@@ -54,9 +56,22 @@ const PatientScreenStack = ({ navigation }) => {
 			<Tab.Screen
 				name="Profile"
 				component={ProfileScreen}
-				initialParams={{ nav: navigation }}
 				options={({ }) => ({
 					header: () => <Header title="Profile" nav={navigation} />
+				})}
+			/>
+			<Tab.Screen
+				name="Edit Profile"
+				component={ProfileEdit}
+				options={({ }) => ({
+					headerShown: false
+				})}
+			/>
+			<Tab.Screen
+				name="Adherence"
+				component={AdherenceScreen}
+				options={({ }) => ({
+					header: () => <Header title="My Med Score" nav={navigation} />
 				})}
 			/>
 		</Tab.Navigator>

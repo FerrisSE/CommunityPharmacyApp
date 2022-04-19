@@ -16,12 +16,15 @@ export const RegisterConsentFormScreen = ({ navigation }) => {
 	let Register = () => {
 		let config = {
 			method: 'post',
-			url: `${SERVER_URL}/api/register`,
+			url: `${SERVER_URL}/auth/register`,
 			data: {
-				firstName: registerData.firstName,
-				lastName: registerData.lastName,
 				email: registerData.email,
 				password: registerData.password,
+				firstName: registerData.firstName,
+				lastName: registerData.lastName,
+				address: registerData.address,
+				phoneNumber: registerData.phoneNumber,
+				birthDate: registerData.birthDate,
 			},
 		};
 

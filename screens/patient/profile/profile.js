@@ -1,44 +1,70 @@
+import { useIsFocused } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
+import { useSelector } from 'react-redux';
 import { PRIMARY_COLOR } from '../../../colors';
 import { Card } from '../../../components/cards';
-import { TextBody, TextHeader3, TextSubHeader1, TextSubHeader2 } from '../../../components/text';
+import { TextBody, TextSubHeader1, TextSubHeader2 } from '../../../components/text';
+import { SERVER_URL } from '../../../constants';
 
 const Stack = createNativeStackNavigator();
 
 const ProfileScreen = ({ navigation, route }) => {
-	// we need the nav of the patient/pharmacist/login stack in order to logout, not the patient stack
-	const { nav } = route.params;
+	const [profileData, setProfileData] = useState({});
 
 	const logout = () => {
 		//TODO: remove sign in details from redux
-		nav.navigate("Login");
+		navigation.navigate("Login");
+	}
+
+	const userToken = useSelector((state) => state.userToken.value);
+	const isFocused = useIsFocused();
+	useEffect(() => {
+		// get the profile data
+		axios({
+			method: 'get',
+			url: `${SERVER_URL}/user/me`,
+			headers: {
+				Authorization: userToken,
+			}
+		}).then(response => setProfileData(response.data));
+	}, [isFocused]);
+
+	const EditProfile = () => {
+		navigation.navigate("Edit Profile");
 	}
 
 	return (
 		<ScrollView>
 			<View style={{ margin: 16 }}>
-				<TextHeader3 text="Allen Curtis" />
+				<View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+					<TextSubHeader1 text={`${profileData.firstName} ${profileData.lastName}`} />
+					<Pressable onPress={EditProfile} style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
+						<Icon name='pencil-box-outline' size={16} color={PRIMARY_COLOR} />
+						<TextBody style={{ color: PRIMARY_COLOR }} text="Edit Profile" />
+					</Pressable>
+				</View>
 
 				<TextSubHeader2 text="Date of Birth" style={{ marginTop: 8 }} />
 				<Card depth={1} style={{ padding: 14, margin: 4 }}>
-					<TextBody text="02/12/1964" />
+					<TextBody text={profileData.birthdate} />
 				</Card>
 
 				<TextSubHeader2 text="Address" style={{ marginTop: 8 }} />
 				<Card depth={1} style={{ padding: 14, margin: 4 }}>
-					<TextBody text="7475 Mulberry Dr. Grand Rapids, MI, 49536" />
+					<TextBody text={profileData.address} />
 				</Card>
 
 				<TextSubHeader2 text="Contact" style={{ marginTop: 8 }} />
 				<Card depth={1} style={{ padding: 14, margin: 4 }}>
-					<TextBody text="616-566-7685" />
+					<TextBody text={`Phone: ${profileData.phoneNumber}`} />
 				</Card>
 				<Card depth={1} style={{ padding: 14, margin: 4 }}>
-					<TextBody text="allencurtis64@gmail.com" />
+					<TextBody text={`Email: ${profileData.email}`} />
 				</Card>
 
 				<TextSubHeader2 text="Insurance on File" style={{ marginTop: 8 }} />

@@ -1,15 +1,16 @@
-import React from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { OutlineButton, PrimaryButton } from '../../components/buttons';
+import { DatePicker } from '../../components/date-picker';
 import { Input } from '../../components/input';
 import { TextHeader2, TextNote } from '../../components/text';
-import { setFirstName, setLastName, setMiddleName } from '../../redux/slices/register-slice';
+import { setBirthDate, setFirstName, setLastName, setMiddleName } from '../../redux/slices/register-slice';
 
 export const RegisterPersonalInfoScreen = ({ navigation }) => {
 	let navBack = () => navigation.pop();
 	let navNext = () => {
-		if (firstName == "" || middleName == "" || lastName == "")
+		if (firstName == "" || middleName == "" || lastName == "" || birthDate == "")
 			return;
 
 		navigation.push("Register Account Info");
@@ -20,10 +21,12 @@ export const RegisterPersonalInfoScreen = ({ navigation }) => {
 	const firstName = useSelector((state) => state.register.firstName);
 	const middleName = useSelector((state) => state.register.middleName);
 	const lastName = useSelector((state) => state.register.lastName);
+	const birthDate = useSelector((state) => state.register.birthDate);
 
 	const changeFirstName = (name) => dispatch(setFirstName(name));
 	const changeMiddleName = (name) => dispatch(setMiddleName(name));
 	const changeLastName = (name) => dispatch(setLastName(name));
+	const changeBirthDate = (date) => dispatch(setBirthDate(date));
 
 	return (
 		<SafeAreaView style={{ padding: 16, paddingTop: 32 }}>
@@ -37,6 +40,14 @@ export const RegisterPersonalInfoScreen = ({ navigation }) => {
 
 			<TextNote text="Last Name" />
 			<Input placeholder="Last Name" defaultText={lastName} setText={changeLastName} />
+
+			<TextNote text="Birth Date" />
+			<DatePicker
+				date={birthDate}
+				setDate={changeBirthDate}
+				minimumDate={new Date(1800, 1)}
+				maximumDate={new Date()}
+			/>
 
 			<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
 				<OutlineButton label="< Back" style={{ margin: 16 }} onPress={navBack} />

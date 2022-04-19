@@ -7,6 +7,7 @@ import { RegisterPersonalInfoScreen } from './register-personal-info';
 import { RegisterAccountInfoScreen } from './register-account-info';
 import { RegisterPharmacyScreen } from './register-pharmacy';
 import { RegisterSucceededScreen } from './register-succeeded';
+import { RegisterAddressScreen } from './register-address';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,13 @@ export const LoginStack = ({ navigation }) => {
 			<Stack.Screen
 				name="Register Account Info"
 				component={RegisterAccountInfoScreen}
+				options={({ route }) => ({
+					headerShown: false
+				})}
+			/>
+			<Stack.Screen
+				name="Register Address"
+				component={RegisterAddressScreen}
 				options={({ route }) => ({
 					headerShown: false
 				})}

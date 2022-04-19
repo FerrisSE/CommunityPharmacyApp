@@ -12,6 +12,7 @@ const MedicationScreenStack = ({ navigation }) => {
 		<Stack.Navigator>
 			<Stack.Screen
 				name="My Meds"
+				initialParams={{ nav: navigation }}
 				component={CurrentMedicationScreen}
 				options={({ }) => ({
 					header: () => <Header title="My Rx" nav={navigation} />

@@ -4,13 +4,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ModalPortal } from 'react-native-modals';
 
 import ProfileScreen from './screens/patient/profile/profile';
-import SearchScreen from './screens/pharmacist/search-screen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PatientScreenStack from './screens/patient/patient-screen-stack';
 import { LoginStack } from './screens/sign-in/login-stack';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import { useFonts } from 'expo-font';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { PharmacistStack } from './screens/pharmacist/pharmacist-stack';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -53,34 +54,36 @@ export default function App() {
   }
 
   return (
-    <Provider store={store}>
-      <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Login"
-            component={LoginStack}
-            options={({ route }) => ({
-              headerShown: false
-            })}
-          />
-          <Stack.Screen
-            name="Pharmacist"
-            component={PharmacistApp}
-            options={({ route }) => ({
-              headerShown: false
-            })}
-          />
-          <Stack.Screen
-            name="Patient"
-            component={PatientScreenStack}
-            options={({ route }) => ({
-              headerShown: false
-            })}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-      <ModalPortal />
-    </Provider>
+    <SafeAreaProvider>
+      <Provider store={store}>
+        <NavigationContainer ref={navigationRef}>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Login"
+              component={LoginStack}
+              options={({ route }) => ({
+                headerShown: false
+              })}
+            />
+            <Stack.Screen
+              name="Pharmacist"
+              component={PharmacistStack}
+              options={({ route }) => ({
+                headerShown: false
+              })}
+            />
+            <Stack.Screen
+              name="Patient"
+              component={PatientScreenStack}
+              options={({ route }) => ({
+                headerShown: false
+              })}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+        <ModalPortal />
+      </Provider>
+    </SafeAreaProvider>
   );
 }
 
