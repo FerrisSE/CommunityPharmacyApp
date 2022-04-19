@@ -22,11 +22,11 @@ export const PharmacistPatientView = ({ navigation, route }) => {
 	const [currentScreen, setCurrentScreen] = useState(0);
 	const screens = [
 		{ name: "Personal Information", icon: "account-circle", screen: <PharmacistPatientInformationScreen /> },
-		{ name: "Medication", icon: "pill", screen: <PharmacistPatientInformationScreen /> },
-		{ name: "Adherence", icon: "circle-slice-6", screen: <PharmacistPatientInformationScreen /> },
-		{ name: "Communications", icon: "forum", screen: <PharmacistPatientInformationScreen /> },
-		{ name: "Appointments", icon: "calendar-month", screen: <PharmacistPatientInformationScreen /> },
-		{ name: "Conditions", icon: "heart", screen: <PharmacistPatientInformationScreen /> },
+		{ name: "Medication", icon: "pill", screen: <TextSubHeader1 text="Placeholder for medication" /> },
+		{ name: "Adherence", icon: "circle-slice-6", screen: <TextSubHeader1 text="Placeholder for adherence" /> },
+		{ name: "Communications", icon: "forum", screen: <TextSubHeader1 text="Placeholder for communications" /> },
+		{ name: "Appointments", icon: "calendar-month", screen: <TextSubHeader1 text="Placeholder for appointments" /> },
+		{ name: "Conditions", icon: "heart", screen: <TextSubHeader1 text="Placeholder for conditions" /> },
 	];
 
 	const onBack = () => navigation.pop();
@@ -56,7 +56,7 @@ export const PharmacistPatientView = ({ navigation, route }) => {
 					</View>
 
 					{/* Screen Name */}
-					<TextSubHeader2 text={screens[currentScreen].name} style={{ flex: 2, alignSelf: 'flex-end' }} />
+					<TextSubHeader2 text={screens[currentScreen].name} style={{ flex: 2, marginLeft: 64, alignSelf: 'flex-end' }} />
 				</View>
 
 				<View style={{ flex: 1, flexDirection: 'row' }}>
