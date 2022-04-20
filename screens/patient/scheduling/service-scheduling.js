@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Pressable, SafeAreaView, ScrollView, View } from 'react-native';
-import { PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT, WHITE } from '../../../colors';
+import { PRIMARY_COLOR, WHITE } from '../../../colors';
 import { PrimaryButton } from '../../../components/buttons';
 import { CloseButton } from '../../../components/close-button';
 import { TextHeader2, TextNote, TextSubHeader2 } from '../../../components/text';
@@ -130,8 +130,8 @@ const ServiceScheduling = ({ navigation, route }) => {
 	}
 
 	return (
-		<ScrollView style={{ backgroundColor: "#A9A9CC", flex: 1 }}>
-			<SafeAreaView style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: "#EEEEF4", marginTop: 8, flex: 1 }}>
+		<SafeAreaView style={{ backgroundColor: "#A9A9CC", flex: 1, height: '100%' }}>
+			<SafeAreaView style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: "#EEEEF4", marginTop: 8, flex: 1, height: '100%' }}>
 				<View style={{ margin: 16 }}>
 					<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 						<TextSubHeader2 text="Service Scheduling" />
@@ -146,31 +146,35 @@ const ServiceScheduling = ({ navigation, route }) => {
 					{descVisible && <TextNote text={route.params.service.desc} style={{ margin: 4 }} />}
 				</View>
 
-				<View style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: WHITE, flex: 1, alignItems: 'center' }}>
-					<CalendarStrip
-						ref={calendarRef}
-						style={{ width: "90%", paddingTop: 32, paddingBottom: 32 }}
-						calendarHeaderStyle={{ fontFamily: "OpenSans-SemiBold", fontSize: 24 }}
-						datesBlacklist={datesBlacklistFunc}
-						onDateSelected={OnDateSelected}
-						calendarHeaderContainerStyle={{ padding: 4 }}
-						highlightDateContainerStyle={{ backgroundColor: PRIMARY_COLOR, borderRadius: 16, padding: 4 }}
-						highlightDateNumberStyle={{ color: WHITE }}
-						highlightDateNameStyle={{ color: WHITE }}
-						dayContainerStyle={{ backgroundColor: PRIMARY_COLOR_TRANSPARENT, borderRadius: 16, padding: 4 }}
-						dateNameStyle={{ color: PRIMARY_COLOR }}
-						dateNumberStyle={{ color: PRIMARY_COLOR }}
-					/>
+				<ScrollView style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: WHITE, flex: 1, height: '100%' }}>
+					<View style={{ flex: 1, alignItems: 'center' }}>
 
-					<TimePicker title="Available Appointments" subtitle="location name" times={timeSlots} activeId={pickedId} setActive={setPickedId} style={{ marginTop: 24, marginBottom: 24, width: '90%', flex: 1 }} />
+						<CalendarStrip
+							ref={calendarRef}
+							style={{ width: "95%", paddingTop: 32, paddingBottom: 32 }}
+							calendarHeaderStyle={{ fontFamily: "OpenSans-SemiBold", fontSize: 24 }}
+							datesBlacklist={datesBlacklistFunc}
+							onDateSelected={OnDateSelected}
+							calendarHeaderContainerStyle={{ padding: 4 }}
+							highlightDateContainerStyle={{ backgroundColor: PRIMARY_COLOR, borderRadius: 16, padding: 2 }}
+							highlightDateNumberStyle={{ color: WHITE }}
+							highlightDateNameStyle={{ color: WHITE }}
+							dayContainerStyle={{ backgroundColor: "#EDEDF4", borderRadius: 16, padding: 2 }}
+							dateNameStyle={{ color: PRIMARY_COLOR }}
+							dateNumberStyle={{ color: PRIMARY_COLOR }}
+						/>
 
-					<PrimaryButton
-						label="SELECT APPOINTMENT"
-						style={{ width: '75%', marginBottom: 32 }}
-						onPress={selectAppointment} />
-				</View>
+						<TimePicker title="Available Appointments" subtitle="location name" times={timeSlots} activeId={pickedId} setActive={setPickedId} style={{ marginTop: 24, marginBottom: 24, width: '90%', flex: 1 }} />
+
+						<PrimaryButton
+							label="SELECT APPOINTMENT"
+							style={{ width: '75%', marginBottom: 32 }}
+							onPress={selectAppointment} />
+
+					</View>
+				</ScrollView>
 			</SafeAreaView>
-		</ScrollView>
+		</SafeAreaView>
 	);
 };
 

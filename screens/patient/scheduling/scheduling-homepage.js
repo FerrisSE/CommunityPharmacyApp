@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import { ScrollView, View, SafeAreaView } from 'react-native';
 import { useSelector } from 'react-redux';
-import { WHITE } from '../../../colors';
 import { Card } from '../../../components/cards';
 import { Input } from '../../../components/input';
 import SchedulingButton from '../../../components/scheduling-card-button';
@@ -61,7 +60,6 @@ const SchedulingHomeScreen = ({ navigation }) => {
 				Authorization: userToken,
 			}
 		}).then(response => {
-			console.log(response);
 			setEvents(response.data.map(t => {
 				return {
 					name: t.category,

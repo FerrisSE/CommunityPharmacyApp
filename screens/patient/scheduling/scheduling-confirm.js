@@ -6,7 +6,7 @@ import { CloseButton } from "../../../components/close-button";
 import { TextHeader2, TextHeader3, TextNote, TextSubHeader1, TextSubHeader2 } from "../../../components/text";
 import { Modal, ModalFooter, ModalButton, ModalContent } from 'react-native-modals';
 import { useSelector } from "react-redux";
-import { SECONDARY_COLOR, WHITE } from "../../../colors";
+import { WHITE } from "../../../colors";
 import { Card } from "../../../components/cards";
 import { TextInput } from "react-native-gesture-handler";
 import { SERVER_URL } from "../../../constants";
@@ -62,7 +62,7 @@ export const SchedulingConfirmScreen = ({ navigation, route }) => {
 
 				<View style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: WHITE, flex: 1, padding: 16 }}>
 					{services.map(s =>
-						<View>
+						<View key={s.name}>
 							<TextHeader3 text={s.name} style={{ marginBottom: 24 }} />
 							<View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-evenly' }}>
 								<View style={{ flex: 1 }}>

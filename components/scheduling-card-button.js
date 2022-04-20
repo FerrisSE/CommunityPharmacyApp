@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT } from "../colors";
 
 const SchedulingButton = ({ onClicked, icon, label }) => {
+	const [iconSize, setIconSize] = React.useState(84);
+
 	return (
 		<TouchableOpacity
 			activeOpacity={0.6}
@@ -12,8 +14,11 @@ const SchedulingButton = ({ onClicked, icon, label }) => {
 			style={{ width: '50%', aspectRatio: 1 }}
 		>
 			<View style={cardStyles.CardView}>
-				<View style={cardStyles.iconView}>
-					<Icon name={icon} size={84} color={PRIMARY_COLOR} />
+				<View
+					style={cardStyles.iconView}
+					onLayout={layoutEvent => setIconSize(layoutEvent.nativeEvent.layout.width * 0.7)}
+				>
+					<Icon name={icon} size={iconSize} color={PRIMARY_COLOR} />
 				</View>
 				<Text style={cardStyles.cardText}>{label}</Text>
 			</View>
