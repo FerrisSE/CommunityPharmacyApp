@@ -7,7 +7,7 @@ const nav = createNativeStackNavigator();
 
 export const PharmacistStack = ({ navigation }) => {
 	return (
-		<PharmacistTabNavigator>
+		<PharmacistTabNavigator nav={navigation}>
 			<nav.Screen
 				name="Patients"
 				component={PharmacistPatientsStack}

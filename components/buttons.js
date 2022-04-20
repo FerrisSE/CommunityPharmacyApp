@@ -59,6 +59,8 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 		borderRadius: 35,
 		justifyContent: 'center',
+		alignItems: "center",
+		flexDirection: "row",
 		opacity: 1,
 	},
 	OutlineButtonText: {

@@ -1,9 +1,10 @@
 import React from "react";
 import { Pressable, View } from "react-native";
-import { PRIMARY_COLOR } from "../colors";
+import { PRIMARY_COLOR, WHITE } from "../colors";
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 import { TextSubHeader1 } from "./text";
 import { TabActions, TabRouter, useNavigationBuilder } from "@react-navigation/native";
+import { OutlineButton } from "./buttons";
 
 const Tab = ({ isSelected, tabIcon, tabName, onPress }) => {
 	const bgColor = isSelected ? "#CFCFE2" : "#00000000";
@@ -17,7 +18,7 @@ const Tab = ({ isSelected, tabIcon, tabName, onPress }) => {
 	)
 }
 
-export const PharmacistTabNavigator = ({ initialRouteName, children, screenOptions }) => {
+export const PharmacistTabNavigator = ({ initialRouteName, children, screenOptions, nav }) => {
 	const { state, navigation, descriptors, NavigationContent } = useNavigationBuilder(TabRouter, {
 		children,
 		screenOptions,
@@ -41,12 +42,24 @@ export const PharmacistTabNavigator = ({ initialRouteName, children, screenOptio
 		}
 	}
 
+	const logout = () => {
+		//TODO: clear token from state
+		nav.navigate('Login');
+	}
+
 	return (
 		<NavigationContent>
 			<View style={{ width: '100%', height: '100%', flex: 1, flexDirection: 'row' }}>
 
-				{/* Render Tabs */}
-				<View style={{ minWidth: 200, backgroundColor: PRIMARY_COLOR, height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+				{/* Side Bar */}
+				<View style={{ minWidth: 200, backgroundColor: PRIMARY_COLOR, height: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
+
+					{/* Profile Top */}
+					<View style={{ width: '100%', backgroundColor: "#CFCFE2" }}>
+						<Icon name="account-circle" size={64} color={PRIMARY_COLOR} style={{ margin: 8, marginTop: 32 }} />
+					</View>
+
+					{/* Render Tabs */}
 					<View>
 						{state.routes.map((route, index) => (
 							<Tab
@@ -58,6 +71,15 @@ export const PharmacistTabNavigator = ({ initialRouteName, children, screenOptio
 							/>
 						))}
 					</View>
+
+					{/* Logout */}
+					<OutlineButton
+						label="Logout"
+						onPress={logout}
+						color={"#CFCFE2"} style={{ width: '90%', marginBottom: 16 }}
+						icon='exit-to-app'
+						iconSide="right"
+					/>
 				</View>
 
 				{/* Render Selected Screen */}
