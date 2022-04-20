@@ -25,7 +25,7 @@ export const LoginScreen = ({ navigation }) => {
 
 	const dispatch = useDispatch();
 
-	let Login = () => {
+	let Login = (stackName) => {
 		var config = {
 			method: 'post',
 			url: `${SERVER_URL}/auth/login`,
@@ -38,7 +38,7 @@ export const LoginScreen = ({ navigation }) => {
 		axios(config)
 			.then(resp => {
 				dispatch(setToken(`Bearer ${resp.data.accessToken}`));
-				changeStack('Patient');
+				changeStack(stackName);
 			})
 			.catch(error => {
 				console.log(error);
@@ -87,8 +87,9 @@ export const LoginScreen = ({ navigation }) => {
 				</View>
 
 				<View style={{ marginTop: 20, marginBottom: 40 }}>
-					<PrimaryButton label="Login" onPress={Login}
+					<PrimaryButton style={{ marginBottom: 8 }} label="Login" onPress={() => Login('Patient')}
 					/>
+					<PrimaryButton label="Login as Pharmacist" onPress={() => Login('Pharmacist')} />
 				</View>
 
 				<View style={{ flex: 1, flexGrow: 0, alignItems: 'center' }}>
@@ -102,11 +103,6 @@ export const LoginScreen = ({ navigation }) => {
 						style={{ backgroundColor: "#CE3545", paddingLeft: 16, paddingRight: 16 }}
 						icon="folder-heart"
 						iconSide="left"
-					/>
-					<PrimaryButton
-						style={{ margin: 8 }}
-						label="to pharmacists screens"
-						onPress={() => changeStack('Pharmacist')}
 					/>
 				</View>
 			</View>
