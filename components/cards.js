@@ -2,26 +2,16 @@ import React from "react";
 import { View } from "react-native";
 import { HIGH_PRIORITY, HIGH_PRIORITY_TRANSPARENT, PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT, SECONDARY_COLOR, SECONDARY_COLOR_TRANSPARENT } from "../colors";
 
-export const Card = ({ color, depth, outlined, children, style }) => {
-	let backgroundColor = PRIMARY_COLOR_TRANSPARENT;
-	let outlineColor = PRIMARY_COLOR;
-
-	if (color == 'secondary') {
-		backgroundColor = SECONDARY_COLOR_TRANSPARENT;
-		outlineColor = SECONDARY_COLOR;
-	}
-
-	if (color == 'priority') {
-		backgroundColor = HIGH_PRIORITY_TRANSPARENT;
-		outlineColor = HIGH_PRIORITY;
-	}
+export const Card = ({ color, outlineColor, depth, children, style }) => {
+	if (!color)
+		color = PRIMARY_COLOR_TRANSPARENT;
 
 	return (
 		<View style={[{
-			backgroundColor: backgroundColor,
+			backgroundColor: color,
 			borderRadius: 20 - (depth - 1) * 4,
 			padding: 4,
-			borderWidth: outlined ? 3 : 0,
+			borderWidth: outlineColor ? 3 : 0,
 			borderColor: outlineColor,
 		}, { ...style }]}>
 			{children}
@@ -29,24 +19,19 @@ export const Card = ({ color, depth, outlined, children, style }) => {
 	)
 };
 
-export const CardWithHeader = ({ color, depth, outlined, header, children, style }) => {
-	let backgroundColor = PRIMARY_COLOR_TRANSPARENT;
-	let outlineColor = PRIMARY_COLOR;
-
-	if (color == 'secondary') {
-		backgroundColor = SECONDARY_COLOR_TRANSPARENT;
-		outlineColor = SECONDARY_COLOR;
-	}
+export const CardWithHeader = ({ color, outlineColor, depth, header, children, style }) => {
+	if (!color)
+		color = PRIMARY_COLOR_TRANSPARENT;
 
 	return (
 		<View style={[{
-			backgroundColor: backgroundColor,
+			backgroundColor: color,
 			borderRadius: 20 - (depth - 1) * 4,
-			borderWidth: outlined ? 3 : 0,
+			borderWidth: outlineColor ? 3 : 0,
 			borderColor: outlineColor,
 		}, { ...style }]}>
 			<View style={{
-				backgroundColor: backgroundColor,
+				backgroundColor: color,
 				borderTopLeftRadius: 20 - (depth - 1) * 4,
 				borderTopRightRadius: 20 - (depth - 1) * 4,
 				padding: 8,
@@ -63,18 +48,15 @@ export const CardWithHeader = ({ color, depth, outlined, header, children, style
 };
 
 export const CardKnockOut = ({ color, depth, children, style }) => {
-	let backgroundColor = PRIMARY_COLOR_TRANSPARENT;
-
-	if (color == 'secondary') {
-		backgroundColor = SECONDARY_COLOR_TRANSPARENT;
-	}
+	if (!color)
+		color = PRIMARY_COLOR_TRANSPARENT;
 
 	return (
 		<View style={[{
 			borderRadius: 20 - (depth - 1) * 4,
 			padding: 4,
 			borderWidth: 10,
-			borderColor: backgroundColor,
+			borderColor: color,
 		}, { ...style }]}>
 			{children}
 		</View>

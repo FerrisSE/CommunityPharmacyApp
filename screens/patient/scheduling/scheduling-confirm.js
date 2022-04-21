@@ -6,7 +6,7 @@ import { CloseButton } from "../../../components/close-button";
 import { TextHeader2, TextHeader3, TextNote, TextSubHeader1, TextSubHeader2 } from "../../../components/text";
 import { Modal, ModalFooter, ModalButton, ModalContent } from 'react-native-modals';
 import { useSelector } from "react-redux";
-import { WHITE } from "../../../colors";
+import { SECONDARY_COLOR_TRANSPARENT, WHITE } from "../../../colors";
 import { Card } from "../../../components/cards";
 import { TextInput } from "react-native-gesture-handler";
 import { SERVER_URL } from "../../../constants";
@@ -79,7 +79,7 @@ export const SchedulingConfirmScreen = ({ navigation, route }) => {
 
 					<TextNote text="Notes for Pharmacy" style={{ marginTop: 24 }} />
 					<View style={{ flex: 1, alignItems: 'center' }}>
-						<Card color='secondary' depth={1} style={{ width: '90%', height: 128, marginTop: 4, marginBottom: 48 }}>
+						<Card color={SECONDARY_COLOR_TRANSPARENT} depth={1} style={{ width: '90%', height: 128, marginTop: 4, marginBottom: 48 }}>
 							<TextInput
 								value={notes}
 								onChangeText={t => setNotes(t)}

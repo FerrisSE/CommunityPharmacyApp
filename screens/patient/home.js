@@ -4,7 +4,7 @@ import { AdherenceButtonSmall } from '../../components/adherence-components';
 import { TextBody, TextHeader2, TextSubHeader1, TextSubHeader2 } from '../../components/text';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
 import { Card } from '../../components/cards';
-import { SECONDARY_COLOR } from '../../colors';
+import { SECONDARY_COLOR, SECONDARY_COLOR_TRANSPARENT } from '../../colors';
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 import moment from 'moment';
@@ -52,7 +52,7 @@ export const HomeScreen = ({ navigation }) => {
 				<View style={{ width: '50%', padding: 16 }}>
 					<TextSubHeader2 text="Upcoming Events" style={{ marginLeft: 16 }} />
 					<Pressable onPress={toScheduling}>
-						<Card depth={1} color="secondary" style={{ padding: 16, flex: 1, aspectRatio: 1, margin: 8 }}>
+						<Card depth={1} color={SECONDARY_COLOR_TRANSPARENT} style={{ padding: 16, flex: 1, aspectRatio: 1, margin: 8 }}>
 							<View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
 								<Icon name="arrow-expand" size={20} color={SECONDARY_COLOR} />
 							</View>

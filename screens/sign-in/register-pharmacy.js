@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { SafeAreaView, Text, View } from 'react-native';
 import { Pressable } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { PRIMARY_COLOR } from '../../colors';
 import { OutlineButton, PrimaryButton } from '../../components/buttons';
 import { Card } from '../../components/cards';
 import { Input } from '../../components/input';
@@ -61,7 +62,7 @@ export const RegisterPharmacyScreen = ({ navigation }) => {
 
 				{filteredPharmacies.map(p =>
 					<Pressable key={p.id} onPress={() => setPreferredPharmacy(p.id)}>
-						<Card depth={2} outlined={p.id == preferredPharmacy} style={{ margin: 4, padding: 16 }}>
+						<Card depth={2} outlineColor={p.id == preferredPharmacy ? PRIMARY_COLOR : false} style={{ margin: 4, padding: 16 }}>
 							<TextSubHeader1 text={p.name} style={{ marginBottom: 8 }} />
 							<TextNote text="Address" />
 							<TextBody text={p.street} />

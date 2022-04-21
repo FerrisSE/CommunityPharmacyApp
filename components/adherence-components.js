@@ -3,7 +3,7 @@ import * as Progress from 'react-native-progress';
 import { Pressable, View } from "react-native";
 import { TextBody, TextNote, TextSubHeader1 } from "./text";
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
-import { SECONDARY_COLOR } from "../colors";
+import { SECONDARY_COLOR, SECONDARY_COLOR_TRANSPARENT } from "../colors";
 
 const meds = [
 	{ name: "Amoxicillian", taken: 24.0, skipped: 6.0 },
@@ -20,7 +20,7 @@ export const AdherenceButtonLarge = ({ navigation }) => {
 
 	return (
 		<Pressable onPress={toAdherence}>
-			<Card depth={1} color="secondary" style={{ padding: 16, marginBottom: 12 }}>
+			<Card depth={1} color={SECONDARY_COLOR_TRANSPARENT} style={{ padding: 16, marginBottom: 12 }}>
 				<View style={{ flex: 1, flexDirection: "row", }}>
 					<AdherenceGraph size={110} percent={0.33} />
 
@@ -53,7 +53,7 @@ export const AdherenceButtonSmall = ({ navigation }) => {
 
 	return (
 		<Pressable onPress={toAdherence}>
-			<Card depth={1} color="secondary" style={{ padding: 16, flex: 1, aspectRatio: 1, margin: 8 }}>
+			<Card depth={1} color={SECONDARY_COLOR_TRANSPARENT} style={{ padding: 16, flex: 1, aspectRatio: 1, margin: 8 }}>
 				<View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
 					<Icon name="arrow-expand" size={20} color={SECONDARY_COLOR} />
 				</View>
