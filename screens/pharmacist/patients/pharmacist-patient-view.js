@@ -6,6 +6,7 @@ import { TextBody, TextSubHeader1, TextSubHeader2 } from "../../../components/te
 import { Card } from "../../../components/cards";
 import { GRAY_1, GRAY_2, GRAY_4, PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT } from "../../../colors";
 import { PharmacistPatientMedicationScreen } from "./pharmacist-patient-mediction";
+import { PharmacistPatientAppointments } from "./pharmacist-patient-appointments";
 
 const Tab = ({ isSelected, tabIcon, tabName, onPress }) => {
 	const bgColor = isSelected ? PRIMARY_COLOR_TRANSPARENT : "#00000000";
@@ -25,8 +26,7 @@ export const PharmacistPatientView = ({ navigation, route }) => {
 		{ name: "Personal Information", icon: "account-circle", screen: <PharmacistPatientInformationScreen /> },
 		{ name: "Medication", icon: "pill", screen: <PharmacistPatientMedicationScreen /> },
 		{ name: "Adherence", icon: "circle-slice-6", screen: <TextSubHeader1 text="Placeholder for adherence" /> },
-		{ name: "Communications", icon: "forum", screen: <TextSubHeader1 text="Placeholder for communications" /> },
-		{ name: "Appointments", icon: "calendar-month", screen: <TextSubHeader1 text="Placeholder for appointments" /> },
+		{ name: "Appointments", icon: "calendar-month", screen: <PharmacistPatientAppointments /> },
 		{ name: "Conditions", icon: "heart", screen: <TextSubHeader1 text="Placeholder for conditions" /> },
 	];
 
