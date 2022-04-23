@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { PharmacistTabNavigator } from '../../components/pharmacist-tabs';
-import { PharmacistSchedule } from './pharmacist-schedule';
 import { PharmacistPatientsStack } from './patients/pharmacist-patients-stack';
+import { PharmacistSchedulingHomeScreen } from './scheduling/pharmacist-scheduling-home';
 
 const nav = createNativeStackNavigator();
 
@@ -18,7 +18,7 @@ export const PharmacistStack = ({ navigation }) => {
 			<nav.Screen
 				name="Scheduling"
 				icon="folder"
-				component={PharmacistSchedule}
+				component={PharmacistSchedulingHomeScreen}
 				options={{
 					icon: "calendar-month"
 				}}

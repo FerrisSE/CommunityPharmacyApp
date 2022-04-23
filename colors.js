@@ -10,6 +10,7 @@ export const HIGH_PRIORITY = "#F56A4C";
 export const HIGH_PRIORITY_TRANSPARENT = "#F56A4C1A";
 export const ACCENT_1 = "#FFBF48";
 export const ACCENT_2 = "#F1A4C9";
+export const ACCENT_3 = "#79DCAD";
 
 export const GRAY_1 = "#333333";
 export const GRAY_2 = "#4F4F4F";
