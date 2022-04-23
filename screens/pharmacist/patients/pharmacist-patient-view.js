@@ -7,6 +7,7 @@ import { Card } from "../../../components/cards";
 import { GRAY_1, GRAY_2, GRAY_4, PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT } from "../../../colors";
 import { PharmacistPatientMedicationScreen } from "./pharmacist-patient-mediction";
 import { PharmacistPatientAppointments } from "./pharmacist-patient-appointments";
+import { PharmacistPatientConditionsScreen } from "./pharmacist-patient-conditions";
 
 const Tab = ({ isSelected, tabIcon, tabName, onPress }) => {
 	const bgColor = isSelected ? PRIMARY_COLOR_TRANSPARENT : "#00000000";
@@ -27,7 +28,7 @@ export const PharmacistPatientView = ({ navigation, route }) => {
 		{ name: "Medication", icon: "pill", screen: <PharmacistPatientMedicationScreen /> },
 		{ name: "Adherence", icon: "circle-slice-6", screen: <TextSubHeader1 text="Placeholder for adherence" /> },
 		{ name: "Appointments", icon: "calendar-month", screen: <PharmacistPatientAppointments /> },
-		{ name: "Conditions", icon: "heart", screen: <TextSubHeader1 text="Placeholder for conditions" /> },
+		{ name: "Conditions", icon: "heart", screen: <PharmacistPatientConditionsScreen /> },
 	];
 
 	const onBack = () => navigation.pop();
