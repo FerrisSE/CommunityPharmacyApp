@@ -110,18 +110,17 @@ export const LoginScreen = ({ navigation }) => {
 			<Modal
 				visible={showDialog}
 				onTouchOutside={() => setDialog(false)}
-				footer={
-					<ModalFooter>
-						<ModalButton
-							text="OK"
-							onPress={() => setDialog(false)}
-						/>
-					</ModalFooter>
-				}
 			>
 				<ModalContent>
 					<TextSubHeader2 text={dialogText} />
 				</ModalContent>
+				<ModalFooter>
+					<ModalButton
+						text="OK"
+						onPress={() => setDialog(false)}
+						key="button-1"
+					/>
+				</ModalFooter>
 			</Modal>
 		</SafeAreaView>
 	)

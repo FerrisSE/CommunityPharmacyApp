@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ModalPortal } from 'react-native-modals';
-
-import ProfileScreen from './screens/patient/profile/profile';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PatientScreenStack from './screens/patient/patient-screen-stack';
 import { LoginStack } from './screens/sign-in/login-stack';
@@ -13,7 +10,6 @@ import { useFonts } from 'expo-font';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PharmacistStack } from './screens/pharmacist/pharmacist-stack';
 
-const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 export const navigationRef = React.createRef();
@@ -85,21 +81,4 @@ export default function App() {
       </Provider>
     </SafeAreaProvider>
   );
-}
-
-const pharmacistStack = createNativeStackNavigator();
-
-const PharmacistApp = ({ navigator }) => {
-  return (
-    <pharmacistStack.Navigator>
-      <pharmacistStack.Screen
-        name="Search"
-        component={SearchScreen}
-      />
-      <pharmacistStack.Screen
-        name="Patient Profile"
-        component={ProfileScreen}
-      />
-    </pharmacistStack.Navigator>
-  )
 }

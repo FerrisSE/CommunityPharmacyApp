@@ -57,24 +57,20 @@ export const RegisterConsentFormScreen = ({ navigation }) => {
 				<PrimaryButton label="Agree" style={{ paddingLeft: 24, paddingRight: 24 }} onPress={Register} />
 			</View>
 
-			<Modal
-				visible={modalVisible}
-				footer={
-					<ModalFooter
-						children={
-							<ModalButton
-								text="OK"
-								onPress={() => {
-									setModalVisible(false);
-								}}
-							/>
-						}
-					/>
-				}
-			>
+			<Modal visible={modalVisible}>
 				<ModalContent>
 					<TextSubHeader2 text="Failed to Create Account!" />
 				</ModalContent>
+				<ModalFooter
+					children={
+						<ModalButton
+							text="OK"
+							onPress={() => {
+								setModalVisible(false);
+							}}
+						/>
+					}
+				/>
 			</Modal>
 		</SafeAreaView>
 	);

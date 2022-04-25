@@ -102,24 +102,21 @@ export const SchedulingConfirmScreen = ({ navigation, route }) => {
 
 				</View>
 
-				<Modal
-					visible={popUpVisible}
-					footer={
-						<ModalFooter>
-							<ModalButton
-								text="Ok"
-								onPress={() => {
-									if (popUpFailed)
-										setPopUpVisible(false);
-									else
-										navigation.popToTop();
-								}}
-							/>
-						</ModalFooter>
-					}>
+				<Modal visible={popUpVisible}>
 					<ModalContent>
 						<TextSubHeader2 text={popUpText} />
 					</ModalContent>
+					<ModalFooter>
+						<ModalButton
+							text="Ok"
+							onPress={() => {
+								if (popUpFailed)
+									setPopUpVisible(false);
+								else
+									navigation.popToTop();
+							}}
+						/>
+					</ModalFooter>
 				</Modal>
 			</SafeAreaView>
 		</View>
