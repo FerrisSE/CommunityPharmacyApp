@@ -8,6 +8,7 @@ import { GRAY_1, GRAY_2, GRAY_4, PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT } from
 import { PharmacistPatientMedicationScreen } from "./pharmacist-patient-mediction";
 import { PharmacistPatientAppointments } from "./pharmacist-patient-appointments";
 import { PharmacistPatientConditionsScreen } from "./pharmacist-patient-conditions";
+import { PharmacistPatientAdherenceScreen } from "./pharmacist-patient-adherence";
 
 const Tab = ({ isSelected, tabIcon, tabName, onPress }) => {
 	const bgColor = isSelected ? PRIMARY_COLOR_TRANSPARENT : "#00000000";
@@ -26,7 +27,7 @@ export const PharmacistPatientView = ({ navigation, route }) => {
 	const screens = [
 		{ name: "Personal Information", icon: "account-circle", screen: <PharmacistPatientInformationScreen /> },
 		{ name: "Medication", icon: "pill", screen: <PharmacistPatientMedicationScreen /> },
-		{ name: "Adherence", icon: "circle-slice-6", screen: <TextSubHeader1 text="Placeholder for adherence" /> },
+		{ name: "Adherence", icon: "circle-slice-6", screen: <PharmacistPatientAdherenceScreen /> },
 		{ name: "Appointments", icon: "calendar-month", screen: <PharmacistPatientAppointments /> },
 		{ name: "Conditions", icon: "heart", screen: <PharmacistPatientConditionsScreen /> },
 	];

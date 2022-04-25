@@ -1,7 +1,7 @@
 import { Card } from "./cards";
 import * as Progress from 'react-native-progress';
 import { Pressable, View } from "react-native";
-import { TextBody, TextNote, TextSubHeader1 } from "./text";
+import { TextBody, TextNote, TextSubHeader1, TextSubHeader2 } from "./text";
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
 import { SECONDARY_COLOR, SECONDARY_COLOR_TRANSPARENT } from "../colors";
 
@@ -63,6 +63,20 @@ export const AdherenceButtonSmall = ({ navigation }) => {
 				</View>
 			</Card>
 		</Pressable>
+	)
+}
+
+export const MedAdherenceCard = ({ med }) => {
+	return (
+		<Card depth={1} style={{ margin: 8, padding: 8 }}>
+			<View style={{ flex: 1, flexDirection: "row", alignItems: 'center' }}>
+				<AdherenceGraph size={64} percent={med.taken / (med.taken + med.skipped)} />
+				<View style={{ marginLeft: 16 }}>
+					<TextSubHeader2 text={med.name} />
+					<TextNote text={`${med.taken} Doses taken | ${med.skipped} Skipped`} />
+				</View>
+			</View>
+		</Card>
 	)
 }
 
