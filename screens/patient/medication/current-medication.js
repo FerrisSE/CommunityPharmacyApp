@@ -10,6 +10,7 @@ import { addMed, removeMed } from '../../../redux/slices/cart-slice';
 import { ShoppingCart } from '../../../components/shopping-cart';
 import { SERVER_URL } from '../../../constants';
 import { AdherenceButtonLarge } from '../../../components/adherence-components';
+import { HIGH_PRIORITY } from '../../../colors';
 
 const CurrentMedicationScreen = ({ navigation, route }) => {
 	let [fhirPatient, setFhirPatient] = React.useState('')

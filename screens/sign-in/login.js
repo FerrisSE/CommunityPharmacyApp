@@ -71,7 +71,7 @@ export const LoginScreen = ({ navigation }) => {
 
 	return (
 		<SafeAreaView style={{ alignItems: "center" }}>
-			<View style={{ margin: 8, width: "100%", maxWidth: "30rem" }}>
+			<View style={{ padding: 12, width: "100%", maxWidth: 600 }}>
 				<TextHeader1 text="Login" style={{ marginTop: 40, marginBottom: 40 }} />
 
 				<TextSubHeader1 text="Username" />
@@ -86,13 +86,13 @@ export const LoginScreen = ({ navigation }) => {
 					}} />
 				</View>
 
-				<View style={{ marginTop: 20, marginBottom: 40 }}>
+				<View style={{ marginTop: 20, marginBottom: 20 }}>
 					<PrimaryButton style={{ marginBottom: 8 }} label="Login" onPress={() => Login('Patient')}
 					/>
 					<PrimaryButton label="Login as Pharmacist" onPress={() => Login('Pharmacist')} />
 				</View>
 
-				<View style={{ flex: 1, flexGrow: 0, alignItems: 'center' }}>
+				<View style={{ flex: 0, flexGrow: 0, alignItems: 'center' }}>
 					<TextNote text="Don't have an account?" style={{ margin: 8 }} />
 					<PrimaryButton label="Sign Up" onPress={goToRegister} style={{ paddingLeft: 16, paddingRight: 16 }} />
 
