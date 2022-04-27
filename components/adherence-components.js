@@ -22,7 +22,7 @@ export const AdherenceButtonLarge = ({ navigation }) => {
 		<Pressable onPress={toAdherence}>
 			<Card depth={1} color={SECONDARY_COLOR_TRANSPARENT} style={{ padding: 16, marginBottom: 12 }}>
 				<View style={{ flex: 1, flexDirection: "row", }}>
-					<AdherenceGraph size={110} percent={0.33} />
+					<AdherenceGraph size={96} percent={0.33} />
 
 					<View style={{ marginLeft: 24 }}>
 						<TextSubHeader1 text="My Med Score" />
@@ -53,7 +53,7 @@ export const AdherenceButtonSmall = ({ navigation }) => {
 
 	return (
 		<Pressable onPress={toAdherence}>
-			<Card depth={1} color={SECONDARY_COLOR_TRANSPARENT} style={{ padding: 16, flex: 1, aspectRatio: 1, margin: 8 }}>
+			<Card depth={1} color={SECONDARY_COLOR_TRANSPARENT} style={{ padding: 8, aspectRatio: 1 }}>
 				<View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
 					<Icon name="arrow-expand" size={20} color={SECONDARY_COLOR} />
 				</View>

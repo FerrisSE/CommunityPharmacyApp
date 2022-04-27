@@ -6,7 +6,7 @@ import { PRIMARY_COLOR } from "../colors";
 
 export const Header = ({ title, nav }) => {
 	return (
-		<View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', margin: 16 }}>
+		<View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', margin: 16 }}>
 			<Pressable onPress={() => nav.navigate("Home")}>
 				<Icon name="home-outline" size={36} color={PRIMARY_COLOR} />
 			</Pressable>

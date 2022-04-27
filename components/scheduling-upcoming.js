@@ -16,8 +16,8 @@ export const UpcomingEvents = ({ events }) => {
 			<View>
 
 				{ // show list of events
-					shownEvents.map(e =>
-						<Card depth={2} color={SECONDARY_COLOR_TRANSPARENT} style={{ margin: 4 }} key={e.name + e.date}>
+					shownEvents.map((e, i) =>
+						<Card depth={2} color={SECONDARY_COLOR_TRANSPARENT} style={{ margin: 4 }} key={i}>
 							<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', margin: 8 }}>
 								<View>
 									<TextSubHeader2 text={e.date} />

@@ -130,50 +130,48 @@ const ServiceScheduling = ({ navigation, route }) => {
 	}
 
 	return (
-		<SafeAreaView style={{ backgroundColor: "#A9A9CC", flex: 1, height: '100%' }}>
-			<SafeAreaView style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: "#EEEEF4", marginTop: 8, flex: 1, height: '100%' }}>
-				<View style={{ margin: 16 }}>
-					<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-						<TextSubHeader2 text="Service Scheduling" />
-						<CloseButton />
-					</View>
-					<View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-						<TextHeader2 text={route.params.service.name} />
-						<Pressable onPress={() => setDescVisible(!descVisible)}>
-							<Icon name='help-circle' size={25} />
-						</Pressable>
-					</View>
-					{descVisible && <TextNote text={route.params.service.desc} style={{ margin: 4 }} />}
+		<SafeAreaView style={{ backgroundColor: "#EEEEF4", height: '100%' }}>
+			<View style={{ margin: 16 }}>
+				<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+					<TextSubHeader2 text="Service Scheduling" />
+					<CloseButton />
 				</View>
+				<View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+					<TextHeader2 text={route.params.service.name} />
+					<Pressable onPress={() => setDescVisible(!descVisible)}>
+						<Icon name='help-circle' size={25} />
+					</Pressable>
+				</View>
+				{descVisible && <TextNote text={route.params.service.desc} style={{ margin: 4 }} />}
+			</View>
 
-				<ScrollView style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: WHITE, flex: 1, height: '100%' }}>
-					<View style={{ flex: 1, alignItems: 'center' }}>
+			<ScrollView style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: WHITE, flex: 1, height: '100%' }}>
+				<View style={{ alignItems: 'center' }}>
 
-						<CalendarStrip
-							ref={calendarRef}
-							style={{ width: "95%", paddingTop: 32, paddingBottom: 32 }}
-							calendarHeaderStyle={{ fontFamily: "OpenSans-SemiBold", fontSize: 24 }}
-							datesBlacklist={datesBlacklistFunc}
-							onDateSelected={OnDateSelected}
-							calendarHeaderContainerStyle={{ padding: 4 }}
-							highlightDateContainerStyle={{ backgroundColor: PRIMARY_COLOR, borderRadius: 16, padding: 2 }}
-							highlightDateNumberStyle={{ color: WHITE }}
-							highlightDateNameStyle={{ color: WHITE }}
-							dayContainerStyle={{ backgroundColor: "#EDEDF4", borderRadius: 16, padding: 2 }}
-							dateNameStyle={{ color: PRIMARY_COLOR }}
-							dateNumberStyle={{ color: PRIMARY_COLOR }}
-						/>
+					<CalendarStrip
+						ref={calendarRef}
+						style={{ width: '90%', height: 150, paddingTop: 24, paddingBottom: 8 }}
+						calendarHeaderStyle={{ fontFamily: "OpenSans-SemiBold", fontSize: 24 }}
+						datesBlacklist={datesBlacklistFunc}
+						onDateSelected={OnDateSelected}
+						calendarHeaderContainerStyle={{ padding: 4 }}
+						highlightDateContainerStyle={{ backgroundColor: PRIMARY_COLOR, borderRadius: 16, padding: 2 }}
+						highlightDateNumberStyle={{ color: WHITE }}
+						highlightDateNameStyle={{ color: WHITE }}
+						dayContainerStyle={{ backgroundColor: "#EDEDF4", borderRadius: 16, padding: 2 }}
+						dateNameStyle={{ color: PRIMARY_COLOR }}
+						dateNumberStyle={{ color: PRIMARY_COLOR }}
+					/>
 
-						<TimePicker title="Available Appointments" subtitle="location name" times={timeSlots} activeId={pickedId} setActive={setPickedId} style={{ marginTop: 24, marginBottom: 24, width: '90%', flex: 1 }} />
+					<TimePicker title="Available Appointments" subtitle="location name" times={timeSlots} activeId={pickedId} setActive={setPickedId} style={{ marginTop: 24, marginBottom: 24, width: '90%', flex: 1 }} />
 
-						<PrimaryButton
-							label="SELECT APPOINTMENT"
-							style={{ width: '75%', marginBottom: 32 }}
-							onPress={selectAppointment} />
+					<PrimaryButton
+						label="SELECT APPOINTMENT"
+						style={{ width: '75%', marginBottom: 32 }}
+						onPress={selectAppointment} />
 
-					</View>
-				</ScrollView>
-			</SafeAreaView>
+				</View>
+			</ScrollView>
 		</SafeAreaView>
 	);
 };

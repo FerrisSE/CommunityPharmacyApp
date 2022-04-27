@@ -21,10 +21,17 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.ferris.pharmacy",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       }
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#F2F2F2",
+      "barStyle": "dark-content",
+      "translucent": false
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -43,16 +43,15 @@ export const HomeScreen = ({ navigation }) => {
 
 			<View style={{
 				width: '100%',
-				flex: 1,
 				flexDirection: 'row',
 				flexWrap: 'wrap',
 				justifyContent: 'flex-start',
 			}}>
 
-				<View style={{ width: '50%', padding: 16 }}>
-					<TextSubHeader2 text="Upcoming Events" style={{ marginLeft: 16 }} />
+				<View style={{ width: '50%', padding: 4 }}>
+					<TextSubHeader2 text="Upcoming Events" style={{ marginLeft: 16, marginBottom: 4 }} />
 					<Pressable onPress={toScheduling}>
-						<Card depth={1} color={SECONDARY_COLOR_TRANSPARENT} style={{ padding: 16, flex: 1, aspectRatio: 1, margin: 8 }}>
+						<Card depth={1} color={SECONDARY_COLOR_TRANSPARENT} style={{ padding: 8, aspectRatio: 1 }}>
 							<View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
 								<Icon name="arrow-expand" size={20} color={SECONDARY_COLOR} />
 							</View>
@@ -76,8 +75,8 @@ export const HomeScreen = ({ navigation }) => {
 					</Pressable>
 				</View>
 
-				<View style={{ width: '50%', padding: 16 }}>
-					<TextSubHeader2 text="My Med Score" style={{ marginLeft: 16 }} />
+				<View style={{ width: '50%', padding: 4 }}>
+					<TextSubHeader2 text="My Med Score" style={{ marginLeft: 16, marginBottom: 4 }} />
 					<AdherenceButtonSmall navigation={navigation} />
 				</View>
 

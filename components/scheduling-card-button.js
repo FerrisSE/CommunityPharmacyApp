@@ -47,7 +47,7 @@ const cardStyles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'space-evenly',
 		padding: 16,
-		margin: 8,
+		margin: 4,
 		borderRadius: 16,
 		aspectRatio: 1,
 	}

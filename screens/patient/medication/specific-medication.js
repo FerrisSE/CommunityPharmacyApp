@@ -81,6 +81,7 @@ const SpecificMedicationScreen = ({ navigation, route }) => {
 					<CardButton depth={2} label="FAQ" />
 				</Card>
 
+				{/* youtube vids don't work on mobile
 				<View style={{ marginTop: 16, flex: 0 }}>
 					<TextHeader3 text="Education" />
 					<Card depth={1}>
@@ -93,8 +94,8 @@ const SpecificMedicationScreen = ({ navigation, route }) => {
 						</View>
 					</Card>
 				</View>
+				*/}
 			</View>
-
 		</ScrollView>
 	);
 };
