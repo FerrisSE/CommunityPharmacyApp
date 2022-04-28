@@ -38,51 +38,47 @@ export const RegisterAddressScreen = ({ navigation }) => {
 			<TextNote text="City" />
 			<Input placeholder="City" defaultText={city} setText={setCity} />
 
-			<View style={{ flex: 1, flexDirection: 'row' }}>
-				<View style={{ width: '50%' }}>
-					<TextNote text="State" />
-					<Dropdown
-						data={states}
-						value={state}
-						labelField='label'
-						valueField='value'
-						placeholder='State'
-						onChange={item => {
-							setState(item.value);
-						}}
-						activeColor='#00000000'
-						style={{
-							padding: 10,
-							margin: 16,
-							backgroundColor: "#E1E1E8",
-							borderRadius: 0,
-							paddingLeft: 32,
-							borderRadius: 25,
-						}}
-						placeholderStyle={{
-							fontFamily: 'OpenSans-Regular',
-							fontSize: 18,
-							color: GRAY_1
-						}}
-						containerStyle={{
-							padding: 10,
-							backgroundColor: "#E1E1E8",
-							shadowOpacity: 0,
-							borderRadius: 0,
-							borderRadius: 25,
-						}}
-					/>
-				</View>
-				<View style={{ width: '50%' }}>
-					<TextNote text="Zip" />
-					<Input placeholder="Zip" defaultText={zip} setText={setZip} />
-				</View>
-			</View>
+			<TextNote text="State" />
+			<Dropdown
+				data={states}
+				value={state}
+				labelField='label'
+				valueField='value'
+				placeholder='State'
+				onChange={item => {
+					setState(item.value);
+				}}
+				activeColor='#00000000'
+				style={{
+					padding: 10,
+					margin: 16,
+					backgroundColor: "#E1E1E8",
+					borderRadius: 0,
+					paddingLeft: 32,
+					borderRadius: 25,
+					fontFamily: 'OpenSans-Regular',
+					fontSize: 14,
+				}}
+				placeholderStyle={{
+					fontFamily: 'OpenSans-Regular',
+					fontSize: 14,
+					color: GRAY_1
+				}}
+				containerStyle={{
+					padding: 10,
+					backgroundColor: "#E1E1E8",
+					shadowOpacity: 0,
+					borderRadius: 0,
+					borderRadius: 25,
+				}}
+			/>
+			<TextNote text="Zip" />
+			<Input placeholder="Zip" defaultText={zip} setText={setZip} />
 
-			<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
+			<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
 				<OutlineButton label="< Back" style={{ margin: 16 }} onPress={navBack} />
 				<PrimaryButton label="Next >" style={{ paddingLeft: 25, paddingRight: 25, margin: 16 }} onPress={navNext} />
 			</View>
-		</SafeAreaView>
+		</SafeAreaView >
 	);
 };

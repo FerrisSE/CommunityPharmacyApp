@@ -10,10 +10,10 @@ import axios from 'axios';
 import { setToken } from '../../redux/slices/user-token-slice';
 import { useDispatch } from 'react-redux';
 import { clearData } from '../../redux/slices/register-slice';
-import { changeStack } from '../../App';
 import * as WebBrowser from 'expo-web-browser';
 import * as Linking from 'expo-linking';
 import { SERVER_URL } from '../../constants';
+import { changeStack } from '../../app-nav';
 
 WebBrowser.maybeCompleteAuthSession();
 

@@ -9,25 +9,7 @@ import store from './redux/store';
 import { useFonts } from 'expo-font';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PharmacistStack } from './screens/pharmacist/pharmacist-stack';
-
-const Stack = createNativeStackNavigator();
-
-export const navigationRef = React.createRef();
-
-export const navigate = (routeName, params) => {
-  navigationRef.current?.navigate(routeName, params);
-}
-
-export const changeStack = (stackName) => {
-  resetRoot(stackName)
-}
-
-const resetRoot = (routeName) => {
-  navigationRef.current?.resetRoot({
-    index: 0,
-    routes: [{ name: routeName }],
-  });
-}
+import { navigationRef, Stack } from './app-nav';
 
 export default function App() {
   const [loaded] = useFonts({

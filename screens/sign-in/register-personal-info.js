@@ -49,7 +49,7 @@ export const RegisterPersonalInfoScreen = ({ navigation }) => {
 				maximumDate={new Date()}
 			/>
 
-			<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
+			<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
 				<OutlineButton label="< Back" style={{ margin: 16 }} onPress={navBack} />
 				<PrimaryButton label="Next >" style={{ paddingLeft: 25, paddingRight: 25, margin: 16 }} onPress={navNext} />
 			</View>

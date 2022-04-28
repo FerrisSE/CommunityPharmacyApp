@@ -32,8 +32,18 @@ export const RegisterConsentFormScreen = ({ navigation }) => {
 			.then(_ => {
 				navigation.push("Register Succeeded");
 			})
-			.catch(error => {
+			.catch(err => {
 				setModalVisible(true);
+				console.log({
+					email: registerData.email,
+					password: registerData.password,
+					firstName: registerData.firstName,
+					lastName: registerData.lastName,
+					address: registerData.address,
+					phoneNumber: registerData.phoneNumber,
+					birthDate: registerData.birthDate,
+				});
+				console.error(err);
 			});
 	};
 
@@ -48,7 +58,6 @@ export const RegisterConsentFormScreen = ({ navigation }) => {
 			</View>
 			<View style={{
 				margin: 10,
-				flex: 1,
 				flexDirection: "row",
 				justifyContent: "space-around",
 				alignItems: "center"

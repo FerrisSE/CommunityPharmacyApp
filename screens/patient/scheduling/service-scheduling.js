@@ -16,7 +16,6 @@ const ServiceScheduling = ({ navigation, route }) => {
 	const calendarRef = useRef();
 
 	let [descVisible, setDescVisible] = React.useState(false);
-
 	let [pickedId, setPickedId] = React.useState(-1);
 	let [pharmacyInfo, setPharmacyInfo] = React.useState();
 	let [bookedSlots, setBookedSlots] = React.useState([]);
@@ -97,7 +96,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 				}
 
 				// view that first date
-				calendarRef.current.setSelectedDate(startDate);
+				calendarRef.current?.setSelectedDate(startDate);
 			}).catch(err => {
 				console.error(err);
 			});
@@ -154,6 +153,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 						calendarHeaderStyle={{ fontFamily: "OpenSans-SemiBold", fontSize: 24 }}
 						datesBlacklist={datesBlacklistFunc}
 						onDateSelected={OnDateSelected}
+						scrollToOnSetSelectedDate={false}
 						calendarHeaderContainerStyle={{ padding: 4 }}
 						highlightDateContainerStyle={{ backgroundColor: PRIMARY_COLOR, borderRadius: 16, padding: 2 }}
 						highlightDateNumberStyle={{ color: WHITE }}
