@@ -30,13 +30,13 @@ export const PharmacistPatientAdherenceScreen = () => {
 				<View style={{ flex: 1, flexDirection: "row", marginTop: 16 }}>
 					<View style={{ width: "50%", padding: 8 }}>
 						<TextSubHeader2 text="Most Missed" style={{ marginLeft: 16 }} />
-						<Card depth={1} style={{ flex: 1, margin: 4, padding: 16, justifyContent: 'end' }}>
+						<Card depth={1} style={{ flex: 1, margin: 4, padding: 16, justifyContent: 'flex-end' }}>
 							<TextSubHeader2 text={mostMissed.name} />
 						</Card>
 					</View>
 					<View style={{ width: "50%", padding: 8 }}>
 						<TextSubHeader2 text="Least Missed" style={{ marginLeft: 16 }} />
-						<Card depth={1} style={{ flex: 1, margin: 4, padding: 16, justifyContent: 'end' }}>
+						<Card depth={1} style={{ flex: 1, margin: 4, padding: 16, justifyContent: 'flex-end' }}>
 							<TextSubHeader2 text={leastMissed.name} />
 						</Card>
 					</View>

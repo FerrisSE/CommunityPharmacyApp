@@ -14,8 +14,8 @@ export const PharmacistPatientMedicationScreen = () => {
 	return (
 		<Card depth={2} style={{ flex: 1 }}>
 			<ScrollView>
-				{meds.map(m => (
-					<Card key={m.name} depth={3} style={{ margin: 8, padding: 12 }}>
+				{meds.map((m, i) => (
+					<Card key={i} depth={3} style={{ margin: 8, padding: 12 }}>
 						<TextSubHeader1 text={m.name} style={{ marginBottom: 8 }} />
 						<TextBody text={`Treated Condition: ${m.treats}`} />
 						<TextBody text={`Next Refill: ${m.refill}`} />

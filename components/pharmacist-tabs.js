@@ -11,7 +11,7 @@ const Tab = ({ isSelected, tabIcon, tabName, onPress }) => {
 	const textColor = isSelected ? PRIMARY_COLOR : "#CFCFE2";
 
 	return (
-		<Pressable onPress={onPress} style={{ margin: 8, padding: 12, borderRadius: 7, flex: 1, flexDirection: "row", backgroundColor: bgColor }}>
+		<Pressable onPress={onPress} style={{ margin: 8, padding: 12, borderRadius: 7, flexDirection: "row", backgroundColor: bgColor }}>
 			<Icon size={24} name={tabIcon} color={textColor} />
 			<TextSubHeader1 text={tabName} style={{ color: textColor, marginLeft: 12 }} />
 		</Pressable>
@@ -49,7 +49,7 @@ export const PharmacistTabNavigator = ({ initialRouteName, children, screenOptio
 
 	return (
 		<NavigationContent>
-			<View style={{ width: '100%', height: '100%', flex: 1, flexDirection: 'row' }}>
+			<View style={{ height: '100%', flexDirection: 'row' }}>
 
 				{/* Side Bar */}
 				<View style={{ minWidth: 200, backgroundColor: PRIMARY_COLOR, height: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -76,7 +76,7 @@ export const PharmacistTabNavigator = ({ initialRouteName, children, screenOptio
 					<OutlineButton
 						label="Logout"
 						onPress={logout}
-						color={"#CFCFE2"} style={{ width: '90%', marginBottom: 16 }}
+						color={"#CFCFE2"} style={{ marginBottom: 16 }}
 						icon='exit-to-app'
 						iconSide="right"
 					/>

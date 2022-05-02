@@ -64,7 +64,7 @@ export const PharmacistPatientView = ({ navigation, route }) => {
 
 				<View style={{ flex: 1, flexDirection: 'row' }}>
 					{/* Tab Selector */}
-					<Card style={{ flex: 1, height: 'full', margin: 12 }} depth={2}>
+					<Card style={{ flex: 1, margin: 12 }} depth={2}>
 						{screens.map((screen, index) => <Tab key={index} isSelected={currentScreen == index} tabIcon={screen.icon} tabName={screen.name} onPress={onPress(index)} />)}
 					</Card>
 

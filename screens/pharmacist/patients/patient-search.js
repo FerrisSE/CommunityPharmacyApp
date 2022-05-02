@@ -66,7 +66,7 @@ export const PharmacistPatientSearchScreen = ({ navigation }) => {
 
 	return (
 		<Card style={{ flex: 1, margin: 48, padding: 32, alignItems: 'center' }} depth={0}>
-			<View style={{ width: "100%", maxWidth: '60rem', flex: 1 }}>
+			<View style={{ width: "100%", flex: 1 }}>
 				<TextHeader2 text="Patient Search" style={{ color: PRIMARY_COLOR }} />
 				<View style={{ width: "100%", flexDirection: 'row' }}>
 					<Input placeholder="last name..." defaultText={searchText} setText={setSearchText} style={{ flex: 1, backgroundColor: WHITE }} />

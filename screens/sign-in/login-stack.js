@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RegisterConsentFormScreen } from './register-consent';
 import ForgotPasswordScreen from './forgot-password';
@@ -8,10 +8,19 @@ import { RegisterAccountInfoScreen } from './register-account-info';
 import { RegisterPharmacyScreen } from './register-pharmacy';
 import { RegisterSucceededScreen } from './register-succeeded';
 import { RegisterAddressScreen } from './register-address';
+import { useIsFocused } from '@react-navigation/native';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 const Stack = createNativeStackNavigator();
 
 export const LoginStack = ({ navigation }) => {
+
+	// use any orientation for login
+	const isFocused = useIsFocused();
+	useEffect(async () => {
+		await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.ALL);
+	}, [isFocused]);
+
 	return (
 		<Stack.Navigator>
 			<Stack.Screen
