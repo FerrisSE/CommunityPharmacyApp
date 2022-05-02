@@ -5,8 +5,8 @@ import { format } from "date-fns";
 import { GRAY_1, PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT } from "../colors";
 
 export const DatePicker = ({ minimumDate, maximumDate, date, setDate, style }) => {
-	const [mobileDate, setMobileDate] = useState('');
-	const [open, setOpen] = useState(false);
+	const [mobileDate, setMobileDate] = useState(new Date());
+	const [show, setShow] = useState(false);
 	const inputRef = useRef();
 
 	useEffect(() => {
@@ -24,11 +24,11 @@ export const DatePicker = ({ minimumDate, maximumDate, date, setDate, style }) =
 		setDate(selectedDate);
 	};
 
-	const mobileChange = (event, selectedDate) => {
+	const onChangeMobile = (event, selectedDate) => {
 		let newDate = format(selectedDate, 'yyyy-MM-dd');
+		setShow(false);
 		setDate(newDate);
-		setMobileDate(newDate);
-		setOpen(false);
+		setMobileDate(selectedDate);
 	}
 
 	if (Platform.OS == 'web') {
@@ -53,7 +53,7 @@ export const DatePicker = ({ minimumDate, maximumDate, date, setDate, style }) =
 	} else {
 		return (
 			<View>
-				<Pressable onPress={() => setOpen(true)}>
+				<Pressable onPress={() => setShow(true)}>
 					<Text
 						style={[{
 							fontFamily: 'OpenSans-Regular',
@@ -66,18 +66,18 @@ export const DatePicker = ({ minimumDate, maximumDate, date, setDate, style }) =
 							paddingLeft: 32,
 							borderRadius: 25,
 						}, { ...style }]}>
-						{mobileDate}
+						{date}
 					</Text>
 				</Pressable>
-
-				{open &&
+				{show && (
 					<DateTimePicker
 						testID="dateTimePicker"
-						value={new Date()}
-						onChange={mobileChange}
-						mode={'date'}
+						value={mobileDate}
+						mode='date'
+						is24Hour={true}
+						onChange={onChangeMobile}
 					/>
-				}
+				)}
 			</View>
 		)
 	}

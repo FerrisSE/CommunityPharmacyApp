@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { GRAY_1, PRIMARY_COLOR_TRANSPARENT } from '../../colors';
+import { BLACK, GRAY_1, PRIMARY_COLOR_TRANSPARENT } from '../../colors';
 import { OutlineButton, PrimaryButton } from '../../components/buttons';
 import { Input } from '../../components/input';
 import { TextHeader2, TextNote } from '../../components/text';
@@ -59,12 +59,9 @@ export const RegisterAddressScreen = ({ navigation }) => {
 					fontFamily: 'OpenSans-Regular',
 					fontSize: 14,
 				}}
-				placeholderStyle={{
+				containerStyle={{
 					fontFamily: 'OpenSans-Regular',
 					fontSize: 14,
-					color: GRAY_1
-				}}
-				containerStyle={{
 					padding: 10,
 					backgroundColor: "#E1E1E8",
 					shadowOpacity: 0,
