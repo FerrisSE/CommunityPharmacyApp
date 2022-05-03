@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MedicationScreenStack from "./medication/medication-screen-stack";
-import { View } from "react-native";
+import { View, Platform } from "react-native";
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 import SchedulingScreenStack from "./scheduling/scheduling-screen-stack";
 import { PRIMARY_COLOR, WHITE } from "../../colors";
@@ -22,7 +22,8 @@ const PatientScreenStack = ({ navigation }) => {
 	// use portrait orientation for patient stack
 	const isFocused = useIsFocused();
 	useEffect(async () => {
-		await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+		if (Platform.OS != 'web')
+			await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
 	}, [isFocused]);
 
 	return (

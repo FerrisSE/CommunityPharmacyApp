@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RegisterConsentFormScreen } from './register-consent';
 import ForgotPasswordScreen from './forgot-password';
 import { LoginScreen } from './login';
+import { Platform } from 'react-native';
 import { RegisterPersonalInfoScreen } from './register-personal-info';
 import { RegisterAccountInfoScreen } from './register-account-info';
 import { RegisterPharmacyScreen } from './register-pharmacy';
@@ -18,7 +19,8 @@ export const LoginStack = ({ navigation }) => {
 	// use any orientation for login
 	const isFocused = useIsFocused();
 	useEffect(async () => {
-		await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.ALL);
+		if (Platform.OS != 'web')
+			await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.ALL);
 	}, [isFocused]);
 
 	return (
