@@ -4,11 +4,12 @@ import { PharmacistPatientInformationScreen } from "./pharmacist-patient-informa
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 import { TextBody, TextSubHeader1, TextSubHeader2 } from "../../../components/text";
 import { Card } from "../../../components/cards";
-import { GRAY_1, GRAY_2, GRAY_4, PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT } from "../../../colors";
+import { GRAY_2, PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT } from "../../../colors";
 import { PharmacistPatientMedicationScreen } from "./pharmacist-patient-mediction";
 import { PharmacistPatientAppointments } from "./pharmacist-patient-appointments";
 import { PharmacistPatientConditionsScreen } from "./pharmacist-patient-conditions";
 import { PharmacistPatientAdherenceScreen } from "./pharmacist-patient-adherence";
+import moment from 'moment';
 
 const Tab = ({ isSelected, tabIcon, tabName, onPress }) => {
 	const bgColor = isSelected ? PRIMARY_COLOR_TRANSPARENT : "#00000000";
@@ -25,11 +26,11 @@ export const PharmacistPatientView = ({ navigation, route }) => {
 	const patient = route.params.patient;
 	const [currentScreen, setCurrentScreen] = useState(0);
 	const screens = [
-		{ name: "Personal Information", icon: "account-circle", screen: <PharmacistPatientInformationScreen /> },
-		{ name: "Medication", icon: "pill", screen: <PharmacistPatientMedicationScreen /> },
-		{ name: "Adherence", icon: "circle-slice-6", screen: <PharmacistPatientAdherenceScreen /> },
-		{ name: "Appointments", icon: "calendar-month", screen: <PharmacistPatientAppointments /> },
-		{ name: "Conditions", icon: "heart", screen: <PharmacistPatientConditionsScreen /> },
+		{ name: "Personal Information", icon: "account-circle", screen: <PharmacistPatientInformationScreen patient={patient} /> },
+		{ name: "Medication", icon: "pill", screen: <PharmacistPatientMedicationScreen patient={patient} /> },
+		{ name: "Adherence", icon: "circle-slice-6", screen: <PharmacistPatientAdherenceScreen patient={patient} /> },
+		{ name: "Appointments", icon: "calendar-month", screen: <PharmacistPatientAppointments patient={patient} /> },
+		{ name: "Conditions", icon: "heart", screen: <PharmacistPatientConditionsScreen patient={patient} /> },
 	];
 
 	const onBack = () => navigation.pop();
@@ -53,8 +54,8 @@ export const PharmacistPatientView = ({ navigation, route }) => {
 						<Icon name="account-circle" size={80} color={PRIMARY_COLOR} />
 						<View style={{ marginLeft: 12 }}>
 							<TextSubHeader1 text={`${patient.givenName} ${patient.familyName}`} />
-							<TextSubHeader2 text='70 years old, 12/12/1962' />
-							<TextBody text='Patient ID: 123456789' />
+							<TextSubHeader2 text={`${moment(patient.birthdate).fromNow(true)} old, ${moment(patient.birthdate).format("MM/DD/YYYY")}`} />
+							<TextBody text={`Patient ID: ${patient.patientId}`} />
 						</View>
 					</View>
 

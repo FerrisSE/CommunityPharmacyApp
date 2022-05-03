@@ -1,46 +1,35 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
+import { useSelector } from "react-redux";
 import { PRIMARY_COLOR } from "../../../colors";
 import { PrimaryButton } from "../../../components/buttons";
 import { Card } from "../../../components/cards";
 import { TextBody, TextSubHeader2 } from "../../../components/text";
+import { SERVER_URL } from "../../../constants";
 
-const upcomingAppointments = [
-	{
-		time: "01/21/2022, 8:30 am",
-		name: "Covid-19 Vaccine",
-		dob: "01/12/1973, 49",
-	},
-	{
-		time: "01/21/2022, 8:30 am",
-		name: "Covid-19 Vaccine",
-		dob: "01/12/1973, 49",
-	}
-]
+export const PharmacistPatientAppointments = ({ patient }) => {
+	const [appointments, setAppointments] = useState([]);
 
-const pastAppointments = [
-	{
-		time: "01/21/2022, 8:30 am",
-		name: "Covid-19 Vaccine",
-		dob: "01/12/1973, 49",
-	},
-	{
-		time: "01/21/2022, 8:30 am",
-		name: "Covid-19 Vaccine",
-		dob: "01/12/1973, 49",
-	},
-	{
-		time: "01/21/2022, 8:30 am",
-		name: "Covid-19 Vaccine",
-		dob: "01/12/1973, 49",
-	}
-]
+	const userToken = useSelector((state) => state.userToken.value);
 
-export const PharmacistPatientAppointments = () => {
+	useEffect(async () => {
+		var config = {
+			method: 'get',
+			url: `${SERVER_URL}/api/schedule/patient/${patient.patientId}`,
+			headers: {
+				Authorization: userToken,
+			}
+		};
+
+		let results = (await axios(config)).data;
+		setAppointments(results);
+	}, []);
+
 	return (
 		<ScrollView>
 			<TextSubHeader2 text="Upcoming" style={{ margin: 8 }} />
-			{upcomingAppointments.map((a, i) => <AppointmentCard key={i} appointment={a} />)}
+			{appointments.map((a, i) => <AppointmentCard key={i} appointment={a} />)}
 
 			<PrimaryButton label="Schedule Appointment" style={{ margin: 8, padding: 12, borderRadius: 20 }} />
 
@@ -48,7 +37,7 @@ export const PharmacistPatientAppointments = () => {
 			<View style={{ flex: 1, backgroundColor: PRIMARY_COLOR, padding: 1, margin: 4, marginTop: 32, marginBottom: 32 }}></View>
 
 			<TextSubHeader2 text="Past" style={{ margin: 8 }} />
-			{pastAppointments.map((a, i) => <AppointmentCard key={i} appointment={a} />)}
+			{appointments.map((a, i) => <AppointmentCard key={i} appointment={a} />)}
 		</ScrollView>
 	)
 }
