@@ -26,7 +26,6 @@ export const SchedulingConfirmScreen = ({ navigation, route }) => {
 	const confirmAppointment = () => {
 		let data = {
 			patientNotes: notes,
-			patientId: services[0].patientId,
 			day: services[0].start.format("YYYY-MM-DD"),
 			start: services[0].start.format("HH:mm:ss"),
 			end: services[0].end.format("HH:mm:ss"),

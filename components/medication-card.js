@@ -16,7 +16,7 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 		setRequestRefill(cart.some(m => m.medicationName == med.medicationName));
 	})
 
-	let precentLeft = med.remainingQuantity / med.totalQuantity;
+	let precentLeft = med.quantityLeft / med.quantity;
 
 	let barColor = '#9ECE6A';
 
@@ -46,12 +46,12 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 						}
 					</View>
 					<View style={MedCardStyles.textStack}>
-						<TextSubHeader1 text={med.medicationName} />
-						<TextBody text={med.drugPurpose} />
+						<TextSubHeader1 text={med.medName} />
+						<TextBody text={med.reasonText} />
 
 						<View style={{ marginTop: 10, marginBottom: 10 }}>
 							<TextBody text={med.instructions} />
-							<TextBody text={`Refills: ${med.currentRefills}/${med.totalRefills}`} />
+							<TextBody text={`Refills: ${med.totalRefills - med.filledRefills}/${med.totalRefills}`} />
 						</View>
 
 						<TextNote text="Amount Left:" />

@@ -23,7 +23,7 @@ export const HomeScreen = ({ navigation }) => {
 		// get the clients list of scheduled events
 		axios({
 			method: 'get',
-			url: `${SERVER_URL}/api/schedule/patient/0`, // hardcoded to first user
+			url: `${SERVER_URL}/api/schedule/`,
 			headers: {
 				Authorization: userToken,
 			}

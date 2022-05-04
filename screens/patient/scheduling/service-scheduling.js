@@ -114,7 +114,6 @@ const ServiceScheduling = ({ navigation, route }) => {
 		let pickedSlot = timeSlots[pickedId];
 
 		let data = {
-			patientId: 0,
 			start: pickedSlot.time,
 			end: pickedSlot.time.clone().add(pharmacyInfo.slotDuration, 'minutes'),
 			name: route.params.service.name,

@@ -37,7 +37,7 @@ const SpecificMedicationScreen = ({ navigation, route }) => {
 			</View>
 
 			<View style={{ backgroundColor: WHITE, borderTopLeftRadius: 20, borderTopRightRadius: 20, flex: 1, padding: 20 }}>
-				<TextHeader2 text={route.params.med.medicationName} />
+				<TextHeader2 text={route.params.med.medName} />
 				<TextBody text={route.params.med.drugPurpose} />
 
 				<View style={{ marginTop: 16 }}>
@@ -55,8 +55,8 @@ const SpecificMedicationScreen = ({ navigation, route }) => {
 							alignItems: "flex-start",
 							height: 100,
 						}}>
-							<TextNote text="Dose" />
-							<TextSubHeader2 text={route.params.med.dose} />
+							<TextNote text="Dosage Instructions" />
+							<TextSubHeader2 text={route.params.med.doseInstructions} />
 						</View>
 						<View style={{
 							flex: 1,
@@ -64,15 +64,15 @@ const SpecificMedicationScreen = ({ navigation, route }) => {
 							alignItems: "flex-start",
 							height: 100,
 						}}>
-							<TextNote text="Instructions" />
-							<TextSubHeader2 text={route.params.med.instructions} />
+							<TextNote text="Reason" />
+							<TextSubHeader2 text={route.params.med.reasonText} />
 						</View>
 					</View>
 				</View>
 
 				<View style={{ marginBottom: 16 }}>
 					<TextNote text="Refills" />
-					<TextSubHeader2 text={`${route.params.med.currentRefills} out of ${route.params.med.totalRefills} refills left`} />
+					<TextSubHeader2 text={`${route.params.med.totalRefills - route.params.med.filledRefills} out of ${route.params.med.totalRefills} refills left`} />
 				</View>
 
 				<Card depth={1} >

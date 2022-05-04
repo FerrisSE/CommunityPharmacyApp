@@ -55,7 +55,7 @@ const SchedulingHomeScreen = ({ navigation }) => {
 		// get the clients list of scheduled events
 		axios({
 			method: 'get',
-			url: `${SERVER_URL}/api/schedule/patient`,
+			url: `${SERVER_URL}/api/schedule`,
 			headers: {
 				Authorization: userToken,
 			}

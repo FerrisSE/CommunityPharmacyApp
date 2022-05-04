@@ -13,7 +13,7 @@ import { AdherenceButtonLarge } from '../../../components/adherence-components';
 import { HIGH_PRIORITY } from '../../../colors';
 
 const CurrentMedicationScreen = ({ navigation }) => {
-	let [fhirPatient, setFhirPatient] = React.useState('')
+	let [meds, setMeds] = React.useState([])
 	let [loading, setLoading] = React.useState(true)
 	let [error, setError] = React.useState(false)
 	let [searchText, setSearchText] = React.useState('')
@@ -25,30 +25,33 @@ const CurrentMedicationScreen = ({ navigation }) => {
 
 	const changeCart = (med, add) => dispatch(add ? addMed(med) : removeMed(med));
 
-	useEffect(() => {
+	useEffect(async () => {
 		var config = {
 			method: 'get',
-			url: `${SERVER_URL}/api/patient/medications/0`,
+			url: `${SERVER_URL}/patient/medication/patient-medications`,
 			headers: {
 				Authorization: userToken,
 			}
 		};
 
-		axios(config)
-			.then(response => setFhirPatient(response.data))
-			.catch(err => {
-				console.error(err);
-				setError(true);
-			})
-			.finally(() => setLoading(false));
+		try {
+			let data = (await axios(config)).data;
+			setMeds(data);
+		} catch (err) {
+			console.error(err);
+			setError(true);
+		} finally {
+			setLoading(false)
+		}
+
 	}, []);
 
 	// show every med if they aren't searching
 	let shownMeds = []
 	if (searchText == "")
-		shownMeds = fhirPatient["patient-medications"]
+		shownMeds = meds
 	else
-		shownMeds = fhirPatient["patient-medications"].filter(m => m.medicationName.toLowerCase().includes(searchText))
+		shownMeds = meds.filter(m => m.medicationName.toLowerCase().includes(searchText))
 
 
 	if (error)
@@ -79,8 +82,8 @@ const CurrentMedicationScreen = ({ navigation }) => {
 				<Card depth={0}>
 					<Input placeholder="search" setText={setSearchText} defaultText={searchText} />
 					{
-						shownMeds.map(m => (
-							<MedicationCard med={m} navigation={navigation} updateCartFunction={changeCart} key={m.medicationName} />
+						shownMeds.map((m, i) => (
+							<MedicationCard key={i} med={m} navigation={navigation} updateCartFunction={changeCart} />
 						))
 					}
 				</Card>

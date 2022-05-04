@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { Pressable } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { PRIMARY_COLOR } from '../../colors';
 import { OutlineButton, PrimaryButton } from '../../components/buttons';
 import { Card } from '../../components/cards';
 import { Input } from '../../components/input';
-import { TextBody, TextHeader2, TextHeader3, TextNote, TextSubHeader1, TextSubHeader2 } from '../../components/text';
+import { TextBody, TextHeader3, TextNote, TextSubHeader1 } from '../../components/text';
 import { setPharmacy } from '../../redux/slices/register-slice';
 
 const pharmacies = [
 	{
 		id: 0,
-		name: 'test name 1',
-		street: '1234 street name',
+		name: 'Grand Rapids Medication',
+		street: '1385 Field View St.',
 		city: 'Grand Rapids',
 		state: "MI",
-		zip: '1234'
+		zip: '49525'
 	},
 	{
 		id: 1,
-		name: 'great pharmacy',
+		name: 'Great Pharmacy',
 		street: '6547 Fieldway Dr',
 		city: 'Big Rapids',
 		state: "MI",
