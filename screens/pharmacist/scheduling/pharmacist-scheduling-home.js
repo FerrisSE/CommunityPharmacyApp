@@ -1,12 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, Pressable, View } from "react-native";
 import { Card } from "../../../components/cards";
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
 import { TextBody, TextHeader2, TextHeader3, TextSubHeader2 } from "../../../components/text";
 import { ACCENT_3, GRAY_2, HIGH_PRIORITY, PRIMARY_COLOR, SECONDARY_COLOR, WHITE } from "../../../colors";
 import { PrimaryButton } from "../../../components/buttons";
+import moment from "moment";
+import axios from "axios";
+import { SERVER_URL } from "../../../constants";
+import { useSelector } from "react-redux";
 
 export const PharmacistSchedulingHomeScreen = () => {
+	const [appointments, setAppointments] = useState([]);
+
+	const userToken = useSelector((state) => state.userToken.value);
+
+	useEffect(async () => {
+		let date = moment().add(1, 'day');
+		let config = {
+			method: 'get',
+			url: `${SERVER_URL}/api/schedule/0/${date.format('YYYY-MM-DD')}`,
+			headers: {
+				Authorization: userToken,
+			}
+		};
+
+		let data = (await axios(config)).data;
+		setAppointments(data);
+	}, []);
+
 	return (
 		<View style={{ padding: 12, flex: 1 }}>
 			<TextHeader2 text="Services" style={{ margin: 12 }} />
@@ -90,14 +112,15 @@ export const PharmacistSchedulingHomeScreen = () => {
 					</View>
 
 					{/* Remaining List */}
-					<AppointmentRow time="8:30 am" service="Covid Vaccine" name="Jacob Goeldel" dob="04/23/2022, 20" status="Incomplete" />
+					{appointments.map((a, i) => <AppointmentRow appointment={a} key={i} />)}
+
 				</Card>
 			</Card>
 		</View>
 	)
 }
 
-const AppointmentRow = ({ time, service, name, dob, status }) => {
+const AppointmentRow = ({ appointment }) => {
 	return (
 		<View>
 			<View style={{ flexDirection: 'row', alignContent: 'center' }}>
@@ -107,19 +130,19 @@ const AppointmentRow = ({ time, service, name, dob, status }) => {
 						<Icon name="checkbox-blank-outline" size={32} color={PRIMARY_COLOR} />
 					</View>
 					<View style={{ flex: 1, padding: 4, alignItems: 'center', justifyContent: 'center' }}>
-						<TextBody text={time} />
+						<TextBody text={moment(appointment.start, "hh:mm:ss").format("h:mm a")} />
 					</View>
 					<View style={{ flex: 3, padding: 4, justifyContent: 'center' }}>
-						<TextBody text={service} />
+						<TextBody text={appointment.category} />
 					</View>
 					<View style={{ flex: 3, padding: 4, justifyContent: 'center' }}>
-						<TextBody text={name} />
+						<TextBody text={"test"} />
 					</View>
 					<View style={{ flex: 2, padding: 4, justifyContent: 'center' }}>
-						<TextBody text={dob} />
+						<TextBody text={"test"} />
 					</View>
 					<View style={{ flex: 2, padding: 4, justifyContent: 'center' }}>
-						<TextBody text={status} />
+						<TextBody text={appointment.status} />
 					</View>
 					<View style={{ flex: 2, padding: 4, justifyContent: 'center' }}>
 						<PrimaryButton label="Reviewed" textStyle={{ margin: 6 }} />
