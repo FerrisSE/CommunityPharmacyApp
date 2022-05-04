@@ -1,36 +1,40 @@
-import React from "react";
+import axios from "axios";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
 import { ScrollView } from "react-native";
+import { useSelector } from "react-redux";
 import { Card } from "../../../components/cards";
 import { TextBody, TextSubHeader1, TextSubHeader2 } from "../../../components/text";
+import { SERVER_URL } from "../../../constants";
 
-const conditions = [
-	{
-		added: "02/22/2022",
-		name: "Diabetes type II"
-	},
-	{
-		added: "04/23/2022",
-		name: "Congestive Heart Failure (CHF)"
-	}
-]
+export const PharmacistPatientConditionsScreen = ({ patient }) => {
+	const [conditions, setConditions] = useState([]);
 
-const allergies = [
-	{
-		added: "04/23/2022",
-		name: "Peanut Allergy"
-	}
-]
+	const userToken = useSelector((state) => state.userToken.value);
 
-export const PharmacistPatientConditionsScreen = () => {
+	useEffect(async () => {
+		var config = {
+			method: 'get',
+			url: `${SERVER_URL}/provider/condition/${patient.patientId}`,
+			headers: {
+				Authorization: userToken,
+			}
+		};
+
+		let results = (await axios(config)).data;
+		console.log(results);
+		setConditions(results);
+	}, []);
+
 	return (
 		<ScrollView>
 			<TextSubHeader1 text="Active Health Conditions" style={{ marginTop: 24 }} />
-			<TextSubHeader2 text="Updated: 02/22/2022" />
-			{conditions.map(c => <ConditionCard condition={c} />)}
 
-			<TextSubHeader1 text="Allergies" style={{ marginTop: 24 }} />
-			<TextSubHeader2 text="Updated: 02/22/2022" />
-			{allergies.map(c => <ConditionCard condition={c} />)}
+			{conditions.length == 0 ?
+				<TextBody text="No Conditions on Record" style={{ margin: 8 }} />
+				:
+				conditions.map((c, i) => <ConditionCard condition={c} key={i} />)
+			}
 		</ScrollView>
 	)
 }
@@ -38,8 +42,8 @@ export const PharmacistPatientConditionsScreen = () => {
 const ConditionCard = ({ condition }) => {
 	return (
 		<Card depth={1} style={{ padding: 8, margin: 8 }}>
-			<TextBody text={`Added ${condition.added}`} />
-			<TextSubHeader2 text={condition.name} />
+			<TextBody text={`Added ${moment(condition.onsetStart).format('MM/DD/YYYY')}`} />
+			<TextSubHeader2 text={condition.text} />
 		</Card>
 	)
 }

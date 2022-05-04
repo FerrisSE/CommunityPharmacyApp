@@ -13,7 +13,7 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 	let [requestRefill, setRequestRefill] = React.useState(false);
 
 	useEffect(() => {
-		setRequestRefill(cart.some(m => m.medicationName == med.medicationName));
+		setRequestRefill(cart.some(m => m.medName == med.medName));
 	})
 
 	let precentLeft = med.quantityLeft / med.quantity;

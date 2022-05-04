@@ -16,14 +16,14 @@ export const PharmacistPatientMedicationScreen = ({ patient }) => {
 	useEffect(async () => {
 		var config = {
 			method: 'get',
-			url: `${SERVER_URL}/api/patient/medications/${patient.patientId}`,
+			url: `${SERVER_URL}/provider/medications/patient-medications/${patient.patientId}`,
 			headers: {
 				Authorization: userToken,
 			}
 		};
 
 		let results = (await axios(config)).data;
-		setMeds(results["patient-medications"]);
+		setMeds(results);
 	}, []);
 
 	return (
@@ -31,12 +31,12 @@ export const PharmacistPatientMedicationScreen = ({ patient }) => {
 			<ScrollView>
 				{meds.map((m, i) => (
 					<Card key={i} depth={3} style={{ margin: 8, padding: 12 }}>
-						<TextSubHeader1 text={m.medicationName} style={{ marginBottom: 8 }} />
-						<TextBody text={`Treated Condition: ${m.drugPurpose}`} />
+						<TextSubHeader1 text={m.medName} style={{ marginBottom: 8 }} />
+						<TextBody text={`Treated Condition: ${m.reasonText}`} />
 
 						<TextBody style={{ marginTop: 4 }} text="Amount Left:" />
 						<Progress.Bar
-							progress={m.remainingQuantity / m.totalQuantity}
+							progress={m.quantityLeft / m.quantity}
 							width={null}
 							height={8}
 							animated={false}

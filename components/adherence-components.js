@@ -28,6 +28,23 @@ export const GetAdherence = async (userToken) => {
 	}
 }
 
+export const GetAdherencePharmacist = async (userToken, patient) => {
+	try {
+		let config = {
+			method: 'get',
+			url: `${SERVER_URL}/provider/adherence/${patient}`,
+			headers: {
+				Authorization: userToken,
+			}
+		};
+
+		return (await axios(config)).data;
+	} catch (err) {
+		console.error(err);
+		return [];
+	}
+}
+
 export const AdherenceButtonLarge = ({ navigation }) => {
 	const [meds, setMeds] = useState([]);
 	const toAdherence = () => navigation.navigate("Adherence");
