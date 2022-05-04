@@ -25,8 +25,8 @@ export const LoginScreen = ({ navigation }) => {
 
 	const dispatch = useDispatch();
 
-	let Login = (stackName) => {
-		var config = {
+	let Login = async (stackName) => {
+		let config = {
 			method: 'post',
 			url: `${SERVER_URL}/auth/login`,
 			data: {
@@ -35,16 +35,30 @@ export const LoginScreen = ({ navigation }) => {
 			}
 		};
 
-		axios(config)
-			.then(resp => {
-				dispatch(setToken(`Bearer ${resp.data.accessToken}`));
-				changeStack(stackName);
-			})
-			.catch(error => {
-				console.log(error);
-				setDialogText('Invalid username or password!');
-				setDialog(true);
-			});
+		try {
+			let token = (await axios(config)).data.accessToken;
+			dispatch(setToken(`Bearer ${token}`));
+
+			config = {
+				method: 'get',
+				url: `${SERVER_URL}/user/me`,
+				headers: {
+					Authorization: `Bearer ${token}`,
+				}
+			};
+
+			// change to appropriate stack from role
+			let role = (await (axios(config))).data.fhirRole;
+
+			if (role == "provider")
+				changeStack("Pharmacist");
+			else
+				changeStack("Patient");
+		} catch (err) {
+			console.error(err);
+			setDialogText('Invalid username or password!');
+			setDialog(true);
+		}
 	};
 
 	let goToRegister = () => {
@@ -86,11 +100,7 @@ export const LoginScreen = ({ navigation }) => {
 					}} />
 				</View>
 
-				<View style={{ marginTop: 20, marginBottom: 20 }}>
-					<PrimaryButton style={{ marginBottom: 8 }} label="Login" onPress={() => Login('Patient')}
-					/>
-					<PrimaryButton label="Login as Pharmacist" onPress={() => Login('Pharmacist')} />
-				</View>
+				<PrimaryButton style={{ marginTop: 20, marginBottom: 20 }} label="Login" onPress={Login} />
 
 				<View style={{ flex: 0, flexGrow: 0, alignItems: 'center' }}>
 					<TextNote text="Don't have an account?" style={{ margin: 8 }} />
