@@ -68,9 +68,10 @@ export const LoginScreen = ({ navigation }) => {
 
 	let openMyChartLogin = async () => {
 		try {
-			let result = await WebBrowser.openAuthSessionAsync(
-				`http://localhost:8080/oauth2/authorize/epic?redirect_uri=http%3A%2F%2Flocalhost%3A19006%2F`
-			);
+			let url = `${SERVER_URL}/oauth2/authorize/epic?redirect_uri=${encodeURIComponent(Linking.createURL())}`;
+			console.log(url);
+
+			let result = await WebBrowser.openAuthSessionAsync(url);
 
 			let redirectData;
 			if (result.url) {
