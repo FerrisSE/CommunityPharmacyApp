@@ -11,6 +11,7 @@ import { setToken } from '../../redux/slices/user-token-slice';
 import { useDispatch } from 'react-redux';
 import { clearData } from '../../redux/slices/register-slice';
 import * as WebBrowser from 'expo-web-browser';
+import * as AuthSession from 'expo-auth-session';
 import * as Linking from 'expo-linking';
 import { SERVER_URL } from '../../constants';
 import { changeStack } from '../../app-nav';
@@ -68,7 +69,7 @@ export const LoginScreen = ({ navigation }) => {
 
 	let openMyChartLogin = async () => {
 		try {
-			let url = `${SERVER_URL}/oauth2/authorize/epic?redirect_uri=${encodeURIComponent(Linking.createURL())}`;
+			let url = `${SERVER_URL}/oauth2/authorize/epic?redirect_uri=${encodeURIComponent(AuthSession.makeRedirectUri())}`;
 			console.log(url);
 
 			let result = await WebBrowser.openAuthSessionAsync(url);

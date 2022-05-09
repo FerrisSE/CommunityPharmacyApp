@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card } from "./cards";
-import { TextSubHeader2 } from "./text";
+import { TextBody, TextSubHeader2 } from "./text";
 import { TouchableOpacity, View } from "react-native";
 import { SECONDARY_COLOR_TRANSPARENT } from "../colors";
 
@@ -25,6 +25,7 @@ export const UpcomingEvents = ({ events }) => {
 								</View>
 								<TextSubHeader2 text={e.name} />
 							</View>
+							<TextBody text={`Status: ${e.status}`} style={{ margin: 10, marginTop: 4 }} />
 						</Card>
 					)
 				}

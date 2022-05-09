@@ -64,7 +64,8 @@ const SchedulingHomeScreen = ({ navigation }) => {
 				return {
 					name: t.category,
 					date: moment(t.day).format("MMM Do"),
-					time: moment(t.start, "HH:mm:ss").format("h:mm a")
+					time: moment(t.start, "HH:mm:ss").format("h:mm a"),
+					status: t.status,
 				}
 			}));
 		});
