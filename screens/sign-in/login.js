@@ -71,11 +71,8 @@ export const LoginScreen = ({ navigation }) => {
 		try {
 			let redirect = encodeURIComponent(AuthSession.makeRedirectUri());
 			let url = `${SERVER_URL}/oauth2/authorize/epic?redirect_uri=${redirect}`;
-			console.log(url);
 
 			let result = await WebBrowser.openAuthSessionAsync(url, redirect);
-
-			console.log(result);
 
 			if (result.url)
 				handleOAuthLogin(result.url);
@@ -94,7 +91,7 @@ export const LoginScreen = ({ navigation }) => {
 		Linking.addEventListener("url", (event) => handleOAuthLogin(event.url));
 		return (() => {
 			Linking.removeEventListener("url");
-		})
+		});
 	})
 
 	return (

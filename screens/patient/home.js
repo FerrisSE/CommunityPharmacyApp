@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Image, Pressable, ScrollView, View } from 'react-native';
 import { AdherenceButtonSmall, GetAdherence } from '../../components/adherence-components';
 import { TextBody, TextHeader2, TextNote, TextSubHeader1, TextSubHeader2 } from '../../components/text';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import pill from "../../images/pill.png"
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
 import { Card } from '../../components/cards';
@@ -12,6 +13,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { SERVER_URL } from '../../constants';
 import { useSelector } from 'react-redux';
+import { scheduleAdherenceNotification } from '../../notifications';
 
 export const HomeScreen = ({ navigation }) => {
 	const toScheduling = () => navigation.navigate("Scheduling");
@@ -160,6 +162,8 @@ export const HomeScreen = ({ navigation }) => {
 
 const AdherenceHomeCard = ({ med, refreshMeds, medsThisDay }) => {
 	const [expanded, setExpanded] = useState(false);
+	const [time, setTime] = useState(new Date());
+	const [timeShown, setTimeShown] = useState(false);
 
 	const userToken = useSelector((state) => state.userToken.value);
 
@@ -190,6 +194,14 @@ const AdherenceHomeCard = ({ med, refreshMeds, medsThisDay }) => {
 		}
 	}
 
+	const openReminderScheduler = () => setTimeShown(true);
+
+	const onTimeChange = (event, selectedTime) => {
+		setTimeShown(false);
+		setTime(selectedTime);
+		scheduleAdherenceNotification(med.medicationName, selectedTime);
+	}
+
 	return (
 		<Card color="#E1E1E8" depth={1} style={{ padding: 0 }}>
 
@@ -201,11 +213,11 @@ const AdherenceHomeCard = ({ med, refreshMeds, medsThisDay }) => {
 						</Card>
 						<View style={{ margin: 8, flex: 1 }}>
 							<View style={{ flexDirection: "row", justifyContent: 'space-between' }}>
-								<TextBody text="8:00 am" />
+								<TextBody text={time ? moment(time).format("h:mm a") : ""} />
 								<Icon name={expanded ? "chevron-up" : "chevron-down"} size={25} />
 							</View>
 							<TextSubHeader2 text={med.medicationName} />
-							<TextNote text={`${medsCanTake} of ${medsThisDay} doses today`} />
+							<TextNote text={`${medsThisDay - medsCanTake} of ${medsThisDay} doses today`} />
 						</View>
 					</View>
 				</Card>
@@ -215,8 +227,18 @@ const AdherenceHomeCard = ({ med, refreshMeds, medsThisDay }) => {
 				<View style={{ flexDirection: "row", margin: 4 }}>
 					<PrimaryButton label="Taken" onPress={takeMed} style={{ flex: 1, margin: 4 }} />
 					<PrimaryButton label="Skip" style={{ flex: 1, margin: 4 }} />
-					<PrimaryButton label="Reminder" style={{ flex: 1, margin: 4 }} />
+					<PrimaryButton label="Reminder" onPress={openReminderScheduler} style={{ flex: 1, margin: 4 }} />
 				</View>
+			}
+
+			{timeShown &&
+				<DateTimePicker
+					testID="adherenceTimePicker"
+					value={time}
+					mode='time'
+					is24Hour={false}
+					onChange={onTimeChange}
+				/>
 			}
 
 		</Card>

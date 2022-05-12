@@ -56,7 +56,8 @@
     "react-phone-number-input": "^3.1.49",
     "react-redux": "^7.2.6",
     "tslib": "^2.3.1",
-    "expo-screen-orientation": "~4.1.1"
+    "expo-screen-orientation": "~4.1.1",
+    "expo-notifications": "~0.14.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
