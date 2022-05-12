@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { Platform, SafeAreaView, View } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Modal, ModalFooter, ModalButton, ModalContent } from 'react-native-modals';
 import { PRIMARY_COLOR } from '../../colors'
@@ -72,7 +72,7 @@ export const LoginScreen = ({ navigation }) => {
 			let redirect = encodeURIComponent(AuthSession.makeRedirectUri());
 			let url = `${SERVER_URL}/oauth2/authorize/epic?redirect_uri=${redirect}`;
 
-			let result = await WebBrowser.openAuthSessionAsync(url, redirect);
+			let result = await WebBrowser.openAuthSessionAsync(url);
 
 			if (result.url)
 				handleOAuthLogin(result.url);
@@ -88,13 +88,15 @@ export const LoginScreen = ({ navigation }) => {
 	}
 
 	useEffect(() => {
-		Linking.addEventListener("url", (event) => {
-			if(event.url)
-				handleOAuthLogin(event.url)
-		});
-		return (() => {
-			Linking.removeEventListener("url");
-		});
+		if (Platform.OS != 'web') {
+			Linking.addEventListener("url", (event) => {
+				if (event.url)
+					handleOAuthLogin(event.url)
+			});
+			return (() => {
+				Linking.removeEventListener("url");
+			});
+		}
 	})
 
 	return (
