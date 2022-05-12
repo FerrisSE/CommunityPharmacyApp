@@ -8,7 +8,7 @@ export const TimePicker = ({ title, subtitle, times, style, activeId, setActive 
 	return (
 		<CardWithHeader
 			depth={1}
-			color={'secondary'}
+			color={SECONDARY_COLOR_TRANSPARENT}
 			style={style}
 			header={<View>
 				<TextHeader3 text={title} style={{ marginLeft: 8 }} />
@@ -41,7 +41,7 @@ const TimeSlot = ({ id, time, active, available, setActive }) => {
 
 	return (
 		<TouchableOpacity style={{ width: '25%' }} disabled={!available || active} onPress={() => setActive(id)}>
-			<Card depth={2} color="secondary" style={{ margin: 4, backgroundColor: color }}>
+			<Card depth={2} color={SECONDARY_COLOR_TRANSPARENT} style={{ margin: 4, backgroundColor: color }}>
 				<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-end', padding: 12 }}>
 					<TextSubHeader2 text={time.format('h:mm')} style={{ color: textColor }} />
 					<TextNote text={time.format('a')} style={{ marginLeft: 4, color: textColor }} />

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Pressable, SafeAreaView, ScrollView, View } from 'react-native';
-import { PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT, WHITE } from '../../../colors';
+import { PRIMARY_COLOR, WHITE } from '../../../colors';
 import { PrimaryButton } from '../../../components/buttons';
 import { CloseButton } from '../../../components/close-button';
 import { TextHeader2, TextNote, TextSubHeader2 } from '../../../components/text';
@@ -16,7 +16,6 @@ const ServiceScheduling = ({ navigation, route }) => {
 	const calendarRef = useRef();
 
 	let [descVisible, setDescVisible] = React.useState(false);
-
 	let [pickedId, setPickedId] = React.useState(-1);
 	let [pharmacyInfo, setPharmacyInfo] = React.useState();
 	let [bookedSlots, setBookedSlots] = React.useState([]);
@@ -97,7 +96,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 				}
 
 				// view that first date
-				calendarRef.current.setSelectedDate(startDate);
+				calendarRef.current?.setSelectedDate(startDate);
 			}).catch(err => {
 				console.error(err);
 			});
@@ -115,7 +114,6 @@ const ServiceScheduling = ({ navigation, route }) => {
 		let pickedSlot = timeSlots[pickedId];
 
 		let data = {
-			patientId: 0,
 			start: pickedSlot.time,
 			end: pickedSlot.time.clone().add(pharmacyInfo.slotDuration, 'minutes'),
 			name: route.params.service.name,
@@ -130,34 +128,36 @@ const ServiceScheduling = ({ navigation, route }) => {
 	}
 
 	return (
-		<ScrollView style={{ backgroundColor: "#A9A9CC", flex: 1 }}>
-			<SafeAreaView style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: "#EEEEF4", marginTop: 8, flex: 1 }}>
-				<View style={{ margin: 16 }}>
-					<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-						<TextSubHeader2 text="Service Scheduling" />
-						<CloseButton />
-					</View>
-					<View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-						<TextHeader2 text={route.params.service.name} />
-						<Pressable onPress={() => setDescVisible(!descVisible)}>
-							<Icon name='help-circle' size={25} />
-						</Pressable>
-					</View>
-					{descVisible && <TextNote text={route.params.service.desc} style={{ margin: 4 }} />}
+		<SafeAreaView style={{ backgroundColor: "#EEEEF4", height: '100%' }}>
+			<View style={{ margin: 16 }}>
+				<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+					<TextSubHeader2 text="Service Scheduling" />
+					<CloseButton />
 				</View>
+				<View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+					<TextHeader2 text={route.params.service.name} />
+					<Pressable onPress={() => setDescVisible(!descVisible)}>
+						<Icon name='help-circle' size={25} />
+					</Pressable>
+				</View>
+				{descVisible && <TextNote text={route.params.service.desc} style={{ margin: 4 }} />}
+			</View>
 
-				<View style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: WHITE, flex: 1, alignItems: 'center' }}>
+			<ScrollView style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, backgroundColor: WHITE, flex: 1, height: '100%' }}>
+				<View style={{ alignItems: 'center' }}>
+
 					<CalendarStrip
 						ref={calendarRef}
-						style={{ width: "90%", paddingTop: 32, paddingBottom: 32 }}
+						style={{ width: '90%', height: 150, paddingTop: 24, paddingBottom: 8 }}
 						calendarHeaderStyle={{ fontFamily: "OpenSans-SemiBold", fontSize: 24 }}
 						datesBlacklist={datesBlacklistFunc}
 						onDateSelected={OnDateSelected}
+						scrollToOnSetSelectedDate={false}
 						calendarHeaderContainerStyle={{ padding: 4 }}
-						highlightDateContainerStyle={{ backgroundColor: PRIMARY_COLOR, borderRadius: 16, padding: 4 }}
+						highlightDateContainerStyle={{ backgroundColor: PRIMARY_COLOR, borderRadius: 16, padding: 2 }}
 						highlightDateNumberStyle={{ color: WHITE }}
 						highlightDateNameStyle={{ color: WHITE }}
-						dayContainerStyle={{ backgroundColor: PRIMARY_COLOR_TRANSPARENT, borderRadius: 16, padding: 4 }}
+						dayContainerStyle={{ backgroundColor: "#EDEDF4", borderRadius: 16, padding: 2 }}
 						dateNameStyle={{ color: PRIMARY_COLOR }}
 						dateNumberStyle={{ color: PRIMARY_COLOR }}
 					/>
@@ -168,9 +168,10 @@ const ServiceScheduling = ({ navigation, route }) => {
 						label="SELECT APPOINTMENT"
 						style={{ width: '75%', marginBottom: 32 }}
 						onPress={selectAppointment} />
+
 				</View>
-			</SafeAreaView>
-		</ScrollView>
+			</ScrollView>
+		</SafeAreaView>
 	);
 };
 

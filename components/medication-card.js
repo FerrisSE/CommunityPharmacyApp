@@ -13,10 +13,10 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 	let [requestRefill, setRequestRefill] = React.useState(false);
 
 	useEffect(() => {
-		setRequestRefill(cart.some(m => m.medicationName == med.medicationName));
+		setRequestRefill(cart.some(m => m.medName == med.medName));
 	})
 
-	let precentLeft = med.remainingQuantity / med.totalQuantity;
+	let precentLeft = med.quantityLeft / med.quantity;
 
 	let barColor = '#9ECE6A';
 
@@ -37,7 +37,7 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 			}}
 			style={{ margin: 8 }}
 		>
-			<Card depth={2} style={{ padding: 8 }} outlined={updateCartFunction != null && requestRefill}>
+			<Card depth={2} style={{ padding: 8 }} outlineColor={updateCartFunction != null && requestRefill ? PRIMARY_COLOR : false}>
 				<View style={MedCardStyles.row}>
 					<View style={MedCardStyles.imageView}>
 						<Image source={pill} style={MedCardStyles.image} />
@@ -46,12 +46,12 @@ const MedicationCard = ({ navigation, med, updateCartFunction }) => {
 						}
 					</View>
 					<View style={MedCardStyles.textStack}>
-						<TextSubHeader1 text={med.medicationName} />
-						<TextBody text={med.drugPurpose} />
+						<TextSubHeader1 text={med.medName} />
+						<TextBody text={med.reasonText} />
 
 						<View style={{ marginTop: 10, marginBottom: 10 }}>
 							<TextBody text={med.instructions} />
-							<TextBody text={`Refills: ${med.currentRefills}/${med.totalRefills}`} />
+							<TextBody text={`Refills: ${med.totalRefills - med.filledRefills}/${med.totalRefills}`} />
 						</View>
 
 						<TextNote text="Amount Left:" />

@@ -1,28 +1,78 @@
 import { Card } from "./cards";
 import * as Progress from 'react-native-progress';
 import { Pressable, View } from "react-native";
-import { TextBody, TextNote, TextSubHeader1 } from "./text";
+import { TextBody, TextNote, TextSubHeader1, TextSubHeader2 } from "./text";
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
-import { SECONDARY_COLOR } from "../colors";
+import { SECONDARY_COLOR, SECONDARY_COLOR_TRANSPARENT } from "../colors";
+import { useSelector } from "react-redux";
+import { SERVER_URL } from "../constants";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const meds = [
-	{ name: "Amoxicillian", taken: 24.0, skipped: 6.0 },
-	{ name: "Test Med", taken: 10.0, skipped: 5.0 }
-]
+export const GetAdherencePrecent = (med) => (med.pillsScheduled != 0) ? (med.pillsTaken / med.pillsScheduled) : 1.0;
 
-const GetMedAdherence = (med) => med.taken / (med.taken + med.skipped);
+export const GetAdherence = async (userToken) => {
+	try {
+		let config = {
+			method: 'get',
+			url: `${SERVER_URL}/patient/adherence`,
+			headers: {
+				Authorization: userToken,
+			}
+		};
+
+		return (await axios(config)).data;
+	} catch (err) {
+		console.error(err);
+		return [];
+	}
+}
+
+export const GetAdherencePharmacist = async (userToken, patient) => {
+	try {
+		let config = {
+			method: 'get',
+			url: `${SERVER_URL}/provider/adherence/${patient}`,
+			headers: {
+				Authorization: userToken,
+			}
+		};
+
+		return (await axios(config)).data;
+	} catch (err) {
+		console.error(err);
+		return [];
+	}
+}
 
 export const AdherenceButtonLarge = ({ navigation }) => {
+	const [meds, setMeds] = useState([]);
 	const toAdherence = () => navigation.navigate("Adherence");
 
-	let mostMissed = meds.reduce((c, m) => GetMedAdherence(c) < GetMedAdherence(m) ? c : m);
-	let leastMissed = meds.reduce((c, m) => GetMedAdherence(c) > GetMedAdherence(m) ? c : m);
+	// default values for if meds can't be pulled in or there aren't any
+	let overallAdherence = 1;
+	let mostMissed = "none";
+	let leastMissed = "none";
+
+	if (meds.length == 1) {
+		overallAdherence = GetAdherencePrecent(meds[0]);
+	} else if (meds.length > 1) {
+		overallAdherence = meds.reduce((t, m) => GetAdherencePrecent(t) + GetAdherencePrecent(m)) / meds.length;
+		mostMissed = meds.reduce((c, m) => GetAdherencePrecent(c) < GetAdherencePrecent(m) ? c : m).name;
+		leastMissed = meds.reduce((c, m) => GetAdherencePrecent(c) > GetAdherencePrecent(m) ? c : m).name;
+	}
+
+	const userToken = useSelector((state) => state.userToken.value);
+
+	useEffect(async () => {
+		setMeds(await GetAdherence(userToken));
+	}, []);
 
 	return (
 		<Pressable onPress={toAdherence}>
-			<Card depth={1} color="secondary" style={{ padding: 16, marginBottom: 12 }}>
+			<Card depth={1} color={SECONDARY_COLOR_TRANSPARENT} style={{ padding: 16, marginBottom: 12 }}>
 				<View style={{ flex: 1, flexDirection: "row", }}>
-					<AdherenceGraph size={110} percent={0.33} />
+					<AdherenceGraph size={96} percent={overallAdherence} />
 
 					<View style={{ marginLeft: 24 }}>
 						<TextSubHeader1 text="My Med Score" />
@@ -30,11 +80,11 @@ export const AdherenceButtonLarge = ({ navigation }) => {
 						<View style={{ flex: 1, flexDirection: "row", marginTop: 8, alignContent: "space-between" }}>
 							<View style={{ margin: 8 }}>
 								<TextNote text="Most Missed" />
-								<TextBody text={mostMissed.name} />
+								<TextBody text={mostMissed} />
 							</View>
 							<View style={{ margin: 8 }}>
 								<TextNote text="Least Missed" />
-								<TextBody text={leastMissed.name} />
+								<TextBody text={leastMissed} />
 							</View>
 						</View>
 					</View>
@@ -49,20 +99,52 @@ export const AdherenceButtonLarge = ({ navigation }) => {
 }
 
 export const AdherenceButtonSmall = ({ navigation }) => {
+	const [meds, setMeds] = useState([]);
+
+	// default values for if meds can't be pulled in or there aren't any
+	let overallAdherence = 1;
+
+	if (meds.length == 1) {
+		overallAdherence = GetAdherencePrecent(meds[0]);
+	} else if (meds.length > 1) {
+		overallAdherence = meds.reduce((t, m) => GetAdherencePrecent(t) + GetAdherencePrecent(m)) / meds.length;
+	}
+
 	const toAdherence = () => navigation.navigate("Adherence");
+
+	const userToken = useSelector((state) => state.userToken.value);
+
+	useEffect(async () => {
+		setMeds(await GetAdherence(userToken));
+	}, []);
+
 
 	return (
 		<Pressable onPress={toAdherence}>
-			<Card depth={1} color="secondary" style={{ padding: 16, flex: 1, aspectRatio: 1, margin: 8 }}>
+			<Card depth={1} color={SECONDARY_COLOR_TRANSPARENT} style={{ padding: 8, aspectRatio: 1 }}>
 				<View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
 					<Icon name="arrow-expand" size={20} color={SECONDARY_COLOR} />
 				</View>
 
 				<View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-					<AdherenceGraph size={148} percent={0.33} />
+					<AdherenceGraph size={148} percent={overallAdherence} />
 				</View>
 			</Card>
 		</Pressable>
+	)
+}
+
+export const MedAdherenceCard = ({ med }) => {
+	return (
+		<Card depth={1} style={{ margin: 8, padding: 8 }}>
+			<View style={{ flex: 1, flexDirection: "row", alignItems: 'center' }}>
+				<AdherenceGraph size={64} percent={GetAdherencePrecent(med)} />
+				<View style={{ marginLeft: 16 }}>
+					<TextSubHeader2 text={med.medicationName} />
+					<TextNote text={`${med.pillsTaken} Doses taken | ${med.pillsScheduled - med.pillsTaken} Skipped`} />
+				</View>
+			</View>
+		</Card>
 	)
 }
 

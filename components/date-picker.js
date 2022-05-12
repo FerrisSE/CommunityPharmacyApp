@@ -1,12 +1,12 @@
-import { Platform, Text, TextInput, View } from "react-native"
-import { PrimaryButton } from "./buttons"
+import { Platform, Text, TextInput, View, Pressable } from "react-native"
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useEffect, useRef, useState } from "react";
 import { format } from "date-fns";
 import { GRAY_1, PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT } from "../colors";
 
 export const DatePicker = ({ minimumDate, maximumDate, date, setDate, style }) => {
-	const [open, setOpen] = useState(false);
+	const [mobileDate, setMobileDate] = useState(new Date());
+	const [show, setShow] = useState(false);
 	const inputRef = useRef();
 
 	useEffect(() => {
@@ -23,6 +23,13 @@ export const DatePicker = ({ minimumDate, maximumDate, date, setDate, style }) =
 	const onChange = (selectedDate) => {
 		setDate(selectedDate);
 	};
+
+	const onChangeMobile = (event, selectedDate) => {
+		let newDate = format(selectedDate, 'yyyy-MM-dd');
+		setShow(false);
+		setDate(newDate);
+		setMobileDate(selectedDate);
+	}
 
 	if (Platform.OS == 'web') {
 		return (
@@ -46,29 +53,31 @@ export const DatePicker = ({ minimumDate, maximumDate, date, setDate, style }) =
 	} else {
 		return (
 			<View>
-				<Text
-					style={[{
-						fontFamily: 'OpenSans-Regular',
-						fontSize: 18,
-						padding: 10,
-						margin: 16,
-						backgroundColor: PRIMARY_COLOR_TRANSPARENT,
-						color: GRAY_1,
-						borderColor: PRIMARY_COLOR,
-						paddingLeft: 32,
-						borderRadius: 25,
-					}, { ...style }]}>
-					{format(date, 'yyyy-MM-dd')}
-				</Text>
-				<PrimaryButton label="Set Birthdate" onPress={() => setOpen(true)} />
-				{open &&
+				<Pressable onPress={() => setShow(true)}>
+					<Text
+						style={[{
+							fontFamily: 'OpenSans-Regular',
+							fontSize: 18,
+							padding: 10,
+							margin: 16,
+							backgroundColor: PRIMARY_COLOR_TRANSPARENT,
+							color: GRAY_1,
+							borderColor: PRIMARY_COLOR,
+							paddingLeft: 32,
+							borderRadius: 25,
+						}, { ...style }]}>
+						{date}
+					</Text>
+				</Pressable>
+				{show && (
 					<DateTimePicker
 						testID="dateTimePicker"
-						value={date}
-						onChange={onChange}
-						mode={'date'}
+						value={mobileDate}
+						mode='date'
+						is24Hour={true}
+						onChange={onChangeMobile}
 					/>
-				}
+				)}
 			</View>
 		)
 	}

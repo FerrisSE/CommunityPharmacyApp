@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, ScrollView, View } from 'react-native';
 import MedicationCard from '../../../components/medication-card';
 import { OutlineButton, PrimaryButton } from '../../../components/buttons';
-import { TextSubHeader1 } from '../../../components/text';
+import { TextSubHeader1, TextSubHeader2 } from '../../../components/text';
 import { PRIMARY_COLOR } from '../../../colors';
 import { Card } from '../../../components/cards';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RefillDeliveryCard } from '../../../components/refill-delivery-card';
+import Modal, { ModalButton, ModalContent, ModalFooter } from 'react-native-modals';
+import { clearCart } from '../../../redux/slices/cart-slice';
 
 const MedicationRefillScreen = ({ navigation, route }) => {
 	const cart = useSelector((state) => state.cart.meds);
-	const [selectedOption, setSelectedOption] = React.useState(-1);
+	const [selectedOption, setSelectedOption] = useState(-1);
+	const [modalOpen, setModalOpen] = useState(false);
+
+	const dispatch = useDispatch();
+
+	const pressOrder = () => {
+		setModalOpen(true);
+	}
 
 	return (
 		<ScrollView style={{ flex: 1 }}>
@@ -38,10 +47,26 @@ const MedicationRefillScreen = ({ navigation, route }) => {
 						style={{ margin: 4 }}
 					/>
 
-					<PrimaryButton label="Confirm Order" style={{ margin: 6 }} />
+					<PrimaryButton label="Confirm Order" onPress={pressOrder} style={{ margin: 6 }} />
 					<OutlineButton label="Cancel Order" style={{ margin: 6 }} color={PRIMARY_COLOR} />
 				</View>
 			</SafeAreaView>
+
+			<Modal visible={modalOpen}>
+				<ModalContent>
+					<TextSubHeader2 text="Thanks for your order!" />
+				</ModalContent>
+				<ModalFooter>
+					<ModalButton
+						text="Ok"
+						onPress={() => {
+							setModalOpen(false);
+							dispatch(clearCart());
+							navigation.popToTop();
+						}}
+					/>
+				</ModalFooter>
+			</Modal>
 		</ScrollView>
 	);
 };

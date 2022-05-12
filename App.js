@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ModalPortal } from 'react-native-modals';
-
-import ProfileScreen from './screens/patient/profile/profile';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PatientScreenStack from './screens/patient/patient-screen-stack';
 import { LoginStack } from './screens/sign-in/login-stack';
@@ -12,26 +9,7 @@ import store from './redux/store';
 import { useFonts } from 'expo-font';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PharmacistStack } from './screens/pharmacist/pharmacist-stack';
-
-const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
-
-export const navigationRef = React.createRef();
-
-export const navigate = (routeName, params) => {
-  navigationRef.current?.navigate(routeName, params);
-}
-
-export const changeStack = (stackName) => {
-  resetRoot(stackName)
-}
-
-const resetRoot = (routeName) => {
-  navigationRef.current?.resetRoot({
-    index: 0,
-    routes: [{ name: routeName }],
-  });
-}
+import { navigationRef, Stack } from './app-nav';
 
 export default function App() {
   const [loaded] = useFonts({
@@ -85,21 +63,4 @@ export default function App() {
       </Provider>
     </SafeAreaProvider>
   );
-}
-
-const pharmacistStack = createNativeStackNavigator();
-
-const PharmacistApp = ({ navigator }) => {
-  return (
-    <pharmacistStack.Navigator>
-      <pharmacistStack.Screen
-        name="Search"
-        component={SearchScreen}
-      />
-      <pharmacistStack.Screen
-        name="Patient Profile"
-        component={ProfileScreen}
-      />
-    </pharmacistStack.Navigator>
-  )
 }

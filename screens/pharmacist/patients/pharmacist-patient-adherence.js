@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
-import { TextSubHeader2 } from '../../components/text';
-import { Card } from "../../components/cards";
-import { AdherenceGraph, GetAdherence, GetAdherencePrecent, MedAdherenceCard } from "../../components/adherence-components";
 import { useSelector } from "react-redux";
+import { AdherenceGraph, GetAdherencePharmacist, GetAdherencePrecent, MedAdherenceCard } from "../../../components/adherence-components";
+import { Card } from "../../../components/cards";
+import { TextSubHeader2 } from "../../../components/text";
 
-export const AdherenceScreen = () => {
+export const PharmacistPatientAdherenceScreen = ({ patient }) => {
 	let [meds, setMeds] = useState([]);
 
 	// default values for if meds can't be pulled in or there aren't any
@@ -24,7 +24,7 @@ export const AdherenceScreen = () => {
 	const userToken = useSelector((state) => state.userToken.value);
 
 	useEffect(async () => {
-		setMeds(await GetAdherence(userToken));
+		setMeds(await GetAdherencePharmacist(userToken, patient.patientId));
 	}, []);
 
 	return (
@@ -39,13 +39,13 @@ export const AdherenceScreen = () => {
 				{meds.map((m, i) => <MedAdherenceCard med={m} key={i} />)}
 
 				<View style={{ flex: 1, flexDirection: "row", marginTop: 16 }}>
-					<View style={{ width: "50%", padding: 8, aspectRatio: 1 }}>
+					<View style={{ width: "50%", padding: 8 }}>
 						<TextSubHeader2 text="Most Missed" style={{ marginLeft: 16 }} />
 						<Card depth={1} style={{ flex: 1, margin: 4, padding: 16, justifyContent: 'flex-end' }}>
 							<TextSubHeader2 text={mostMissed} />
 						</Card>
 					</View>
-					<View style={{ width: "50%", padding: 8, aspectRatio: 1 }}>
+					<View style={{ width: "50%", padding: 8 }}>
 						<TextSubHeader2 text="Least Missed" style={{ marginLeft: 16 }} />
 						<Card depth={1} style={{ flex: 1, margin: 4, padding: 16, justifyContent: 'flex-end' }}>
 							<TextSubHeader2 text={leastMissed} />

@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { Pressable } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { PRIMARY_COLOR } from '../../colors';
 import { OutlineButton, PrimaryButton } from '../../components/buttons';
 import { Card } from '../../components/cards';
 import { Input } from '../../components/input';
-import { TextBody, TextHeader2, TextHeader3, TextNote, TextSubHeader1, TextSubHeader2 } from '../../components/text';
+import { TextBody, TextHeader3, TextNote, TextSubHeader1 } from '../../components/text';
 import { setPharmacy } from '../../redux/slices/register-slice';
 
 const pharmacies = [
 	{
 		id: 0,
-		name: 'test name 1',
-		street: '1234 street name',
+		name: 'Grand Rapids Medication',
+		street: '1385 Field View St.',
 		city: 'Grand Rapids',
 		state: "MI",
-		zip: '1234'
+		zip: '49525'
 	},
 	{
 		id: 1,
-		name: 'great pharmacy',
+		name: 'Great Pharmacy',
 		street: '6547 Fieldway Dr',
 		city: 'Big Rapids',
 		state: "MI",
@@ -61,7 +62,7 @@ export const RegisterPharmacyScreen = ({ navigation }) => {
 
 				{filteredPharmacies.map(p =>
 					<Pressable key={p.id} onPress={() => setPreferredPharmacy(p.id)}>
-						<Card depth={2} outlined={p.id == preferredPharmacy} style={{ margin: 4, padding: 16 }}>
+						<Card depth={2} outlineColor={p.id == preferredPharmacy ? PRIMARY_COLOR : false} style={{ margin: 4, padding: 16 }}>
 							<TextSubHeader1 text={p.name} style={{ marginBottom: 8 }} />
 							<TextNote text="Address" />
 							<TextBody text={p.street} />
@@ -71,7 +72,7 @@ export const RegisterPharmacyScreen = ({ navigation }) => {
 				)}
 			</Card>
 
-			<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
+			<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
 				<OutlineButton label="< Back" style={{ margin: 16 }} onPress={navBack} />
 				<PrimaryButton label="Next >" style={{ paddingLeft: 25, paddingRight: 25, margin: 16 }} onPress={navNext} />
 			</View>

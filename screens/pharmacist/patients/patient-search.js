@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
 import { TextHeader2, TextHeader3, TextSubHeader2 } from '../../../components/text';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
 import { SERVER_URL } from '../../../constants';
@@ -9,6 +9,7 @@ import { PRIMARY_COLOR, WHITE } from '../../../colors';
 import { OutlineButton, PrimaryButton } from '../../../components/buttons';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import moment from 'moment';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const PatientResult = ({ patient, nav }) => {
@@ -26,7 +27,7 @@ const PatientResult = ({ patient, nav }) => {
 				<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 					<Icon name="account-circle" size={48} color={PRIMARY_COLOR} />
 					<TextSubHeader2 text={`${patient.givenName} ${patient.familyName}`} style={{ margin: 12 }} />
-					<TextSubHeader2 text={patient.birthdate} />
+					<TextSubHeader2 text={moment(patient.birthdate).format("MM/DD/YYYY")} />
 				</View>
 				<View style={{ flex: 1, flexDirection: 'row', alignContent: 'center', justifyContent: 'flex-end' }}>
 					<OutlineButton label="Schedule" style={{ margin: 4 }} />
@@ -42,9 +43,7 @@ const PatientResult = ({ patient, nav }) => {
 
 export const PharmacistPatientSearchScreen = ({ navigation }) => {
 	let [searchText, setSearchText] = useState('');
-	let [patients, setPatients] = useState([
-		{ givenName: "Jacob", familyName: "Goeldel", birthdate: "none" },
-	]);
+	let [patients, setPatients] = useState([]);
 
 	const userToken = useSelector((state) => state.userToken.value);
 
@@ -66,13 +65,13 @@ export const PharmacistPatientSearchScreen = ({ navigation }) => {
 
 	return (
 		<Card style={{ flex: 1, margin: 48, padding: 32, alignItems: 'center' }} depth={0}>
-			<View style={{ width: "100%", maxWidth: '60rem', flex: 1 }}>
+			<View style={{ width: "100%", flex: 1 }}>
 				<TextHeader2 text="Patient Search" style={{ color: PRIMARY_COLOR }} />
 				<View style={{ width: "100%", flexDirection: 'row' }}>
 					<Input placeholder="last name..." defaultText={searchText} setText={setSearchText} style={{ flex: 1, backgroundColor: WHITE }} />
 					<PrimaryButton label="Search" onPress={searchPress} style={{ margin: 16, paddingLeft: 32, paddingRight: 32 }} />
 				</View>
-				{patients &&
+				{patients.length != 0 &&
 					<View style={{ flex: 1 }}>
 						<TextHeader3 text="Results" style={{ color: PRIMARY_COLOR, marginTop: 32 }} />
 

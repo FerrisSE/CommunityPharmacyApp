@@ -3,11 +3,11 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 import { BLACK, PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT, WHITE } from "../colors";
 
-export const PrimaryButton = ({ label, onPress, icon, iconSide, style }) => {
+export const PrimaryButton = ({ label, onPress, icon, iconSide, style, textStyle }) => {
 	return (
 		<TouchableOpacity style={[styles.PrimaryButtonTouchable, { ...style }]} onPress={onPress ? () => onPress() : () => { }}>
 			{icon && iconSide == "left" && <Icon name={icon} size={25} color={WHITE} />}
-			<Text style={styles.PrimaryButtonText}>{label}</Text>
+			<Text style={[styles.PrimaryButtonText, { ...textStyle }]}>{label}</Text>
 			{icon && iconSide == "right" && <Icon name={icon} size={25} color={WHITE} />}
 		</TouchableOpacity>
 	)
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
 	PrimaryButtonTouchable: {
 		backgroundColor: PRIMARY_COLOR,
 		borderRadius: 35,
+		padding: 10,
 		justifyContent: 'center',
 		alignItems: "center",
 		flexDirection: "row",
@@ -52,20 +53,21 @@ const styles = StyleSheet.create({
 		color: WHITE,
 		fontFamily: "OpenSans-SemiBold",
 		fontSize: 16,
-		margin: 10,
 		opacity: 1,
 	},
 	OutlineButtonTouchable: {
 		borderWidth: 2,
 		borderRadius: 35,
+		padding: 10,
 		justifyContent: 'center',
+		alignItems: "center",
+		flexDirection: "row",
 		opacity: 1,
 	},
 	OutlineButtonText: {
 		textAlign: 'center',
 		fontFamily: "OpenSans-SemiBold",
 		fontSize: 16,
-		margin: 10,
 		marginLeft: 25,
 		marginRight: 25,
 		opacity: 1,

@@ -1,28 +1,28 @@
 import React from "react";
-import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Card } from "../../../components/cards";
-import { TextBody, TextSubHeader1, TextSubHeader2 } from "../../../components/text";
+import { TextBody, TextSubHeader2 } from "../../../components/text";
+import moment from 'moment';
 
-export const PharmacistPatientInformationScreen = () => {
+export const PharmacistPatientInformationScreen = ({ patient }) => {
 	return (
 		<ScrollView>
 			{/* Date of Birth */}
 			<Card depth={2} style={{ margin: 8, padding: 8 }}>
 				<TextBody text="Date of Birth" style={{ marginBottom: 12 }} />
-				<TextSubHeader2 text="12/12/1952" />
+				<TextSubHeader2 text={moment(patient.birthdate).format("MM/DD/YYYY")} />
 			</Card>
 
 			{/* Phone Number */}
 			<Card depth={2} style={{ margin: 8, padding: 8 }}>
 				<TextBody text="Phone Number" style={{ marginBottom: 12 }} />
-				<TextSubHeader2 text="800-588-2300" />
+				<TextSubHeader2 text={patient.phoneNumber} />
 			</Card>
 
 			{/* Address */}
 			<Card depth={2} style={{ margin: 8, padding: 8 }}>
 				<TextBody text="Address" style={{ marginBottom: 12 }} />
-				<TextSubHeader2 text="2703 Mulberry LN. Grand Rapids, MI, 49546" />
+				<TextSubHeader2 text={`${patient.addressStreet} ${patient.addressCity}, ${patient.addressState}, ${patient.addressZipcode}`} />
 			</Card>
 
 			{/* Primary Care */}

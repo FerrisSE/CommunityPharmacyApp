@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import { ScrollView, View, SafeAreaView } from 'react-native';
 import { useSelector } from 'react-redux';
-import { WHITE } from '../../../colors';
 import { Card } from '../../../components/cards';
 import { Input } from '../../../components/input';
 import SchedulingButton from '../../../components/scheduling-card-button';
@@ -56,17 +55,17 @@ const SchedulingHomeScreen = ({ navigation }) => {
 		// get the clients list of scheduled events
 		axios({
 			method: 'get',
-			url: `${SERVER_URL}/api/schedule/patient/0`, // hardcoded to first user
+			url: `${SERVER_URL}/api/schedule`,
 			headers: {
 				Authorization: userToken,
 			}
 		}).then(response => {
-			console.log(response);
 			setEvents(response.data.map(t => {
 				return {
 					name: t.category,
 					date: moment(t.day).format("MMM Do"),
-					time: moment(t.start, "HH:mm:ss").format("h:mm a")
+					time: moment(t.start, "HH:mm:ss").format("h:mm a"),
+					status: t.status,
 				}
 			}));
 		});

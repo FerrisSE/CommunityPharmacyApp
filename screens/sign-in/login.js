@@ -10,10 +10,11 @@ import axios from 'axios';
 import { setToken } from '../../redux/slices/user-token-slice';
 import { useDispatch } from 'react-redux';
 import { clearData } from '../../redux/slices/register-slice';
-import { changeStack } from '../../App';
 import * as WebBrowser from 'expo-web-browser';
+import * as AuthSession from 'expo-auth-session';
 import * as Linking from 'expo-linking';
 import { SERVER_URL } from '../../constants';
+import { changeStack } from '../../app-nav';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -25,8 +26,8 @@ export const LoginScreen = ({ navigation }) => {
 
 	const dispatch = useDispatch();
 
-	let Login = () => {
-		var config = {
+	let Login = async (stackName) => {
+		let config = {
 			method: 'post',
 			url: `${SERVER_URL}/auth/login`,
 			data: {
@@ -35,16 +36,30 @@ export const LoginScreen = ({ navigation }) => {
 			}
 		};
 
-		axios(config)
-			.then(resp => {
-				dispatch(setToken(`Bearer ${resp.data.accessToken}`));
-				changeStack('Patient');
-			})
-			.catch(error => {
-				console.log(error);
-				setDialogText('Invalid username or password!');
-				setDialog(true);
-			});
+		try {
+			let token = (await axios(config)).data.accessToken;
+			dispatch(setToken(`Bearer ${token}`));
+
+			config = {
+				method: 'get',
+				url: `${SERVER_URL}/user/me`,
+				headers: {
+					Authorization: `Bearer ${token}`,
+				}
+			};
+
+			// change to appropriate stack from role
+			let role = (await (axios(config))).data.fhirRole;
+
+			if (role == "provider")
+				changeStack("Pharmacist");
+			else
+				changeStack("Patient");
+		} catch (err) {
+			console.error(err);
+			setDialogText('Invalid username or password!');
+			setDialog(true);
+		}
 	};
 
 	let goToRegister = () => {
@@ -54,24 +69,37 @@ export const LoginScreen = ({ navigation }) => {
 
 	let openMyChartLogin = async () => {
 		try {
-			let result = await WebBrowser.openAuthSessionAsync(
-				`http://localhost:8080/oauth2/authorize/epic?redirect_uri=http%3A%2F%2Flocalhost%3A19006%2F`
-			);
+			let redirect = encodeURIComponent(AuthSession.makeRedirectUri());
+			let url = `${SERVER_URL}/oauth2/authorize/epic?redirect_uri=${redirect}`;
 
-			let redirectData;
-			if (result.url) {
-				redirectData = Linking.parse(result.url);
-				dispatch(setToken(`Bearer ${redirectData.queryParams.token}`));
-				changeStack('Patient');
-			}
+			let result = await WebBrowser.openAuthSessionAsync(url, redirect);
+
+			if (result.url)
+				handleOAuthLogin(result.url);
 		} catch (error) {
 			console.error(error);
 		}
 	}
 
+	let handleOAuthLogin = (url) => {
+		let data = Linking.parse(url);
+		dispatch(setToken(`Bearer ${data.queryParams.token}`));
+		changeStack('Patient');
+	}
+
+	useEffect(() => {
+		Linking.addEventListener("url", (event) => {
+			if(event.url)
+				handleOAuthLogin(event.url)
+		});
+		return (() => {
+			Linking.removeEventListener("url");
+		});
+	})
+
 	return (
 		<SafeAreaView style={{ alignItems: "center" }}>
-			<View style={{ margin: 8, width: "100%", maxWidth: "30rem" }}>
+			<View style={{ padding: 12, width: "100%", maxWidth: 600 }}>
 				<TextHeader1 text="Login" style={{ marginTop: 40, marginBottom: 40 }} />
 
 				<TextSubHeader1 text="Username" />
@@ -86,12 +114,9 @@ export const LoginScreen = ({ navigation }) => {
 					}} />
 				</View>
 
-				<View style={{ marginTop: 20, marginBottom: 40 }}>
-					<PrimaryButton label="Login" onPress={Login}
-					/>
-				</View>
+				<PrimaryButton style={{ marginTop: 20, marginBottom: 20 }} label="Login" onPress={Login} />
 
-				<View style={{ flex: 1, flexGrow: 0, alignItems: 'center' }}>
+				<View style={{ flex: 0, flexGrow: 0, alignItems: 'center' }}>
 					<TextNote text="Don't have an account?" style={{ margin: 8 }} />
 					<PrimaryButton label="Sign Up" onPress={goToRegister} style={{ paddingLeft: 16, paddingRight: 16 }} />
 
@@ -103,29 +128,23 @@ export const LoginScreen = ({ navigation }) => {
 						icon="folder-heart"
 						iconSide="left"
 					/>
-					<PrimaryButton
-						style={{ margin: 8 }}
-						label="to pharmacists screens"
-						onPress={() => changeStack('Pharmacist')}
-					/>
 				</View>
 			</View>
 
 			<Modal
 				visible={showDialog}
 				onTouchOutside={() => setDialog(false)}
-				footer={
-					<ModalFooter>
-						<ModalButton
-							text="OK"
-							onPress={() => setDialog(false)}
-						/>
-					</ModalFooter>
-				}
 			>
 				<ModalContent>
 					<TextSubHeader2 text={dialogText} />
 				</ModalContent>
+				<ModalFooter>
+					<ModalButton
+						text="OK"
+						onPress={() => setDialog(false)}
+						key="button-1"
+					/>
+				</ModalFooter>
 			</Modal>
 		</SafeAreaView>
 	)

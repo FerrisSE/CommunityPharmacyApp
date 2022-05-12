@@ -12,10 +12,13 @@ export const cartSlice = createSlice({
 		},
 		removeMed: (state, action) => {
 			state.meds = state.meds.filter(m => m.medicationName != action.payload.medicationName);
-		}
+		},
+		clearCart: (state, action) => {
+			state.meds = [];
+		},
 	},
 });
 
-export const { addMed, removeMed } = cartSlice.actions;
+export const { addMed, removeMed, clearCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

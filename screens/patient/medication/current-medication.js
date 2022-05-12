@@ -10,14 +10,13 @@ import { addMed, removeMed } from '../../../redux/slices/cart-slice';
 import { ShoppingCart } from '../../../components/shopping-cart';
 import { SERVER_URL } from '../../../constants';
 import { AdherenceButtonLarge } from '../../../components/adherence-components';
+import { HIGH_PRIORITY } from '../../../colors';
 
-const CurrentMedicationScreen = ({ navigation, route }) => {
-	let [fhirPatient, setFhirPatient] = React.useState('')
+const CurrentMedicationScreen = ({ navigation }) => {
+	let [meds, setMeds] = React.useState([])
 	let [loading, setLoading] = React.useState(true)
 	let [error, setError] = React.useState(false)
 	let [searchText, setSearchText] = React.useState('')
-
-	const { nav } = route.params; // access to tab navigator
 
 	const userToken = useSelector((state) => state.userToken.value);
 	const cart = useSelector((state) => state.cart);
@@ -26,30 +25,33 @@ const CurrentMedicationScreen = ({ navigation, route }) => {
 
 	const changeCart = (med, add) => dispatch(add ? addMed(med) : removeMed(med));
 
-	useEffect(() => {
+	useEffect(async () => {
 		var config = {
 			method: 'get',
-			url: `${SERVER_URL}/api/patient/medications/0`,
+			url: `${SERVER_URL}/patient/medication/patient-medications`,
 			headers: {
 				Authorization: userToken,
 			}
 		};
 
-		axios(config)
-			.then(response => setFhirPatient(response.data))
-			.catch(err => {
-				console.error(err);
-				setError(true);
-			})
-			.finally(() => setLoading(false));
+		try {
+			let data = (await axios(config)).data;
+			setMeds(data);
+		} catch (err) {
+			console.error(err);
+			setError(true);
+		} finally {
+			setLoading(false)
+		}
+
 	}, []);
 
 	// show every med if they aren't searching
 	let shownMeds = []
 	if (searchText == "")
-		shownMeds = fhirPatient["patient-medications"]
+		shownMeds = meds
 	else
-		shownMeds = fhirPatient["patient-medications"].filter(m => m.medicationName.toLowerCase().includes(searchText))
+		shownMeds = meds.filter(m => m.medicationName.toLowerCase().includes(searchText))
 
 
 	if (error)
@@ -70,7 +72,7 @@ const CurrentMedicationScreen = ({ navigation, route }) => {
 		<ScrollView>
 			<SafeAreaView style={{ flex: 1, margin: 8 }}>
 
-				<AdherenceButtonLarge navigation={nav} />
+				<AdherenceButtonLarge navigation={navigation} />
 
 				<View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', padding: 8, paddingTop: 16 }}>
 					<TextSubHeader1 text="Current Medications" style={{ marginBottom: 4 }} />
@@ -80,8 +82,8 @@ const CurrentMedicationScreen = ({ navigation, route }) => {
 				<Card depth={0}>
 					<Input placeholder="search" setText={setSearchText} defaultText={searchText} />
 					{
-						shownMeds.map(m => (
-							<MedicationCard med={m} navigation={navigation} updateCartFunction={changeCart} key={m.medicationName} />
+						shownMeds.map((m, i) => (
+							<MedicationCard key={i} med={m} navigation={navigation} updateCartFunction={changeCart} />
 						))
 					}
 				</Card>

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MedicationScreenStack from "./medication/medication-screen-stack";
-import { View } from "react-native";
+import { View, Platform } from "react-native";
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 import SchedulingScreenStack from "./scheduling/scheduling-screen-stack";
 import { PRIMARY_COLOR, WHITE } from "../../colors";
@@ -10,12 +10,22 @@ import { Header } from "../../components/header";
 import { HomeScreen } from "./home";
 import { AdherenceScreen } from "./adherence";
 import { ProfileEdit } from "./profile/ProfileEdit";
+import { useIsFocused } from '@react-navigation/native';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 const Tab = createBottomTabNavigator();
 
 const hiddenTabs = ['Profile', 'Home', 'Adherence', 'Edit Profile'];
 
 const PatientScreenStack = ({ navigation }) => {
+
+	// use portrait orientation for patient stack
+	const isFocused = useIsFocused();
+	useEffect(async () => {
+		if (Platform.OS != 'web')
+			await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+	}, [isFocused]);
+
 	return (
 		<Tab.Navigator
 			screenOptions={({ route }) => ({

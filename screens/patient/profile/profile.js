@@ -88,7 +88,7 @@ const ProfileScreen = ({ navigation, route }) => {
 
 				<TextSubHeader2 text="Patient Info" style={{ marginTop: 8 }} />
 				<Card depth={1} style={{ padding: 14, margin: 4 }}>
-					<TextBody text="Current Health Issues: High blood pressure and Diabetes" />
+					<TextBody text="Current Health Issues: None" />
 					<TextBody text="Allergies: None" />
 				</Card>
 
