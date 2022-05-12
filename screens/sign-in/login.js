@@ -69,21 +69,33 @@ export const LoginScreen = ({ navigation }) => {
 
 	let openMyChartLogin = async () => {
 		try {
-			let url = `${SERVER_URL}/oauth2/authorize/epic?redirect_uri=${encodeURIComponent(AuthSession.makeRedirectUri())}`;
+			let redirect = encodeURIComponent(AuthSession.makeRedirectUri());
+			let url = `${SERVER_URL}/oauth2/authorize/epic?redirect_uri=${redirect}`;
 			console.log(url);
 
-			let result = await WebBrowser.openAuthSessionAsync(url);
+			let result = await WebBrowser.openAuthSessionAsync(url, redirect);
 
-			let redirectData;
-			if (result.url) {
-				redirectData = Linking.parse(result.url);
-				dispatch(setToken(`Bearer ${redirectData.queryParams.token}`));
-				changeStack('Patient');
-			}
+			console.log(result);
+
+			if (result.url)
+				handleOAuthLogin(result.url);
 		} catch (error) {
 			console.error(error);
 		}
 	}
+
+	let handleOAuthLogin = (url) => {
+		let data = Linking.parse(url);
+		dispatch(setToken(`Bearer ${data.queryParams.token}`));
+		changeStack('Patient');
+	}
+
+	useEffect(() => {
+		Linking.addEventListener("url", (event) => handleOAuthLogin(event.url));
+		return (() => {
+			Linking.removeEventListener("url");
+		})
+	})
 
 	return (
 		<SafeAreaView style={{ alignItems: "center" }}>
