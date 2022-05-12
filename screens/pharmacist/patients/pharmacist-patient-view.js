@@ -24,6 +24,8 @@ const Tab = ({ isSelected, tabIcon, tabName, onPress }) => {
 
 export const PharmacistPatientView = ({ navigation, route }) => {
 	const patient = route.params.patient;
+
+	// react navigation was a bit overkill in my opinion here, so just conditionally render these tabs based on currentScreen index
 	const [currentScreen, setCurrentScreen] = useState(0);
 	const screens = [
 		{ name: "Personal Information", icon: "account-circle", screen: <PharmacistPatientInformationScreen patient={patient} /> },

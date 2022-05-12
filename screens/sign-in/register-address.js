@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { BLACK, GRAY_1, PRIMARY_COLOR_TRANSPARENT } from '../../colors';
 import { OutlineButton, PrimaryButton } from '../../components/buttons';
 import { Input } from '../../components/input';
 import { TextHeader2, TextNote } from '../../components/text';

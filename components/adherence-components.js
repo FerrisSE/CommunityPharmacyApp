@@ -54,6 +54,7 @@ export const AdherenceButtonLarge = ({ navigation }) => {
 	let mostMissed = "none";
 	let leastMissed = "none";
 
+	// the reduces don't work properly with a length of 1, so force just precentage of the 1 med
 	if (meds.length == 1) {
 		overallAdherence = GetAdherencePrecent(meds[0]);
 	} else if (meds.length > 1) {
@@ -104,6 +105,7 @@ export const AdherenceButtonSmall = ({ navigation }) => {
 	// default values for if meds can't be pulled in or there aren't any
 	let overallAdherence = 1;
 
+	// the reduce doesn't work properly with a length of 1, so force just precentage of the 1 med
 	if (meds.length == 1) {
 		overallAdherence = GetAdherencePrecent(meds[0]);
 	} else if (meds.length > 1) {

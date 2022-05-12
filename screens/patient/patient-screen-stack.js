@@ -15,6 +15,8 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 
 const Tab = createBottomTabNavigator();
 
+// these screens have their own way to get to them, so we don't want an icon rendered on the bottom navigation
+// but it's easier to just keep them in the tab nav stack
 const hiddenTabs = ['Profile', 'Home', 'Adherence', 'Edit Profile'];
 
 const PatientScreenStack = ({ navigation }) => {
@@ -34,7 +36,7 @@ const PatientScreenStack = ({ navigation }) => {
 				tabBarActiveTintColor: WHITE,
 				tabBarInactiveTintColor: '#A8A8CB',
 				tabBarStyle: { backgroundColor: PRIMARY_COLOR },
-				tabBarButton: hiddenTabs.includes(route.name) ? () => null : undefined,
+				tabBarButton: hiddenTabs.includes(route.name) ? () => null : undefined, // hide the tabs we want hidden
 				tabBarIcon: ({ focused, color, size }) => {
 					let iconName;
 

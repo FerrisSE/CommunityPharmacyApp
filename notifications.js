@@ -1,5 +1,6 @@
 import * as Notifications from 'expo-notifications';
 
+// needed for notifications to be pushed to user
 Notifications.setNotificationHandler({
 	handleNotification: async () => ({
 		shouldShowAlert: true,

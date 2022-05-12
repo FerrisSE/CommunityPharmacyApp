@@ -13,6 +13,7 @@ export const PharmacistPatientAdherenceScreen = ({ patient }) => {
 	let mostMissed = "none";
 	let leastMissed = "none";
 
+	// the reduces don't work properly with a length of 1, so force just precentage of the 1 med
 	if (meds.length == 1) {
 		overallAdherence = GetAdherencePrecent(meds[0]);
 	} else if (meds.length > 1) {

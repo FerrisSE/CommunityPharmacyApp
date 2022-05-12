@@ -11,6 +11,8 @@ import moment from 'moment';
 import { useIsFocused } from "@react-navigation/native";
 import { SERVER_URL } from '../../../constants';
 
+// TODO: replace these hardcoded services with a list of what is actually offered at a given pharmacy
+
 const vaccines = [
 	{
 		name: "Covid-19 Vaccine",

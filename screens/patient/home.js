@@ -45,6 +45,7 @@ export const HomeScreen = ({ navigation }) => {
 				}
 			})).data;
 
+			// map to array so we can grab the index based off the day, week day 0 = sunday
 			let model = data.map(m => ({
 				medId: m.patientMedicationId,
 				medsPerDay: [

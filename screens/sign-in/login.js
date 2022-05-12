@@ -74,6 +74,7 @@ export const LoginScreen = ({ navigation }) => {
 
 			let result = await WebBrowser.openAuthSessionAsync(url);
 
+			// grabbing the result only works on web build
 			if (result.url)
 				handleOAuthLogin(result.url);
 		} catch (error) {
@@ -81,12 +82,15 @@ export const LoginScreen = ({ navigation }) => {
 		}
 	}
 
+	// grab token from redirect and open patient view
 	let handleOAuthLogin = (url) => {
 		let data = Linking.parse(url);
 		dispatch(setToken(`Bearer ${data.queryParams.token}`));
 		changeStack('Patient');
 	}
 
+	// since directly reading the result of the web browser doesn't work on mobile for oauth,
+	// we need to setup a listener for when we get directed back to the app to grab it instead
 	useEffect(() => {
 		if (Platform.OS != 'web') {
 			Linking.addEventListener("url", (event) => {

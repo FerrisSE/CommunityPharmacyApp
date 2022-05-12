@@ -32,6 +32,7 @@ export const DatePicker = ({ minimumDate, maximumDate, date, setDate, style }) =
 	}
 
 	if (Platform.OS == 'web') {
+		// use basic html date input
 		return (
 			<TextInput
 				ref={inputRef}
@@ -51,6 +52,7 @@ export const DatePicker = ({ minimumDate, maximumDate, date, setDate, style }) =
 			/>
 		)
 	} else {
+		// use mobile system's date picker
 		return (
 			<View>
 				<Pressable onPress={() => setShow(true)}>

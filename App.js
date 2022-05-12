@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { ModalPortal } from 'react-native-modals';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PatientScreenStack from './screens/patient/patient-screen-stack';
 import { LoginStack } from './screens/sign-in/login-stack';
 import { Provider } from 'react-redux';
@@ -12,6 +11,7 @@ import { PharmacistStack } from './screens/pharmacist/pharmacist-stack';
 import { navigationRef, Stack } from './app-nav';
 
 export default function App() {
+  // all fonts used in app need to be loaded here first in order to work on mobile
   const [loaded] = useFonts({
     'OpenSans-Bold': require('./assets/fonts/OpenSans-Bold.ttf'),
     'OpenSans-BoldItalic': require('./assets/fonts/OpenSans-BoldItalic.ttf'),

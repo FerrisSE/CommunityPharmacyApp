@@ -11,8 +11,6 @@ import { Card } from '../../../components/cards';
 import { TextBody, TextSubHeader1, TextSubHeader2 } from '../../../components/text';
 import { SERVER_URL } from '../../../constants';
 
-const Stack = createNativeStackNavigator();
-
 const ProfileScreen = ({ navigation, route }) => {
 	const [profileData, setProfileData] = useState({});
 

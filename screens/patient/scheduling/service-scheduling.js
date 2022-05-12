@@ -25,17 +25,20 @@ const ServiceScheduling = ({ navigation, route }) => {
 	const userToken = useSelector((state) => state.userToken.value);
 
 	const GenerateTimeslots = (info, date) => {
+		// funky splitting to get the time today that the pharmacy opens
 		let openTime = info.open.split(":");
 		let open = moment(date).add(openTime[0], "hours").add(openTime[1], "minutes");
 
+		// funky splitting to get the time today that the pharmacy closes
 		let closeTime = info.close.split(":");
 		let close = moment(date).add(closeTime[0], "hours").add(closeTime[1], "minutes");
 
+		// get unavailable time just for selected date
 		let unavailable = bookedSlots.map(s => moment(s.start + s.day, "hh:mm:ssYYYY-MM-DD")).filter(t => t.isSame(date, 'day'));
 		let slots = [];
 
+		// generate timeslots from opening time to closed time, based on the time slot length
 		let currentMoment = open;
-
 		while (currentMoment < close) {
 			slots.push({
 				time: currentMoment.clone(),
@@ -48,6 +51,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 		setPickedId(-1);
 	}
 
+	// only allow scheduling of times on open days from tomorrow to 1 month out
 	const datesBlacklistFunc = date => {
 		return !enabledWeekdays[date.day()] || date.isBefore(moment()) || date.isAfter(moment().add(1, 'month'));
 	}
@@ -90,6 +94,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 				setBookedSlots(response.data);
 
 				// get the first avaiable date to view
+				// tomorrow might be closed, so loop until there is an available date
 				let startDate = moment().add(1, 'days');
 				while (!days[startDate.day()]) {
 					startDate.add(1, "days");
@@ -108,11 +113,12 @@ const ServiceScheduling = ({ navigation, route }) => {
 	const OnDateSelected = date => GenerateTimeslots(pharmacyInfo, date.format("YYYY-MM-DD"));
 
 	const selectAppointment = () => {
+		// make sure something is selected
 		if (pickedId == -1)
 			return;
 
+		// construct appointment data
 		let pickedSlot = timeSlots[pickedId];
-
 		let data = {
 			start: pickedSlot.time,
 			end: pickedSlot.time.clone().add(pharmacyInfo.slotDuration, 'minutes'),
