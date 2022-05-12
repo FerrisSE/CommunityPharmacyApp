@@ -88,7 +88,10 @@ export const LoginScreen = ({ navigation }) => {
 	}
 
 	useEffect(() => {
-		Linking.addEventListener("url", (event) => handleOAuthLogin(event.url));
+		Linking.addEventListener("url", (event) => {
+			if(event.url)
+				handleOAuthLogin(event.url)
+		});
 		return (() => {
 			Linking.removeEventListener("url");
 		});
