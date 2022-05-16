@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { SERVER_URL } from "../constants";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useIsFocused } from "@react-navigation/native";
 
 export const GetAdherencePrecent = (med) => (med.pillsScheduled != 0) ? (med.pillsTaken / med.pillsScheduled) : 1.0;
 
@@ -65,9 +66,10 @@ export const AdherenceButtonLarge = ({ navigation }) => {
 
 	const userToken = useSelector((state) => state.userToken.value);
 
+	let isFocused = useIsFocused();
 	useEffect(async () => {
 		setMeds(await GetAdherence(userToken));
-	}, []);
+	}, [isFocused]);
 
 	return (
 		<Pressable onPress={toAdherence}>
@@ -116,9 +118,10 @@ export const AdherenceButtonSmall = ({ navigation }) => {
 
 	const userToken = useSelector((state) => state.userToken.value);
 
+	let isFocused = useIsFocused();
 	useEffect(async () => {
 		setMeds(await GetAdherence(userToken));
-	}, []);
+	}, [isFocused]);
 
 
 	return (

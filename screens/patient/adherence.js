@@ -4,6 +4,7 @@ import { TextSubHeader2 } from '../../components/text';
 import { Card } from "../../components/cards";
 import { AdherenceGraph, GetAdherence, GetAdherencePrecent, MedAdherenceCard } from "../../components/adherence-components";
 import { useSelector } from "react-redux";
+import { useIsFocused } from "@react-navigation/native";
 
 export const AdherenceScreen = () => {
 	let [meds, setMeds] = useState([]);
@@ -24,9 +25,10 @@ export const AdherenceScreen = () => {
 
 	const userToken = useSelector((state) => state.userToken.value);
 
+	const isFocused = useIsFocused();
 	useEffect(async () => {
 		setMeds(await GetAdherence(userToken));
-	}, []);
+	}, [isFocused]);
 
 	return (
 		<ScrollView>

@@ -170,10 +170,8 @@ const AdherenceHomeCard = ({ med, refreshMeds, medsThisDay }) => {
 
 	const toggleExpanded = () => setExpanded(!expanded);
 
-	const medsCanTake = Math.min(Math.max(0, med.pillsTaken - med.pillsScheduled), medsThisDay);
-
 	const takeMed = async () => {
-		if (medsCanTake == 0)
+		if (med.pillsTaken == med.pillsScheduled)
 			return;
 
 		try {
@@ -218,7 +216,7 @@ const AdherenceHomeCard = ({ med, refreshMeds, medsThisDay }) => {
 								<Icon name={expanded ? "chevron-up" : "chevron-down"} size={25} />
 							</View>
 							<TextSubHeader2 text={med.medicationName} />
-							<TextNote text={`${medsThisDay - medsCanTake} of ${medsThisDay} doses today`} />
+							<TextNote text={`${med.pillsTaken} of ${medsThisDay} doses today`} />
 						</View>
 					</View>
 				</Card>
