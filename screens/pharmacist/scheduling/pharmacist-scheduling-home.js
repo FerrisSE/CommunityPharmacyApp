@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Pressable, View } from "react-native";
+import { FlatList, Pressable, ScrollView, View } from "react-native";
 import { Card } from "../../../components/cards";
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
-import { TextBody, TextHeader2, TextHeader3, TextSubHeader2 } from "../../../components/text";
+import { TextBody, TextHeader2, TextHeader3, TextSubHeader1, TextSubHeader2 } from "../../../components/text";
 import { ACCENT_3, GRAY_2, HIGH_PRIORITY, PRIMARY_COLOR, SECONDARY_COLOR, WHITE } from "../../../colors";
 import { PrimaryButton } from "../../../components/buttons";
 import moment from "moment";
@@ -12,14 +12,14 @@ import { useSelector } from "react-redux";
 
 export const PharmacistSchedulingHomeScreen = () => {
 	const [appointments, setAppointments] = useState([]);
+	const [viewedDay, setViewedDay] = useState(moment());
 
 	const userToken = useSelector((state) => state.userToken.value);
 
-	useEffect(async () => {
-		let date = moment().add(1, 'day');
+	let loadAppointments = async () => {
 		let config = {
 			method: 'get',
-			url: `${SERVER_URL}/api/schedule/0/${date.format('YYYY-MM-DD')}`,
+			url: `${SERVER_URL}/api/schedule/0`,
 			headers: {
 				Authorization: userToken,
 			}
@@ -27,11 +27,22 @@ export const PharmacistSchedulingHomeScreen = () => {
 
 		let data = (await axios(config)).data;
 		setAppointments(data);
+	}
+
+	useEffect(async () => {
+		loadAppointments();
 	}, []);
+
+	const addDay = () => setViewedDay(viewedDay.clone().add(1, 'day'));
+	const subDay = () => setViewedDay(viewedDay.clone().subtract(1, 'day'));
+
+	let totalApptCount = appointments.length;
+	let completeApptCount = appointments.filter(a => a.status == "Complete").length;
+	let nowShowApptCount = appointments.filter(a => a.status == "No Show").length;
 
 	return (
 		<View style={{ padding: 12, flex: 1 }}>
-			<TextHeader2 text="Services" style={{ margin: 12 }} />
+			<TextHeader2 text="Scheduling" style={{ margin: 12 }} />
 			<Card depth={1} style={{ margin: 12, flex: 1, padding: 32 }}>
 
 				{/* Manage Appointments Button */}
@@ -48,17 +59,17 @@ export const PharmacistSchedulingHomeScreen = () => {
 					<View style={{ flexDirection: 'row' }}>
 
 						<Card depth={2} color={SECONDARY_COLOR} style={{ margin: 8, padding: 12 }}>
-							<TextHeader2 text="3" style={{ color: WHITE, margin: 8 }} />
+							<TextHeader2 text={totalApptCount} style={{ color: WHITE, margin: 8 }} />
 							<TextSubHeader2 text="Total Appointments" style={{ color: WHITE }} />
 						</Card>
 
 						<Card depth={2} color={ACCENT_3} style={{ margin: 8, padding: 12 }}>
-							<TextHeader2 text="2" style={{ color: WHITE, margin: 8 }} />
+							<TextHeader2 text={completeApptCount} style={{ color: WHITE, margin: 8 }} />
 							<TextSubHeader2 text="Complete Appointments" style={{ color: WHITE }} />
 						</Card>
 
 						<Card depth={2} color={HIGH_PRIORITY} style={{ margin: 8, padding: 12 }}>
-							<TextHeader2 text="2" style={{ color: WHITE, margin: 8 }} />
+							<TextHeader2 text={nowShowApptCount} style={{ color: WHITE, margin: 8 }} />
 							<TextSubHeader2 text="No-Show Appointments" style={{ color: WHITE }} />
 						</Card>
 
@@ -70,6 +81,16 @@ export const PharmacistSchedulingHomeScreen = () => {
 				</View>
 
 				<TextHeader3 text="Appointment Schedule" style={{ marginTop: 16 }} />
+
+				<View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'center', width: '100%', margin: 4 }}>
+					<Pressable onPress={subDay}>
+						<Icon name="chevron-left" size={48} color={PRIMARY_COLOR} />
+					</Pressable>
+					<TextSubHeader2 text={viewedDay.format("ddd, MMMM Do")} />
+					<Pressable onPress={addDay}>
+						<Icon name="chevron-right" size={48} color={PRIMARY_COLOR} />
+					</Pressable>
+				</View>
 
 				{/* Appointments Grid */}
 				<Card depth={1} color={WHITE} style={{
@@ -111,8 +132,10 @@ export const PharmacistSchedulingHomeScreen = () => {
 					<View style={{ width: '100%', padding: 1, marginTop: 8, marginBottom: 8, backgroundColor: PRIMARY_COLOR }}>
 					</View>
 
-					{/* Remaining List */}
-					{appointments.map((a, i) => <AppointmentRow appointment={a} key={i} />)}
+					<ScrollView>
+						{/* Remaining List */}
+						{appointments.filter(a => a.day == viewedDay.format("YYYY-MM-DD")).map((a, i) => <AppointmentRow appointment={a} loadAppointments={loadAppointments} key={i} />)}
+					</ScrollView>
 
 				</Card>
 			</Card>
@@ -120,7 +143,29 @@ export const PharmacistSchedulingHomeScreen = () => {
 	)
 }
 
-const AppointmentRow = ({ appointment }) => {
+const AppointmentRow = ({ appointment, loadAppointments }) => {
+	const userToken = useSelector((state) => state.userToken.value);
+
+	const onReview = async (appt) => {
+		if (appt.status != "Needs Verification")
+			return;
+
+		let config = {
+			method: 'patch',
+			url: `${SERVER_URL}/api/schedule/${appt.id}`,
+			headers: {
+				Authorization: userToken,
+			},
+			data: {
+				status: "Verified"
+			}
+		};
+
+		let resp = await axios(config);
+
+		loadAppointments();
+	}
+
 	return (
 		<View>
 			<View style={{ flexDirection: 'row', alignContent: 'center' }}>
@@ -136,16 +181,16 @@ const AppointmentRow = ({ appointment }) => {
 						<TextBody text={appointment.category} />
 					</View>
 					<View style={{ flex: 3, padding: 4, justifyContent: 'center' }}>
-						<TextBody text={"test"} />
+						<TextBody text={`${appointment.patientGivenName} ${appointment.patientFamilyName}`} />
 					</View>
 					<View style={{ flex: 2, padding: 4, justifyContent: 'center' }}>
-						<TextBody text={"test"} />
+						<TextBody text={`${moment(appointment.patientDOB).format("MM/DD/YYYY")}, ${moment(appointment.patientDOB).fromNow(true)}`} />
 					</View>
 					<View style={{ flex: 2, padding: 4, justifyContent: 'center' }}>
 						<TextBody text={appointment.status} />
 					</View>
 					<View style={{ flex: 2, padding: 4, justifyContent: 'center' }}>
-						<PrimaryButton label="Reviewed" textStyle={{ margin: 6 }} />
+						<PrimaryButton label={appointment.status == "Needs Verification" ? "Review" : "Reviewed"} onPress={() => onReview(appointment)} />
 					</View>
 					<View style={{ flex: 1, padding: 4, justifyContent: 'center' }}>
 						<Icon name="dots-vertical" size={24} color={GRAY_2} />
