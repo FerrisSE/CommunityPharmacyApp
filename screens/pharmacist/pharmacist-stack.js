@@ -6,6 +6,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { Platform } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useEffect } from 'react';
+import { DashboardScreen } from './pharmacist-dashboard';
 
 const nav = createNativeStackNavigator();
 
@@ -20,6 +21,13 @@ export const PharmacistStack = ({ navigation }) => {
 
 	return (
 		<PharmacistTabNavigator nav={navigation}>
+			<nav.Screen
+				name="Dashboard"
+				component={DashboardScreen}
+				options={{
+					icon: "home"
+				}}
+			/>
 			<nav.Screen
 				name="Patients"
 				component={PharmacistPatientsStack}
