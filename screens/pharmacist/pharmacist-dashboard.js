@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 import { TextHeader1, TextHeader2, TextHeader3, TextSubHeader1 } from '../../components/text';
 import { Card } from '../../components/cards';
 import { PRIMARY_COLOR, WHITE } from "../../colors";
@@ -12,7 +12,7 @@ import { SERVER_URL } from "../../constants";
 import axios from "axios";
 import moment from "moment";
 
-export const DashboardScreen = () => {
+export const DashboardScreen = ({ navigation }) => {
 	const [searchText, setSearchText] = useState("");
 	const [appointments, setAppointments] = useState([]);
 
@@ -35,6 +35,18 @@ export const DashboardScreen = () => {
 		loadAppointments();
 	}, []);
 
+	let toSchedule = () => {
+		navigation.navigate("Scheduling", {
+			screen: "Scheduling Search"
+		});
+	}
+
+	let toPatient = () => {
+		navigation.navigate("Patients", {
+			screen: "Patient Search"
+		});
+	}
+
 	return (
 		<View style={{ width: "100%", height: "100%", padding: 32 }}>
 			<TextHeader2 text="Dashboard" style={{ marginBottom: 8 }} />
@@ -51,14 +63,18 @@ export const DashboardScreen = () => {
 
 				<TextHeader3 text="Quick Links" />
 				<View style={{ width: "100%", flexDirection: 'row', margin: 12, alignItems: "flex-start" }}>
-					<Card depth={2} style={{ margin: 12, flexDirection: "row", alignItems: "center", justifyContent: "center", padding: 32 }}>
-						<Icon name="format-list-bulleted" size={32} color={PRIMARY_COLOR} />
-						<TextSubHeader1 text="Schedule Appointments" style={{ color: PRIMARY_COLOR, marginLeft: 4 }} />
-					</Card>
-					<Card depth={2} style={{ margin: 12, flexDirection: "row", alignItems: "center", justifyContent: "center", padding: 32 }}>
-						<Icon name="account-multiple" size={32} color={PRIMARY_COLOR} />
-						<TextSubHeader1 text="Patient Search" style={{ color: PRIMARY_COLOR, marginLeft: 4 }} />
-					</Card>
+					<Pressable onPress={toSchedule}>
+						<Card depth={2} style={{ margin: 12, flexDirection: "row", alignItems: "center", justifyContent: "center", padding: 32 }}>
+							<Icon name="format-list-bulleted" size={32} color={PRIMARY_COLOR} />
+							<TextSubHeader1 text="Schedule Appointments" style={{ color: PRIMARY_COLOR, marginLeft: 4 }} />
+						</Card>
+					</Pressable>
+					<Pressable onPress={toPatient}>
+						<Card depth={2} style={{ margin: 12, flexDirection: "row", alignItems: "center", justifyContent: "center", padding: 32 }}>
+							<Icon name="account-multiple" size={32} color={PRIMARY_COLOR} />
+							<TextSubHeader1 text="Patient Search" style={{ color: PRIMARY_COLOR, marginLeft: 4 }} />
+						</Card>
+					</Pressable>
 				</View>
 
 				<AppointmentsView appointments={appointments} loadAppointments={loadAppointments} viewedDay={moment()} viewLimit={3} />
