@@ -31,7 +31,7 @@ export const PharmacistPatientView = ({ navigation, route }) => {
 		{ name: "Personal Information", icon: "account-circle", screen: <PharmacistPatientInformationScreen patient={patient} /> },
 		{ name: "Medication", icon: "pill", screen: <PharmacistPatientMedicationScreen patient={patient} /> },
 		{ name: "Adherence", icon: "circle-slice-6", screen: <PharmacistPatientAdherenceScreen patient={patient} /> },
-		{ name: "Appointments", icon: "calendar-month", screen: <PharmacistPatientAppointments patient={patient} /> },
+		{ name: "Appointments", icon: "calendar-month", screen: <PharmacistPatientAppointments patient={patient} nav={navigation} /> },
 		{ name: "Conditions", icon: "heart", screen: <PharmacistPatientConditionsScreen patient={patient} /> },
 	];
 

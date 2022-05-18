@@ -10,6 +10,7 @@ import { TextHeader3, TextSubHeader1, TextSubHeader2 } from '../../../components
 import moment from 'moment';
 import { useIsFocused } from "@react-navigation/native";
 import { SERVER_URL } from '../../../constants';
+import { RenderServicesGrid } from '../../../components/services';
 
 // TODO: replace these hardcoded services with a list of what is actually offered at a given pharmacy
 
@@ -48,6 +49,15 @@ const SchedulingHomeScreen = ({ navigation }) => {
 			...vaccines.filter(v => v.name.toLowerCase().includes(searchText.toLowerCase())),
 			...bloodTests.filter(v => v.name.toLowerCase().includes(searchText.toLowerCase()))
 		);
+	}
+
+	const onCardPressed = (service) => {
+		navigation.navigate({
+			name: 'Service Scheduling',
+			params: {
+				service: service
+			}
+		});
 	}
 
 	const userToken = useSelector((state) => state.userToken.value);
@@ -91,17 +101,17 @@ const SchedulingHomeScreen = ({ navigation }) => {
 					{searchText.length == 0 &&
 						<View>
 							<TextSubHeader2 text="Vaccines" style={{ marginLeft: 8, marginTop: 16 }} />
-							<RenderServicesGrid items={vaccines} navigation={navigation} />
+							<RenderServicesGrid items={vaccines} navigation={navigation} itemsPerRow={2} onPress={onCardPressed} />
 
 							<TextSubHeader2 text="Blood Tests" style={{ marginLeft: 8, marginTop: 16 }} />
-							<RenderServicesGrid items={bloodTests} navigation={navigation} />
+							<RenderServicesGrid items={bloodTests} navigation={navigation} itemsPerRow={2} onPress={onCardPressed} />
 						</View>
 					}
 
 					{searchText.length != 0 &&
 						<View>
 							<TextSubHeader2 text={`Search Results For ${searchText}...`} style={{ marginLeft: 8 }} />
-							<RenderServicesGrid items={searchServices} navigation={navigation} />
+							<RenderServicesGrid items={searchServices} navigation={navigation} itemsPerRow={2} onPress={onCardPressed} />
 						</View>
 					}
 				</Card>
@@ -109,29 +119,5 @@ const SchedulingHomeScreen = ({ navigation }) => {
 		</ScrollView>
 	);
 };
-
-const RenderServicesGrid = ({ items, navigation }) => {
-	return (
-		<View style={{
-			width: '100%',
-			marginTop: 10,
-			flex: 1,
-			flexDirection: 'row',
-			flexWrap: 'wrap',
-			justifyContent: 'flex-start',
-		}}>
-			{items.map(s => (
-				< SchedulingButton icon={s.icon} label={s.name} key={s.name} onClicked={() => {
-					navigation.navigate({
-						name: 'Service Scheduling',
-						params: {
-							service: s
-						}
-					})
-				}} />
-			))}
-		</View>
-	)
-}
 
 export default SchedulingHomeScreen;

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { View, Pressable } from 'react-native';
 import { TextHeader2, TextHeader3, TextSubHeader2 } from '../../../components/text';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
 import { SERVER_URL } from '../../../constants';
 import { Card } from '../../../components/cards';
 import { Input } from '../../../components/input';
-import { PRIMARY_COLOR, WHITE } from '../../../colors';
+import { PRIMARY_COLOR, WHITE, GRAY_2 } from '../../../colors';
 import { OutlineButton, PrimaryButton } from '../../../components/buttons';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
@@ -14,12 +14,21 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 const PatientResult = ({ patient, nav }) => {
 	const viewPatient = () =>
-		nav.navigate({
-			name: 'Patient View',
+		nav.navigate("Patients", {
+			screen: 'Patient View',
 			params: {
 				patient: patient
 			}
 		});
+
+	const schedulePatient = () => {
+		nav.navigate("Services", {
+			screen: 'Services Schedule',
+			params: {
+				patient: patient
+			}
+		});
+	}
 
 	return (
 		<View>
@@ -31,6 +40,7 @@ const PatientResult = ({ patient, nav }) => {
 				</View>
 				<View style={{ flex: 1, flexDirection: 'row', alignContent: 'center', justifyContent: 'flex-end' }}>
 					<OutlineButton label="View Profile" onPress={viewPatient} style={{ margin: 4, marginLeft: 12 }} />
+					<OutlineButton label="Schedule" onPress={schedulePatient} style={{ margin: 4 }} />
 				</View>
 			</View>
 
@@ -40,7 +50,7 @@ const PatientResult = ({ patient, nav }) => {
 	)
 }
 
-export const PharmacistPatientSearchScreen = ({ navigation }) => {
+export const PharmacistScheduleSearchScreen = ({ navigation }) => {
 	let [searchText, setSearchText] = useState('');
 	let [patients, setPatients] = useState([]);
 
@@ -62,28 +72,37 @@ export const PharmacistPatientSearchScreen = ({ navigation }) => {
 		}
 	}
 
-	return (
-		<Card style={{ flex: 1, margin: 48, padding: 32, alignItems: 'center' }} depth={0}>
-			<View style={{ width: "100%", flex: 1 }}>
-				<TextHeader2 text="Patient Search" style={{ color: PRIMARY_COLOR }} />
-				<View style={{ width: "100%", flexDirection: 'row' }}>
-					<Input placeholder="last name..." defaultText={searchText} setText={setSearchText} style={{ flex: 1, backgroundColor: WHITE }} />
-					<PrimaryButton label="Search" onPress={searchPress} style={{ margin: 16, paddingLeft: 32, paddingRight: 32 }} />
-				</View>
-				{patients.length != 0 &&
-					<View style={{ flex: 1 }}>
-						<TextHeader3 text="Results" style={{ color: PRIMARY_COLOR, marginTop: 32 }} />
+	const onBack = () => navigation.pop();
 
-						<Card style={{ backgroundColor: WHITE, padding: 16, flex: 1 }} depth={0}>
-							<ScrollView>
-								{patients.map((patient, index) => (
-									<PatientResult key={index} patient={patient} nav={navigation} />
-								))}
-							</ScrollView>
-						</Card>
+	return (
+		<View style={{ flex: 1 }}>
+			{/* Back Button */}
+			<Pressable onPress={onBack} style={{ margin: 32 }}>
+				<TextSubHeader2 text="< Back to Schedule" style={{ color: GRAY_2 }} />
+			</Pressable >
+
+			<Card style={{ flex: 1, margin: 48, marginTop: 24, padding: 32, alignItems: 'center' }} depth={0}>
+				<View style={{ width: "100%", flex: 1 }}>
+					<TextHeader2 text="Create Appointment" style={{ color: PRIMARY_COLOR }} />
+					<View style={{ width: "100%", flexDirection: 'row' }}>
+						<Input placeholder="last name..." defaultText={searchText} setText={setSearchText} style={{ flex: 1, backgroundColor: WHITE }} />
+						<PrimaryButton label="Search" onPress={searchPress} style={{ margin: 16, paddingLeft: 32, paddingRight: 32 }} />
 					</View>
-				}
-			</View>
-		</Card>
+					{patients.length != 0 &&
+						<View style={{ flex: 1 }}>
+							<TextHeader3 text="Results" style={{ color: PRIMARY_COLOR, marginTop: 32 }} />
+
+							<Card style={{ backgroundColor: WHITE, padding: 16, flex: 1 }} depth={0}>
+								<ScrollView>
+									{patients.map((patient, index) => (
+										<PatientResult key={index} patient={patient} nav={navigation} />
+									))}
+								</ScrollView>
+							</Card>
+						</View>
+					}
+				</View>
+			</Card>
+		</View>
 	)
 };

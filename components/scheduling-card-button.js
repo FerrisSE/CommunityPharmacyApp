@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT } from "../colors";
 
-const SchedulingButton = ({ onClicked, icon, label }) => {
+const SchedulingButton = ({ onClicked, icon, label, width }) => {
 	const [iconSize, setIconSize] = React.useState(84);
 
 	return (
@@ -11,7 +11,7 @@ const SchedulingButton = ({ onClicked, icon, label }) => {
 			activeOpacity={0.6}
 			underlayColor="#333"
 			onPress={onClicked ? () => { onClicked() } : () => { }}
-			style={{ width: '50%', aspectRatio: 1 }}
+			style={{ width: `${width}%`, aspectRatio: 1 }}
 		>
 			<View style={cardStyles.CardView}>
 				<View

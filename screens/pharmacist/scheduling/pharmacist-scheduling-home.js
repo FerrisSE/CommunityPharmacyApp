@@ -11,11 +11,13 @@ import { SERVER_URL } from "../../../constants";
 import { useSelector } from "react-redux";
 import { AppointmentsView } from "../../../components/pharmacist-appointments";
 
-export const PharmacistSchedulingHomeScreen = () => {
+export const PharmacistSchedulingHomeScreen = ({ navigation }) => {
 	const [appointments, setAppointments] = useState([]);
 	const [viewedDay, setViewedDay] = useState(moment());
 
 	const userToken = useSelector((state) => state.userToken.value);
+
+	const toScheduleSearch = () => navigation.navigate("Scheduling Search");
 
 	let loadAppointments = async () => {
 		let config = {
@@ -76,9 +78,11 @@ export const PharmacistSchedulingHomeScreen = () => {
 
 					</View>
 
-					<Card depth={2} style={{ margin: 8, alignItems: "center", justifyContent: "center" }} color={PRIMARY_COLOR}>
-						<TextSubHeader2 text="Schedule Appointment" style={{ color: WHITE, margin: 8 }} />
-					</Card>
+					<Pressable onPress={toScheduleSearch} style={{ margin: 8 }}>
+						<Card depth={2} style={{ flex: 1, alignItems: "center", justifyContent: "center" }} color={PRIMARY_COLOR}>
+							<TextSubHeader2 text="Create Appointment" style={{ color: WHITE, margin: 8 }} />
+						</Card>
+					</Pressable>
 				</View>
 
 				<TextHeader3 text="Appointment Schedule" style={{ marginTop: 16 }} />

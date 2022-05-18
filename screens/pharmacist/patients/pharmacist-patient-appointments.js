@@ -11,7 +11,7 @@ import moment from 'moment';
 
 const dayHasPassed = (day) => moment(day).isBefore(moment());
 
-export const PharmacistPatientAppointments = ({ patient }) => {
+export const PharmacistPatientAppointments = ({ nav, patient }) => {
 	const [appointments, setAppointments] = useState([]);
 
 	const upcomingApps = appointments.filter(a => !dayHasPassed(a.day));
@@ -32,6 +32,15 @@ export const PharmacistPatientAppointments = ({ patient }) => {
 		setAppointments(results);
 	}, []);
 
+	const schedulePatient = () => {
+		nav.navigate("Services", {
+			screen: 'Services Schedule',
+			params: {
+				patient: patient
+			}
+		});
+	}
+
 	return (
 		<ScrollView>
 			<TextSubHeader2 text="Upcoming" style={{ margin: 8 }} />
@@ -41,7 +50,7 @@ export const PharmacistPatientAppointments = ({ patient }) => {
 				upcomingApps.map((a, i) => <AppointmentCard key={i} appointment={a} />)
 			}
 
-			<PrimaryButton label="Schedule Appointment" style={{ margin: 8, padding: 12, borderRadius: 20 }} />
+			<PrimaryButton label="Schedule Appointment" onPress={schedulePatient} style={{ margin: 8, padding: 12, borderRadius: 20 }} />
 
 			{/* Divider line */}
 			<View style={{ flex: 1, backgroundColor: PRIMARY_COLOR, padding: 1, margin: 4, marginTop: 32, marginBottom: 32 }}></View>

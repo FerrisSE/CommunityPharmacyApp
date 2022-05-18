@@ -1,12 +1,13 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { PharmacistTabNavigator } from '../../components/pharmacist-tabs';
 import { PharmacistPatientsStack } from './patients/pharmacist-patients-stack';
-import { PharmacistSchedulingHomeScreen } from './scheduling/pharmacist-scheduling-home';
 import { useIsFocused } from '@react-navigation/native';
 import { Platform } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useEffect } from 'react';
 import { DashboardScreen } from './pharmacist-dashboard';
+import { PharmacistSchedulingStack } from './scheduling/pharmacist-scheduling-stack';
+import { PharmacistServicesStack } from './services/pharmacist-services-stack';
 
 const nav = createNativeStackNavigator();
 
@@ -38,9 +39,17 @@ export const PharmacistStack = ({ navigation }) => {
 			<nav.Screen
 				name="Scheduling"
 				icon="folder"
-				component={PharmacistSchedulingHomeScreen}
+				component={PharmacistSchedulingStack}
 				options={{
 					icon: "calendar-month"
+				}}
+			/>
+			<nav.Screen
+				name="Services"
+				icon="folder"
+				component={PharmacistServicesStack}
+				options={{
+					icon: "medical-bag"
 				}}
 			/>
 		</PharmacistTabNavigator>
