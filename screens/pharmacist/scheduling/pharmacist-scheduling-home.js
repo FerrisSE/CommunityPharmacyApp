@@ -18,6 +18,7 @@ export const PharmacistSchedulingHomeScreen = ({ navigation }) => {
 	const userToken = useSelector((state) => state.userToken.value);
 
 	const toScheduleSearch = () => navigation.navigate("Scheduling Search");
+	const toManageAppts = () => navigation.navigate("Manage");
 
 	let loadAppointments = async () => {
 		let config = {
@@ -50,7 +51,7 @@ export const PharmacistSchedulingHomeScreen = ({ navigation }) => {
 
 				{/* Manage Appointments Button */}
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-					<Pressable style={{ flexDirection: 'row' }}>
+					<Pressable onPress={toManageAppts} style={{ flexDirection: 'row' }}>
 						<Icon name="cog-outline" size={24} style={{ marginRight: 4 }} />
 						<TextSubHeader2 text="Manage Appointment Times" />
 					</Pressable>
