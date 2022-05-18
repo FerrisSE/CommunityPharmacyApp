@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { DashboardScreen } from './pharmacist-dashboard';
 import { PharmacistSchedulingStack } from './scheduling/pharmacist-scheduling-stack';
 import { PharmacistServicesStack } from './services/pharmacist-services-stack';
+import { PharmacistOrdersScreen } from './orders/pharmacist-orders';
 
 const nav = createNativeStackNavigator();
 
@@ -38,7 +39,6 @@ export const PharmacistStack = ({ navigation }) => {
 			/>
 			<nav.Screen
 				name="Scheduling"
-				icon="folder"
 				component={PharmacistSchedulingStack}
 				options={{
 					icon: "calendar-month"
@@ -46,10 +46,16 @@ export const PharmacistStack = ({ navigation }) => {
 			/>
 			<nav.Screen
 				name="Services"
-				icon="folder"
 				component={PharmacistServicesStack}
 				options={{
 					icon: "medical-bag"
+				}}
+			/>
+			<nav.Screen
+				name="Orders"
+				component={PharmacistOrdersScreen}
+				options={{
+					icon: "script-text"
 				}}
 			/>
 		</PharmacistTabNavigator>
