@@ -20,6 +20,10 @@ export const PharmacistPatientAppointments = ({ nav, patient }) => {
 	const userToken = useSelector((state) => state.userToken.value);
 
 	useEffect(async () => {
+		loadAppts();
+	}, []);
+
+	const loadAppts = async () => {
 		var config = {
 			method: 'get',
 			url: `${SERVER_URL}/api/schedule/patient/${patient.patientId}`,
@@ -30,7 +34,7 @@ export const PharmacistPatientAppointments = ({ nav, patient }) => {
 
 		let results = (await axios(config)).data;
 		setAppointments(results);
-	}, []);
+	}
 
 	const schedulePatient = () => {
 		nav.navigate("Services", {
@@ -41,13 +45,33 @@ export const PharmacistPatientAppointments = ({ nav, patient }) => {
 		});
 	}
 
+	const onReviewAppt = async (appt) => {
+		if (appt.status != "Needs Verification")
+			return;
+
+		let config = {
+			method: 'patch',
+			url: `${SERVER_URL}/api/schedule/${appt.id}`,
+			headers: {
+				Authorization: userToken,
+			},
+			data: {
+				status: "Verified"
+			}
+		};
+
+		let resp = await axios(config);
+
+		loadAppts();
+	}
+
 	return (
 		<ScrollView>
 			<TextSubHeader2 text="Upcoming" style={{ margin: 8 }} />
 			{upcomingApps.length == 0 ?
 				<TextBody text="No Appointments on Record" style={{ margin: 8 }} />
 				:
-				upcomingApps.map((a, i) => <AppointmentCard key={i} appointment={a} />)
+				upcomingApps.map((a, i) => <AppointmentCard key={i} appointment={a} onReview={() => onReviewAppt(a)} />)
 			}
 
 			<PrimaryButton label="Schedule Appointment" onPress={schedulePatient} style={{ margin: 8, padding: 12, borderRadius: 20 }} />
@@ -59,13 +83,13 @@ export const PharmacistPatientAppointments = ({ nav, patient }) => {
 			{pastApps.length == 0 ?
 				<TextBody text="No Past Appointments on Record" style={{ margin: 8 }} />
 				:
-				pastApps.map((a, i) => <AppointmentCard key={i} appointment={a} />)
+				pastApps.map((a, i) => <AppointmentCard key={i} appointment={a} onReview={() => onReviewAppt(a)} />)
 			}
 		</ScrollView>
 	)
 }
 
-const AppointmentCard = ({ appointment }) => {
+const AppointmentCard = ({ appointment, onReview }) => {
 	return (
 		<Card depth={1} style={{ margin: 8 }}>
 			<View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
@@ -75,7 +99,13 @@ const AppointmentCard = ({ appointment }) => {
 				<View style={{ flex: 1, padding: 2, alignContent: 'center', justifyContent: 'center' }}>
 					<TextBody text={appointment.category} />
 				</View>
-				<PrimaryButton label="Reviewed" style={{ flex: 1, margin: 2, textAlign: 'center', textAlignVertical: 'center' }} />
+				<View style={{ flex: 1, padding: 2, alignContent: 'center', justifyContent: 'center' }}>
+					<TextBody text={appointment.status} />
+				</View>
+				<PrimaryButton label={appointment.status == "Needs Verification" ? "Review" : "Reviewed"}
+					onPress={onReview}
+					style={{ flex: 1, margin: 2, textAlign: 'center', textAlignVertical: 'center' }}
+				/>
 			</View>
 		</Card>
 	)
