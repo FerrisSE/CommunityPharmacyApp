@@ -51,10 +51,16 @@ export const PharmacistServicesScheduleScreen = ({ navigation, route }) => {
 		});
 	}
 
+	const onBack = () => {
+		navigation.navigate("Scheduling", {
+			screen: 'Scheduling Search',
+		});
+	}
+
 	return (
 		<View style={{ flex: 1 }}>
 			{/* Back Button */}
-			< Pressable style={{ margin: 32 }}>
+			< Pressable onPress={onBack} style={{ margin: 32 }}>
 				<TextSubHeader2 text="< Back" style={{ color: GRAY_2 }} />
 			</Pressable >
 

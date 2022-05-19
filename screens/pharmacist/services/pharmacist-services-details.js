@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Pressable, SafeAreaView, ScrollView, View } from 'react-native';
-import { PRIMARY_COLOR, WHITE } from '../../../colors';
+import { GRAY_2, PRIMARY_COLOR, WHITE } from '../../../colors';
 import { PrimaryButton } from '../../../components/buttons';
 import { CloseButton } from '../../../components/close-button';
 import { TextHeader2, TextNote, TextSubHeader2 } from '../../../components/text';
@@ -147,8 +147,17 @@ export const PharmacistServicesDetailsScreen = ({ navigation, route }) => {
 		});
 	}
 
+	const onBack = () => {
+		navigation.pop();
+	}
+
 	return (
 		<View style={{ flex: 1 }}>
+			{/* Back Button */}
+			< Pressable onPress={onBack} style={{ margin: 32 }}>
+				<TextSubHeader2 text="< Back" style={{ color: GRAY_2 }} />
+			</Pressable >
+
 			<Card depth={1} style={{ margin: 32, flex: 1 }}>
 				<ScrollView style={{ flex: 1, height: '100%' }}>
 					<View style={{ alignItems: 'center' }}>
@@ -181,7 +190,9 @@ export const PharmacistServicesDetailsScreen = ({ navigation, route }) => {
 							</View>
 
 							<View style={{ flex: 1, margin: 16 }}>
-								<TimePicker title="Available Appointments" subtitle="location name" times={timeSlots} activeId={pickedId} setActive={setPickedId} style={{ marginTop: 24, marginBottom: 24, width: '90%', flex: 1 }} />
+								<Card depth={1} color={WHITE} style={{ marginTop: 24, marginBottom: 24, width: '90%', flex: 1, padding: 0 }}>
+									<TimePicker title="Available Appointments" subtitle="location name" times={timeSlots} activeId={pickedId} setActive={setPickedId} style={{ flex: 1 }} />
+								</Card>
 							</View>
 						</View>
 
