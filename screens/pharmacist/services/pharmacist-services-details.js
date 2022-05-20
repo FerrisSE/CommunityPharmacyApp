@@ -1,15 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Pressable, SafeAreaView, ScrollView, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { GRAY_2, PRIMARY_COLOR, WHITE } from '../../../colors';
 import { PrimaryButton } from '../../../components/buttons';
-import { CloseButton } from '../../../components/close-button';
 import { TextHeader2, TextNote, TextSubHeader2 } from '../../../components/text';
 import CalendarStrip from 'react-native-calendar-strip';
 import { TimePicker } from '../../../components/time-picker';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 import { SERVER_URL } from '../../../constants';
 import { Card } from '../../../components/cards';
 import Modal, { ModalButton, ModalContent, ModalFooter } from 'react-native-modals';
@@ -69,7 +67,6 @@ export const PharmacistServicesDetailsScreen = ({ navigation, route }) => {
 				Authorization: userToken,
 			}
 		}).then(response => {
-			console.log(response.data);
 			setPharmacyInfo(response.data);
 
 			// set open days
@@ -96,7 +93,6 @@ export const PharmacistServicesDetailsScreen = ({ navigation, route }) => {
 					Authorization: userToken,
 				}
 			}).then(response => {
-				console.log(response.data);
 				setBookedSlots(response.data);
 
 				// get the first avaiable date to view

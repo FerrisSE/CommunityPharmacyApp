@@ -202,7 +202,7 @@ const AdherenceHomeCard = ({ med, refreshMeds, medsThisDay }) => {
 	}
 
 	return (
-		<Card color="#E1E1E8" depth={1} style={{ padding: 0 }}>
+		<Card color="#E1E1E8" depth={1} style={{ padding: 0, margin: 8 }}>
 
 			<Pressable onPress={toggleExpanded}>
 				<Card color="#D2D2DF" depth={1} style={{ padding: 0 }}>

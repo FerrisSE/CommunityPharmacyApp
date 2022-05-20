@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
-import { BLACK, GRAY_4, GRAY_5, SECONDARY_COLOR, SECONDARY_COLOR_TRANSPARENT, WHITE } from "../colors";
+import { BLACK, GRAY_4, SECONDARY_COLOR, SECONDARY_COLOR_TRANSPARENT, WHITE } from "../colors";
 import { Card, CardWithHeader } from "./cards";
 import { TextHeader3, TextNote, TextSubHeader2 } from "./text";
 

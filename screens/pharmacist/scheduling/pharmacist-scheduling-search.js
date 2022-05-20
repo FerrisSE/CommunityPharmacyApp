@@ -72,7 +72,7 @@ export const PharmacistScheduleSearchScreen = ({ navigation }) => {
 		}
 	}
 
-	const onBack = () => navigation.pop();
+	const onBack = () => navigation.navigate("Scheduling View");
 
 	return (
 		<View style={{ flex: 1 }}>
