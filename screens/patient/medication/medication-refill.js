@@ -9,16 +9,36 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RefillDeliveryCard } from '../../../components/refill-delivery-card';
 import Modal, { ModalButton, ModalContent, ModalFooter } from 'react-native-modals';
 import { clearCart } from '../../../redux/slices/cart-slice';
+import axios from 'axios';
+import { SERVER_URL } from '../../../constants';
 
 const MedicationRefillScreen = ({ navigation, route }) => {
-	const cart = useSelector((state) => state.cart.meds);
 	const [selectedOption, setSelectedOption] = useState(-1);
 	const [modalOpen, setModalOpen] = useState(false);
 
 	const dispatch = useDispatch();
 
-	const pressOrder = () => {
-		setModalOpen(true);
+	const cart = useSelector((state) => state.cart.meds);
+	const userToken = useSelector((state) => state.userToken.value);
+
+	const pressOrder = async () => {
+		try {
+
+			let config = {
+				method: 'post',
+				url: `${SERVER_URL}/patient/orders`,
+				headers: {
+					Authorization: userToken,
+				},
+				data: cart.map(m => m.medicationId)
+			};
+
+			let response = (await axios(config)).data;
+
+			setModalOpen(true);
+		} catch (err) {
+			console.error(err);
+		}
 	}
 
 	return (

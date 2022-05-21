@@ -1,14 +1,35 @@
+import axios from "axios"
+import { useEffect, useState } from "react"
 import { ScrollView, View } from "react-native"
+import { useSelector } from "react-redux"
 import { PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT, SECONDARY_COLOR, WHITE } from "../../../colors"
 import { PrimaryButton } from "../../../components/buttons"
 import { Card } from "../../../components/cards"
 import { TextHeader2, TextHeader1, TextSubHeader2, TextBody } from "../../../components/text"
-
-const orders = [
-	{ received: "04/17/2022, 4:50pm", patientName: "Nancy Jones", prescription: "Drug Name", approval: "Approved", status: "Dispensed" }
-]
+import { SERVER_URL } from "../../../constants"
 
 export const PharmacistOrdersScreen = () => {
+	const [orders, setOrders] = useState([]);
+
+	const userToken = useSelector((state) => state.userToken.value);
+
+	let loadOrders = async () => {
+		let config = {
+			method: 'get',
+			url: `${SERVER_URL}/provider/orders`,
+			headers: {
+				Authorization: userToken,
+			}
+		};
+
+		let data = (await axios(config)).data;
+		setOrders(data);
+	}
+
+	useEffect(async () => {
+		loadOrders();
+	}, []);
+
 	return (
 		<View style={{ width: "100%", height: "100%", padding: 32 }}>
 			<TextHeader2 text="Orders" style={{ marginBottom: 8 }} />
@@ -26,7 +47,6 @@ export const PharmacistOrdersScreen = () => {
 							<RowHeader text="Received" />
 							<RowHeader text="Patient Name" />
 							<RowHeader text="Prescription" />
-							<RowHeader text="Provider Approval" />
 							<RowHeader text="Status" />
 							<RowHeader text="Notify" />
 							<RowHeader text="Release" />
@@ -68,18 +88,21 @@ const Row = ({ data }) => {
 	return (
 		<View>
 			<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-				<RowBody text={data.received} />
+				<RowBody text={data.createTime} />
 				<RowBody text={data.patientName} />
-				<RowBody text={data.prescription} />
-				<RowBody text={data.approval} />
+				<RowBody text={data.medicationName} />
 				<RowBody text={data.status} />
 
 				<View style={{ flex: 1, padding: 2, alignItems: 'center', justifyContent: 'center' }}>
-					<PrimaryButton label="Notify Again" />
+					{data.status == "Ready" &&
+						<PrimaryButton label="Notify Again" />
+					}
 				</View>
 
 				<View style={{ flex: 1, padding: 2, alignItems: 'center', justifyContent: 'center' }}>
-					<PrimaryButton label="Ready" style={{ backgroundColor: SECONDARY_COLOR }} />
+					{data.status == "Approved" &&
+						<PrimaryButton label="Ready" style={{ backgroundColor: SECONDARY_COLOR }} />
+					}
 				</View>
 			</View>
 			{/* Divider */}

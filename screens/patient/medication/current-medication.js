@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, View } from 'react-native';
 import { Card } from '../../../components/cards';
 import { TextSubHeader1 } from '../../../components/text';
@@ -10,13 +10,16 @@ import { addMed, removeMed } from '../../../redux/slices/cart-slice';
 import { ShoppingCart } from '../../../components/shopping-cart';
 import { SERVER_URL } from '../../../constants';
 import { AdherenceButtonLarge } from '../../../components/adherence-components';
-import { HIGH_PRIORITY } from '../../../colors';
+import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
+import { HIGH_PRIORITY, SECONDARY_COLOR, SECONDARY_COLOR_TRANSPARENT } from '../../../colors';
+import { useIsFocused } from '@react-navigation/native';
 
 const CurrentMedicationScreen = ({ navigation }) => {
-	let [meds, setMeds] = React.useState([])
-	let [loading, setLoading] = React.useState(true)
-	let [error, setError] = React.useState(false)
-	let [searchText, setSearchText] = React.useState('')
+	let [meds, setMeds] = useState([])
+	let [loading, setLoading] = useState(true)
+	let [error, setError] = useState(false)
+	let [searchText, setSearchText] = useState('')
+	let [orders, setOrders] = useState([]);
 
 	const userToken = useSelector((state) => state.userToken.value);
 	const cart = useSelector((state) => state.cart);
@@ -25,18 +28,27 @@ const CurrentMedicationScreen = ({ navigation }) => {
 
 	const changeCart = (med, add) => dispatch(add ? addMed(med) : removeMed(med));
 
+	const isFocused = useIsFocused();
 	useEffect(async () => {
-		var config = {
-			method: 'get',
-			url: `${SERVER_URL}/patient/medication/patient-medications`,
-			headers: {
-				Authorization: userToken,
-			}
-		};
-
 		try {
-			let data = (await axios(config)).data;
+			let data = (await axios({
+				method: 'get',
+				url: `${SERVER_URL}/patient/medication/patient-medications`,
+				headers: {
+					Authorization: userToken,
+				}
+			}
+			)).data;
 			setMeds(data);
+
+			let ordersData = (await axios({
+				method: 'get',
+				url: `${SERVER_URL}/patient/orders`,
+				headers: {
+					Authorization: userToken,
+				}
+			})).data;
+			setOrders(ordersData);
 		} catch (err) {
 			console.error(err);
 			setError(true);
@@ -44,7 +56,7 @@ const CurrentMedicationScreen = ({ navigation }) => {
 			setLoading(false)
 		}
 
-	}, []);
+	}, [isFocused]);
 
 	// show every med if they aren't searching
 	let shownMeds = []
@@ -73,6 +85,15 @@ const CurrentMedicationScreen = ({ navigation }) => {
 			<SafeAreaView style={{ flex: 1, margin: 8 }}>
 
 				<AdherenceButtonLarge navigation={navigation} />
+
+				{orders.length > 0 &&
+					<Card depth={1} color={SECONDARY_COLOR_TRANSPARENT}>
+						<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 12 }}>
+							<TextSubHeader1 text={`View ${orders.length} Orders`} />
+							<Icon name="arrow-expand" size={20} color={SECONDARY_COLOR} />
+						</View>
+					</Card>
+				}
 
 				<View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', padding: 8, paddingTop: 16 }}>
 					<TextSubHeader1 text="Current Medications" style={{ marginBottom: 4 }} />
