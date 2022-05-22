@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, View } from 'react-native';
+import { Pressable, SafeAreaView, ScrollView, View } from 'react-native';
 import { Card } from '../../../components/cards';
 import { TextSubHeader1 } from '../../../components/text';
 import MedicationCard from '../../../components/medication-card';
@@ -58,6 +58,8 @@ const CurrentMedicationScreen = ({ navigation }) => {
 
 	}, [isFocused]);
 
+	const toOrders = () => navigation.navigate("Orders", { orders: orders });
+
 	// show every med if they aren't searching
 	let shownMeds = []
 	if (searchText == "")
@@ -87,12 +89,14 @@ const CurrentMedicationScreen = ({ navigation }) => {
 				<AdherenceButtonLarge navigation={navigation} />
 
 				{orders.length > 0 &&
-					<Card depth={1} color={SECONDARY_COLOR_TRANSPARENT}>
-						<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 12 }}>
-							<TextSubHeader1 text={`View ${orders.length} Orders`} />
-							<Icon name="arrow-expand" size={20} color={SECONDARY_COLOR} />
-						</View>
-					</Card>
+					<Pressable onPress={toOrders}>
+						<Card depth={1} color={SECONDARY_COLOR_TRANSPARENT}>
+							<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 12 }}>
+								<TextSubHeader1 text={`View ${orders.length} Orders`} />
+								<Icon name="arrow-expand" size={20} color={SECONDARY_COLOR} />
+							</View>
+						</Card>
+					</Pressable>
 				}
 
 				<View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', padding: 8, paddingTop: 16 }}>

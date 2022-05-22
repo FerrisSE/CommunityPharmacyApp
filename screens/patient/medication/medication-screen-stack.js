@@ -4,6 +4,7 @@ import CurrentMedicationScreen from "./current-medication";
 import SpecificMedicationScreen from "./specific-medication";
 import MedicationRefillScreen from "./medication-refill";
 import { Header } from "../../../components/header";
+import { MedicationOrdersScreen } from "./medication-orders";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,13 @@ const MedicationScreenStack = ({ navigation }) => {
 			<Stack.Screen
 				name="Refill Order"
 				component={MedicationRefillScreen}
+			/>
+			<Stack.Screen
+				name="Orders"
+				component={MedicationOrdersScreen}
+				options={({ }) => ({
+					headerShown: false
+				})}
 			/>
 		</Stack.Navigator>
 	)
