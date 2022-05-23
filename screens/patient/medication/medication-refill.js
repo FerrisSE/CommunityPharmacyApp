@@ -46,7 +46,7 @@ const MedicationRefillScreen = ({ navigation, route }) => {
 			<SafeAreaView style={{ margin: 16, flex: 1 }}>
 				<Card depth={1}>
 					<TextSubHeader1 text="Shopping Cart" style={{ marginLeft: 12, marginTop: 8 }} />
-					{cart.map(m => <MedicationCard med={m} navigation={navigation} key={m.medicationName} />)}
+					{cart.map((m, i) => <MedicationCard med={m} navigation={navigation} key={i} />)}
 				</Card>
 
 				<View style={{ marginTop: 16 }}>

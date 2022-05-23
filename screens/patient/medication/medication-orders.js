@@ -13,9 +13,9 @@ export const MedicationOrdersScreen = ({ navigation, route }) => {
 				<CloseButton />
 			</View>
 			{orders.map((o, i) =>
-				<Card depth={1} key={i} style={{ margin: 4, padding: 8 }}>
-					<TextHeader3 text={o.medicationName} />
-					<View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+				<Card depth={1} key={i} style={{ margin: 4, padding: 16 }}>
+					<TextHeader3 text={o.medicationName} style={{ marginBottom: 12 }} />
+					<View style={{ flexDirection: "row", justifyContent: "space-between" }}>
 						<TextBody text={`Status: ${o.status}`} />
 						<TextBody text={`Created: ${o.createTime}`} />
 					</View>

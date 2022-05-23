@@ -92,7 +92,7 @@ const CurrentMedicationScreen = ({ navigation }) => {
 					<Pressable onPress={toOrders}>
 						<Card depth={1} color={SECONDARY_COLOR_TRANSPARENT}>
 							<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 12 }}>
-								<TextSubHeader1 text={`View ${orders.length} Orders`} />
+								<TextSubHeader1 text={`View ${orders.length} Order${orders.length > 1 ? "s" : ""}`} />
 								<Icon name="arrow-expand" size={20} color={SECONDARY_COLOR} />
 							</View>
 						</Card>
