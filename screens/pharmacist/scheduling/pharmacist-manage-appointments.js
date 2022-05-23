@@ -3,16 +3,12 @@ import { ACCENT_3, GRAY_2, HIGH_PRIORITY, PRIMARY_COLOR, WHITE } from "../../../
 import { Card } from "../../../components/cards";
 import { TextBody, TextHeader3, TextSubHeader1, TextSubHeader2 } from "../../../components/text";
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
-
-const DayAvailability = [
-	{ day: "Sunday", all: false, from: "1:00pm", to: "2:00pm" },
-	{ day: "Monday", all: true, from: "", to: "" },
-	{ day: "Tuesday", all: true, from: "", to: "" },
-	{ day: "Wednesday", all: true, from: "", to: "" },
-	{ day: "Thursday", all: true, from: "", to: "" },
-	{ day: "Friday", all: true, from: "", to: "" },
-	{ day: "Saturday", all: false, from: "1:00pm", to: "2:00pm" },
-];
+import { useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { SERVER_URL } from "../../../constants";
+import moment from "moment";
 
 const Unavailability = [
 	{ date: "December 25th", duration: "All day", repeat: "Repeats Annually" },
@@ -20,7 +16,41 @@ const Unavailability = [
 ];
 
 export const PharmacistManageAppointmentsScreen = ({ navigation }) => {
+	const [settings, setSettings] = useState(false);
+	const [availability, setAvailability] = useState([]);
+
 	const onBack = () => navigation.pop();
+
+	const userToken = useSelector((state) => state.userToken.value);
+
+	const isFocused = useIsFocused();
+	useEffect(async () => {
+		let data = (await axios({
+			method: 'get',
+			url: `${SERVER_URL}/api/schedule/0/settings`,
+			headers: {
+				Authorization: userToken,
+			}
+		})).data;
+
+		setSettings(data);
+		setAvailability([
+			{ day: "Sunday", all: data.days.sun, from: "", to: "" },
+			{ day: "Monday", all: data.days.mon, from: "", to: "" },
+			{ day: "Tuesday", all: data.days.tue, from: "", to: "" },
+			{ day: "Wednesday", all: data.days.wed, from: "", to: "" },
+			{ day: "Thursday", all: data.days.thu, from: "", to: "" },
+			{ day: "Friday", all: data.days.fri, from: "", to: "" },
+			{ day: "Saturday", all: data.days.sat, from: "", to: "" },
+		]);
+	}, [isFocused]);
+
+	if (!settings)
+		return (
+			<View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+				<TextSubHeader1 text="Loading..." />
+			</View>
+		)
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -45,7 +75,7 @@ export const PharmacistManageAppointmentsScreen = ({ navigation }) => {
 									<AvailabilityHeader text="From" />
 									<AvailabilityHeader text="To" />
 								</View>
-								{DayAvailability.map((a, i) => <AvailabilityRow data={a} key={i} />)}
+								{availability.map((a, i) => <AvailabilityRow data={a} key={i} />)}
 							</Card>
 
 							<TextSubHeader1 text="Unavailability" style={{ marginTop: 16, marginBottom: 4 }} />
@@ -58,20 +88,20 @@ export const PharmacistManageAppointmentsScreen = ({ navigation }) => {
 							<TextSubHeader1 text="Hours of Operation" />
 							<View style={{ flexDirection: "row", marginTop: 4 }}>
 								<View style={{ flex: 1, padding: 4 }}>
-									<HoursCard text="8:00am - 9:00pm" subtext="Weekday" />
+									<HoursCard text={moment(settings.open, "hh:mm:ss").format("h:mm a")} subtext="Opening" />
 								</View>
 								<View style={{ flex: 1, padding: 4 }}>
-									<HoursCard text="10:00am - 6:00pm" subtext="Weekend" />
+									<HoursCard text={moment(settings.close, "hh:mm:ss").format("h:mm a")} subtext="Closing" />
 								</View>
 							</View>
 
 							<TextSubHeader1 text="Appointment Details" style={{ marginTop: 16 }} />
 							<View style={{ flexDirection: "row", marginTop: 4 }}>
 								<View style={{ flex: 1, padding: 4 }}>
-									<HoursCard text="30 min" subtext="Duration" />
+									<HoursCard text={`${settings.slotDuration} min`} subtext="Duration" />
 								</View>
 								<View style={{ flex: 1, padding: 4 }}>
-									<HoursCard text="0 min" subtext="Buffer" />
+									<HoursCard text={`${settings.slotBuffer} min`} subtext="Buffer" />
 								</View>
 							</View>
 
