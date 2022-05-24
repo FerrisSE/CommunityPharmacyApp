@@ -14,6 +14,7 @@ import moment from 'moment';
 import { SERVER_URL } from '../../constants';
 import { useSelector } from 'react-redux';
 import { scheduleAdherenceNotification } from '../../notifications';
+import { DayAndTimeDiff } from '../../time';
 
 export const HomeScreen = ({ navigation }) => {
 	const toScheduling = () => navigation.navigate("Scheduling");
@@ -76,6 +77,9 @@ export const HomeScreen = ({ navigation }) => {
 					Authorization: userToken,
 				}
 			})).data;
+
+			// sort so next event is index 0
+			data = data.sort((a, b) => DayAndTimeDiff(a.day, a.start, b.day, b.start));
 
 			// grab the next event only
 			if (data.length > 0) {

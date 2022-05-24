@@ -11,6 +11,7 @@ import moment from 'moment';
 import { useIsFocused } from "@react-navigation/native";
 import { SERVER_URL } from '../../../constants';
 import { RenderServicesGrid } from '../../../components/services';
+import { DayAndTimeDiff } from '../../../time';
 
 // TODO: replace these hardcoded services with a list of what is actually offered at a given pharmacy
 
@@ -72,14 +73,16 @@ const SchedulingHomeScreen = ({ navigation }) => {
 				Authorization: userToken,
 			}
 		}).then(response => {
-			setEvents(response.data.map(t => {
-				return {
-					name: t.category,
-					date: moment(t.day).format("MMM Do"),
-					time: moment(t.start, "HH:mm:ss").format("h:mm a"),
-					status: t.status,
-				}
-			}));
+			setEvents(response.data
+				.sort((a, b) => DayAndTimeDiff(a.day, a.start, b.day, b.start))
+				.map(t => {
+					return {
+						name: t.category,
+						date: moment(t.day).format("MMM Do"),
+						time: moment(t.start, "HH:mm:ss").format("h:mm a"),
+						status: t.status,
+					}
+				}));
 		});
 	}, [isFocused]);
 

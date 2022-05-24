@@ -58,7 +58,10 @@ export const AppointmentsView = ({ viewedDay, appointments, loadAppointments, vi
 
 			<ScrollView>
 				{/* Remaining List */}
-				{appts.filter(a => a.day == viewedDay.format("YYYY-MM-DD")).map((a, i) => <AppointmentRow appointment={a} loadAppointments={loadAppointments} key={i} />)}
+				{appts.filter(a => a.day == viewedDay.format("YYYY-MM-DD"))
+					.sort((a, b) => DayAndTimeDiff(a.day, a.start, b.day, b.start))
+					.map((a, i) => <AppointmentRow appointment={a} loadAppointments={loadAppointments} key={i} />)
+				}
 			</ScrollView>
 
 		</Card >

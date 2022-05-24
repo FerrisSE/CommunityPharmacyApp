@@ -8,14 +8,13 @@ import { Card } from "../../../components/cards";
 import { TextBody, TextSubHeader2 } from "../../../components/text";
 import { SERVER_URL } from "../../../constants";
 import moment from 'moment';
-
-const dayHasPassed = (day) => moment(day).isBefore(moment());
+import { DayAndTimeDiff, DayHasPassed } from "../../../time";
 
 export const PharmacistPatientAppointments = ({ nav, patient }) => {
 	const [appointments, setAppointments] = useState([]);
 
-	const upcomingApps = appointments.filter(a => !dayHasPassed(a.day));
-	const pastApps = appointments.filter(a => dayHasPassed(a.day));
+	const upcomingApps = appointments.filter(a => !DayHasPassed(a.day, a.start)).sort((a, b) => DayAndTimeDiff(a.day, a.start, b.day, b.start));
+	const pastApps = appointments.filter(a => DayHasPassed(a.day, a.start)).sort((a, b) => DayAndTimeDiff(a.day, a.start, b.day, b.start));
 
 	const userToken = useSelector((state) => state.userToken.value);
 

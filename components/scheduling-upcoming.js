@@ -3,6 +3,7 @@ import { Card } from "./cards";
 import { TextBody, TextSubHeader2 } from "./text";
 import { TouchableOpacity, View } from "react-native";
 import { SECONDARY_COLOR_TRANSPARENT } from "../colors";
+import { DayAndTimeDiff } from "../time";
 
 const DefaultCountShown = 2;
 
