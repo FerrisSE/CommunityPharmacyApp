@@ -13,6 +13,7 @@ import { AdherenceButtonLarge } from '../../../components/adherence-components';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
 import { HIGH_PRIORITY, SECONDARY_COLOR, SECONDARY_COLOR_TRANSPARENT } from '../../../colors';
 import { useIsFocused } from '@react-navigation/native';
+import { LoadingScreen } from '../../../loading-screen';
 
 const CurrentMedicationScreen = ({ navigation }) => {
 	let [meds, setMeds] = useState([])
@@ -75,11 +76,7 @@ const CurrentMedicationScreen = ({ navigation }) => {
 			</SafeAreaView>
 		)
 	if (loading)
-		return (
-			<SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-				<TextSubHeader1 text="Loading..." />
-			</SafeAreaView>
-		)
+		return <LoadingScreen />
 
 
 	return (

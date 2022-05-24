@@ -6,8 +6,10 @@ import { useSelector } from "react-redux";
 import { Card } from "../../../components/cards";
 import { TextBody, TextSubHeader1, TextSubHeader2 } from "../../../components/text";
 import { SERVER_URL } from "../../../constants";
+import { LoadingScreen } from "../../../loading-screen";
 
 export const PharmacistPatientConditionsScreen = ({ patient }) => {
+	const [loading, setLoading] = useState(true);
 	const [conditions, setConditions] = useState([]);
 
 	const userToken = useSelector((state) => state.userToken.value);
@@ -24,7 +26,11 @@ export const PharmacistPatientConditionsScreen = ({ patient }) => {
 		let results = (await axios(config)).data;
 		console.log(results);
 		setConditions(results);
+		setLoading(false);
 	}, []);
+
+	if (loading)
+		return <LoadingScreen />
 
 	return (
 		<ScrollView>

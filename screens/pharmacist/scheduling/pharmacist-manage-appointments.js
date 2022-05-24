@@ -9,6 +9,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { SERVER_URL } from "../../../constants";
 import moment from "moment";
+import { LoadingScreen } from "../../../loading-screen";
 
 const Unavailability = [
 	{ date: "December 25th", duration: "All day", repeat: "Repeats Annually" },
@@ -46,11 +47,7 @@ export const PharmacistManageAppointmentsScreen = ({ navigation }) => {
 	}, [isFocused]);
 
 	if (!settings)
-		return (
-			<View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-				<TextSubHeader1 text="Loading..." />
-			</View>
-		)
+		return <LoadingScreen />
 
 	return (
 		<View style={{ flex: 1 }}>

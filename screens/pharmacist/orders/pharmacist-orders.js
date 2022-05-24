@@ -7,8 +7,10 @@ import { PrimaryButton } from "../../../components/buttons"
 import { Card } from "../../../components/cards"
 import { TextHeader2, TextHeader1, TextSubHeader2, TextBody } from "../../../components/text"
 import { SERVER_URL } from "../../../constants"
+import { LoadingScreen } from "../../../loading-screen"
 
 export const PharmacistOrdersScreen = () => {
+	const [loading, setLoading] = useState(true);
 	const [orders, setOrders] = useState([]);
 
 	const userToken = useSelector((state) => state.userToken.value);
@@ -24,6 +26,7 @@ export const PharmacistOrdersScreen = () => {
 
 		let data = (await axios(config)).data;
 		setOrders(data);
+		setLoading(false);
 	}
 
 	useEffect(async () => {
@@ -56,10 +59,14 @@ export const PharmacistOrdersScreen = () => {
 					<View style={{ width: '100%', padding: 1, marginTop: 8, marginBottom: 8, backgroundColor: PRIMARY_COLOR }}>
 					</View>
 
-					<ScrollView>
-						{/* Remaining List */}
-						{orders.map((o, i) => <Row data={o} key={i} />)}
-					</ScrollView>
+					{loading ?
+						<LoadingScreen />
+						:
+						<ScrollView>
+							{/* Remaining List */}
+							{orders.map((o, i) => <Row data={o} key={i} />)}
+						</ScrollView>
+					}
 
 				</Card >
 

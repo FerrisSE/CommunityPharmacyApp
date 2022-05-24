@@ -4,8 +4,10 @@ import { useSelector } from "react-redux";
 import { AdherenceGraph, GetAdherencePharmacist, GetAdherencePrecent, MedAdherenceCard } from "../../../components/adherence-components";
 import { Card } from "../../../components/cards";
 import { TextSubHeader2 } from "../../../components/text";
+import { LoadingScreen } from "../../../loading-screen";
 
 export const PharmacistPatientAdherenceScreen = ({ patient }) => {
+	let [loading, setLoading] = useState(true);
 	let [meds, setMeds] = useState([]);
 
 	// default values for if meds can't be pulled in or there aren't any
@@ -26,7 +28,11 @@ export const PharmacistPatientAdherenceScreen = ({ patient }) => {
 
 	useEffect(async () => {
 		setMeds(await GetAdherencePharmacist(userToken, patient.patientId));
+		setLoading(false);
 	}, []);
+
+	if (loading)
+		return <LoadingScreen />
 
 	return (
 		<ScrollView>

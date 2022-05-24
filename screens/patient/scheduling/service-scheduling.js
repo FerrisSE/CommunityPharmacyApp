@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Pressable, SafeAreaView, ScrollView, View } from 'react-native';
 import { PRIMARY_COLOR, WHITE } from '../../../colors';
 import { PrimaryButton } from '../../../components/buttons';
@@ -11,16 +11,18 @@ import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
 import { SERVER_URL } from '../../../constants';
+import { LoadingScreen } from '../../../loading-screen';
 
 const ServiceScheduling = ({ navigation, route }) => {
 	const calendarRef = useRef();
 
-	let [descVisible, setDescVisible] = React.useState(false);
-	let [pickedId, setPickedId] = React.useState(-1);
-	let [pharmacyInfo, setPharmacyInfo] = React.useState();
-	let [bookedSlots, setBookedSlots] = React.useState([]);
-	let [timeSlots, setTimeSlots] = React.useState([]);
-	let [enabledWeekdays, setEnabledWeekdays] = React.useState([false, false, false, false, false, false, false]);
+	const [loading, setLoading] = useState(true);
+	let [descVisible, setDescVisible] = useState(false);
+	let [pickedId, setPickedId] = useState(-1);
+	let [pharmacyInfo, setPharmacyInfo] = useState();
+	let [bookedSlots, setBookedSlots] = useState([]);
+	let [timeSlots, setTimeSlots] = useState([]);
+	let [enabledWeekdays, setEnabledWeekdays] = useState([false, false, false, false, false, false, false]);
 
 	const userToken = useSelector((state) => state.userToken.value);
 
@@ -102,6 +104,8 @@ const ServiceScheduling = ({ navigation, route }) => {
 
 				// view that first date
 				calendarRef.current?.setSelectedDate(startDate);
+
+				setLoading(false);
 			}).catch(err => {
 				console.error(err);
 			});
@@ -168,7 +172,11 @@ const ServiceScheduling = ({ navigation, route }) => {
 						dateNumberStyle={{ color: PRIMARY_COLOR }}
 					/>
 
-					<TimePicker title="Available Appointments" subtitle="location name" times={timeSlots} activeId={pickedId} setActive={setPickedId} style={{ marginTop: 24, marginBottom: 24, width: '90%', flex: 1 }} />
+					{loading ?
+						<LoadingScreen />
+						:
+						<TimePicker title="Available Appointments" subtitle="location name" times={timeSlots} activeId={pickedId} setActive={setPickedId} style={{ marginTop: 24, marginBottom: 24, width: '90%', flex: 1 }} />
+					}
 
 					<PrimaryButton
 						label="SELECT APPOINTMENT"

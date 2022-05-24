@@ -11,10 +11,12 @@ import moment from 'moment';
 import { SERVER_URL } from '../../../constants';
 import { Card } from '../../../components/cards';
 import Modal, { ModalButton, ModalContent, ModalFooter } from 'react-native-modals';
+import { LoadingScreen } from '../../../loading-screen';
 
 export const PharmacistServicesDetailsScreen = ({ navigation, route }) => {
 	const calendarRef = useRef();
 
+	const [loading, setLoading] = useState(true);
 	let [pickedId, setPickedId] = useState(-1);
 	let [pharmacyInfo, setPharmacyInfo] = useState();
 	let [bookedSlots, setBookedSlots] = useState([]);
@@ -104,6 +106,8 @@ export const PharmacistServicesDetailsScreen = ({ navigation, route }) => {
 
 				// view that first date
 				calendarRef.current?.setSelectedDate(startDate);
+
+				setLoading(false);
 			}).catch(err => {
 				console.error(err);
 			});
@@ -187,7 +191,11 @@ export const PharmacistServicesDetailsScreen = ({ navigation, route }) => {
 
 							<View style={{ flex: 1, margin: 16 }}>
 								<Card depth={1} color={WHITE} style={{ marginTop: 24, marginBottom: 24, width: '90%', flex: 1, padding: 0 }}>
-									<TimePicker title="Available Appointments" subtitle="location name" times={timeSlots} activeId={pickedId} setActive={setPickedId} style={{ flex: 1 }} />
+									{loading ?
+										<LoadingScreen />
+										:
+										<TimePicker title="Available Appointments" subtitle="location name" times={timeSlots} activeId={pickedId} setActive={setPickedId} style={{ flex: 1 }} />
+									}
 								</Card>
 							</View>
 						</View>

@@ -10,8 +10,10 @@ import axios from "axios";
 import { SERVER_URL } from "../../../constants";
 import { useSelector } from "react-redux";
 import { AppointmentsView } from "../../../components/pharmacist-appointments";
+import { LoadingScreen } from "../../../loading-screen";
 
 export const PharmacistSchedulingHomeScreen = ({ navigation }) => {
+	const [loading, setLoading] = useState(true);
 	const [appointments, setAppointments] = useState([]);
 	const [viewedDay, setViewedDay] = useState(moment());
 
@@ -31,6 +33,7 @@ export const PharmacistSchedulingHomeScreen = ({ navigation }) => {
 
 		let data = (await axios(config)).data;
 		setAppointments(data);
+		setLoading(false);
 	}
 
 	useEffect(async () => {
@@ -98,7 +101,11 @@ export const PharmacistSchedulingHomeScreen = ({ navigation }) => {
 					</Pressable>
 				</View>
 
-				<AppointmentsView appointments={appointments} viewedDay={viewedDay} loadAppointments={loadAppointments} />
+				{loading ?
+					<LoadingScreen />
+					:
+					<AppointmentsView appointments={appointments} viewedDay={viewedDay} loadAppointments={loadAppointments} />
+				}
 			</Card>
 		</View>
 	)

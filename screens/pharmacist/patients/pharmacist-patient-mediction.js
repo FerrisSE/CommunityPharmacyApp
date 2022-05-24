@@ -7,8 +7,10 @@ import { PRIMARY_COLOR } from "../../../colors";
 import { SERVER_URL } from "../../../constants";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { LoadingScreen } from "../../../loading-screen";
 
 export const PharmacistPatientMedicationScreen = ({ patient }) => {
+	const [loading, setLoading] = useState(true);
 	const [meds, setMeds] = useState([]);
 
 	const userToken = useSelector((state) => state.userToken.value);
@@ -24,7 +26,11 @@ export const PharmacistPatientMedicationScreen = ({ patient }) => {
 
 		let results = (await axios(config)).data;
 		setMeds(results);
+		setLoading(false);
 	}, []);
+
+	if (loading)
+		return <LoadingScreen />
 
 	return (
 		<Card depth={2} style={{ flex: 1 }}>

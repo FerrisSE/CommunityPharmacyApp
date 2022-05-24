@@ -9,8 +9,10 @@ import { TextBody, TextSubHeader2 } from "../../../components/text";
 import { SERVER_URL } from "../../../constants";
 import moment from 'moment';
 import { DayAndTimeDiff, DayHasPassed } from "../../../time";
+import { LoadingScreen } from "../../../loading-screen";
 
 export const PharmacistPatientAppointments = ({ nav, patient }) => {
+	const [loading, setLoading] = useState(true);
 	const [appointments, setAppointments] = useState([]);
 
 	const upcomingApps = appointments.filter(a => !DayHasPassed(a.day, a.start)).sort((a, b) => DayAndTimeDiff(a.day, a.start, b.day, b.start));
@@ -33,6 +35,7 @@ export const PharmacistPatientAppointments = ({ nav, patient }) => {
 
 		let results = (await axios(config)).data;
 		setAppointments(results);
+		setLoading(false);
 	}
 
 	const schedulePatient = () => {
@@ -63,6 +66,9 @@ export const PharmacistPatientAppointments = ({ nav, patient }) => {
 
 		loadAppts();
 	}
+
+	if (loading)
+		return <LoadingScreen />
 
 	return (
 		<ScrollView>

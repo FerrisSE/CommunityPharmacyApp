@@ -10,8 +10,10 @@ import { PRIMARY_COLOR } from '../../../colors';
 import { Card } from '../../../components/cards';
 import { TextBody, TextSubHeader1, TextSubHeader2 } from '../../../components/text';
 import { SERVER_URL } from '../../../constants';
+import { LoadingScreen } from '../../../loading-screen';
 
 const ProfileScreen = ({ navigation, route }) => {
+	const [loading, setLoading] = useState(true);
 	const [profileData, setProfileData] = useState({});
 
 	const logout = () => {
@@ -29,12 +31,16 @@ const ProfileScreen = ({ navigation, route }) => {
 			headers: {
 				Authorization: userToken,
 			}
-		}).then(response => setProfileData(response.data));
+		}).then(response => setProfileData(response.data))
+			.finally(() => setLoading(false));
 	}, [isFocused]);
 
 	const EditProfile = () => {
 		navigation.navigate("Edit Profile");
 	}
+
+	if (loading)
+		return <LoadingScreen />
 
 	return (
 		<ScrollView>

@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { SERVER_URL } from "../../constants";
 import axios from "axios";
 import moment from "moment";
+import { LoadingScreen } from "../../loading-screen";
 
 export const DashboardScreen = ({ navigation }) => {
 	const [searchText, setSearchText] = useState("");

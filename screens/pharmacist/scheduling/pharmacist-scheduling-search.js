@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import moment from 'moment';
 import { ScrollView } from 'react-native-gesture-handler';
+import { LoadingScreen } from '../../../loading-screen';
 
 const PatientResult = ({ patient, nav }) => {
 	const viewPatient = () =>
@@ -51,6 +52,7 @@ const PatientResult = ({ patient, nav }) => {
 }
 
 export const PharmacistScheduleSearchScreen = ({ navigation }) => {
+	const [loading, setLoading] = useState(true);
 	let [searchText, setSearchText] = useState('');
 	let [patients, setPatients] = useState([]);
 
@@ -67,6 +69,7 @@ export const PharmacistScheduleSearchScreen = ({ navigation }) => {
 
 		try {
 			setPatients((await axios(config)).data);
+			setLoading(false);
 		} catch (err) {
 			console.error(err);
 		}
@@ -88,7 +91,8 @@ export const PharmacistScheduleSearchScreen = ({ navigation }) => {
 						<Input placeholder="last name..." defaultText={searchText} setText={setSearchText} style={{ flex: 1, backgroundColor: WHITE }} />
 						<PrimaryButton label="Search" onPress={searchPress} style={{ margin: 16, paddingLeft: 32, paddingRight: 32 }} />
 					</View>
-					{patients.length != 0 &&
+					{loading && <LoadingScreen />}
+					{patients.length != 0 && !loading &&
 						<View style={{ flex: 1 }}>
 							<TextHeader3 text="Results" style={{ color: PRIMARY_COLOR, marginTop: 32 }} />
 

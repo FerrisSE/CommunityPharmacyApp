@@ -15,10 +15,12 @@ import { SERVER_URL } from '../../constants';
 import { useSelector } from 'react-redux';
 import { scheduleAdherenceNotification } from '../../notifications';
 import { DayAndTimeDiff } from '../../time';
+import { LoadingScreen } from '../../loading-screen';
 
 export const HomeScreen = ({ navigation }) => {
 	const toScheduling = () => navigation.navigate("Scheduling");
 
+	const [loading, setLoading] = useState(true);
 	let [adherenceMeds, setAdherenceMeds] = useState([]);
 	let [adherenceModel, setAdherenceModel] = useState([]);
 	const [nextEvent, setNextEvent] = useState();
@@ -103,7 +105,11 @@ export const HomeScreen = ({ navigation }) => {
 		setNextEvent(await getNextEvent());
 		setAdherenceModel(await getAdherenceModel());
 		setAdherenceMeds(await getMedAdherence());
+		setLoading(false);
 	}, [isFocused]);
+
+	if (loading)
+		return <LoadingScreen />
 
 	return (
 		<ScrollView style={{ padding: 8 }}>

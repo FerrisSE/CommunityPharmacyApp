@@ -5,8 +5,10 @@ import { Card } from "../../components/cards";
 import { AdherenceGraph, GetAdherence, GetAdherencePrecent, MedAdherenceCard } from "../../components/adherence-components";
 import { useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
+import { LoadingScreen } from "../../loading-screen";
 
 export const AdherenceScreen = () => {
+	const [loading, setLoading] = useState(true);
 	let [meds, setMeds] = useState([]);
 
 	// default values for if meds can't be pulled in or there aren't any
@@ -28,7 +30,11 @@ export const AdherenceScreen = () => {
 	const isFocused = useIsFocused();
 	useEffect(async () => {
 		setMeds(await GetAdherence(userToken));
+		setLoading(false);
 	}, [isFocused]);
+
+	if (loading)
+		return <LoadingScreen />
 
 	return (
 		<ScrollView>
