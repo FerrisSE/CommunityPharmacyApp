@@ -6,3 +6,5 @@ export const SERVER_URL = Platform.select({
 	android: "http://10.0.0.130:8080",
 	default: "http://localhost:8080"
 });
+
+export const TIMEOUT = 10_000; // 10 seconds

@@ -8,7 +8,7 @@ import { Input } from "../../components/input";
 import { PrimaryButton } from "../../components/buttons";
 import { AppointmentsView } from "../../components/pharmacist-appointments";
 import { useSelector } from "react-redux";
-import { SERVER_URL } from "../../constants";
+import { SERVER_URL, TIMEOUT } from "../../constants";
 import axios from "axios";
 import moment from "moment";
 import { LoadingScreen } from "../../loading-screen";
@@ -23,6 +23,7 @@ export const DashboardScreen = ({ navigation }) => {
 		let config = {
 			method: 'get',
 			url: `${SERVER_URL}/api/schedule/0`,
+			timeout: TIMEOUT,
 			headers: {
 				Authorization: userToken,
 			}

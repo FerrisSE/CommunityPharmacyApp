@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { SECONDARY_COLOR_TRANSPARENT, WHITE } from "../../../colors";
 import { Card } from "../../../components/cards";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
-import { SERVER_URL } from "../../../constants";
+import { SERVER_URL, TIMEOUT } from "../../../constants";
 import { StatusBar } from "expo-status-bar";
 
 export const SchedulingConfirmScreen = ({ navigation, route }) => {
@@ -35,6 +35,7 @@ export const SchedulingConfirmScreen = ({ navigation, route }) => {
 		axios({
 			method: 'post',
 			url: `${SERVER_URL}/api/schedule/0`,
+			timeout: TIMEOUT,
 			headers: {
 				Authorization: userToken,
 			},

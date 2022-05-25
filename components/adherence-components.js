@@ -5,7 +5,7 @@ import { TextBody, TextNote, TextSubHeader1, TextSubHeader2 } from "./text";
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
 import { SECONDARY_COLOR, SECONDARY_COLOR_TRANSPARENT } from "../colors";
 import { useSelector } from "react-redux";
-import { SERVER_URL } from "../constants";
+import { SERVER_URL, TIMEOUT } from "../constants";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useIsFocused } from "@react-navigation/native";
@@ -17,6 +17,7 @@ export const GetAdherence = async (userToken) => {
 		let config = {
 			method: 'get',
 			url: `${SERVER_URL}/patient/adherence`,
+			timeout: TIMEOUT,
 			headers: {
 				Authorization: userToken,
 			}
@@ -34,6 +35,7 @@ export const GetAdherencePharmacist = async (userToken, patient) => {
 		let config = {
 			method: 'get',
 			url: `${SERVER_URL}/provider/adherence/${patient}`,
+			timeout: TIMEOUT,
 			headers: {
 				Authorization: userToken,
 			}

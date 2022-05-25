@@ -7,7 +7,7 @@ import { ACCENT_3, GRAY_2, HIGH_PRIORITY, PRIMARY_COLOR, SECONDARY_COLOR, WHITE 
 import { PrimaryButton } from "../../../components/buttons";
 import moment from "moment";
 import axios from "axios";
-import { SERVER_URL } from "../../../constants";
+import { SERVER_URL, TIMEOUT } from "../../../constants";
 import { useSelector } from "react-redux";
 import { AppointmentsView } from "../../../components/pharmacist-appointments";
 import { LoadingScreen } from "../../../loading-screen";
@@ -28,6 +28,7 @@ export const PharmacistSchedulingHomeScreen = ({ navigation }) => {
 		let config = {
 			method: 'get',
 			url: `${SERVER_URL}/api/schedule/0`,
+			timeout: TIMEOUT,
 			headers: {
 				Authorization: userToken,
 			}

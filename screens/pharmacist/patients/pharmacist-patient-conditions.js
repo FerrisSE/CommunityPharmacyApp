@@ -5,7 +5,7 @@ import { ScrollView } from "react-native";
 import { useSelector } from "react-redux";
 import { Card } from "../../../components/cards";
 import { TextBody, TextSubHeader1, TextSubHeader2 } from "../../../components/text";
-import { SERVER_URL } from "../../../constants";
+import { SERVER_URL, TIMEOUT } from "../../../constants";
 import { ErrorScreen } from "../../../error-screen";
 import { LoadingScreen } from "../../../loading-screen";
 
@@ -20,6 +20,7 @@ export const PharmacistPatientConditionsScreen = ({ patient }) => {
 		var config = {
 			method: 'get',
 			url: `${SERVER_URL}/provider/condition/${patient.patientId}`,
+			timeout: TIMEOUT,
 			headers: {
 				Authorization: userToken,
 			}

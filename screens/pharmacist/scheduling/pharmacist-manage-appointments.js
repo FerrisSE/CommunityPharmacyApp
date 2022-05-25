@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { SERVER_URL } from "../../../constants";
+import { SERVER_URL, TIMEOUT } from "../../../constants";
 import moment from "moment";
 import { LoadingScreen } from "../../../loading-screen";
 import { ErrorScreen } from "../../../error-screen";
@@ -32,6 +32,7 @@ export const PharmacistManageAppointmentsScreen = ({ navigation }) => {
 			let data = (await axios({
 				method: 'get',
 				url: `${SERVER_URL}/api/schedule/0/settings`,
+				timeout: TIMEOUT,
 				headers: {
 					Authorization: userToken,
 				}

@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { PRIMARY_COLOR } from '../../../colors';
 import { Card } from '../../../components/cards';
 import { TextBody, TextSubHeader1, TextSubHeader2 } from '../../../components/text';
-import { SERVER_URL } from '../../../constants';
+import { SERVER_URL, TIMEOUT } from '../../../constants';
 import { ErrorScreen } from '../../../error-screen';
 import { LoadingScreen } from '../../../loading-screen';
 
@@ -31,6 +31,7 @@ const ProfileScreen = ({ navigation, route }) => {
 			let data = (await axios({
 				method: 'get',
 				url: `${SERVER_URL}/user/me`,
+				timeout: TIMEOUT,
 				headers: {
 					Authorization: userToken,
 				}

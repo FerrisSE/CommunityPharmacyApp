@@ -10,7 +10,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons"
-import { SERVER_URL } from '../../../constants';
+import { SERVER_URL, TIMEOUT } from '../../../constants';
 import { LoadingScreen } from '../../../loading-screen';
 import { ErrorScreen } from '../../../error-screen';
 
@@ -64,6 +64,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 			let data = (await axios({
 				method: 'get',
 				url: `${SERVER_URL}/api/schedule/0/settings`,
+				timeout: TIMEOUT,
 				headers: {
 					Authorization: userToken,
 				}
@@ -90,6 +91,7 @@ const ServiceScheduling = ({ navigation, route }) => {
 			data = (await axios({
 				method: 'get',
 				url: `${SERVER_URL}/api/schedule/0/${date.format('YYYY-MM-DD')}`,
+				timeout: TIMEOUT,
 				headers: {
 					Authorization: userToken,
 				}

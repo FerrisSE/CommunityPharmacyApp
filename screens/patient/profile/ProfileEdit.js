@@ -9,7 +9,7 @@ import { OutlineButton, PrimaryButton } from "../../../components/buttons";
 import { DatePicker } from "../../../components/date-picker";
 import { Input } from "../../../components/input";
 import { TextHeader2, TextNote } from "../../../components/text";
-import { SERVER_URL } from "../../../constants";
+import { SERVER_URL, TIMEOUT } from "../../../constants";
 
 export const ProfileEdit = ({ navigation }) => {
 	const [firstName, setFirstname] = useState('');
@@ -25,6 +25,7 @@ export const ProfileEdit = ({ navigation }) => {
 		let profile = (await axios({
 			method: 'get',
 			url: `${SERVER_URL}/user/me`,
+			timeout: TIMEOUT,
 			headers: {
 				Authorization: userToken,
 			}

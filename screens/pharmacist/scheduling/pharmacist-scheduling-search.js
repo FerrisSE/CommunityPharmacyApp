@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Pressable } from 'react-native';
 import { TextHeader2, TextHeader3, TextSubHeader2 } from '../../../components/text';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
-import { SERVER_URL } from '../../../constants';
+import { SERVER_URL, TIMEOUT } from '../../../constants';
 import { Card } from '../../../components/cards';
 import { Input } from '../../../components/input';
 import { PRIMARY_COLOR, WHITE, GRAY_2 } from '../../../colors';
@@ -64,6 +64,7 @@ export const PharmacistScheduleSearchScreen = ({ navigation }) => {
 		var config = {
 			method: 'get',
 			url: `${SERVER_URL}/api/patient/name/${searchText}`,
+			timeout: TIMEOUT,
 			headers: {
 				Authorization: userToken,
 			}

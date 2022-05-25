@@ -8,7 +8,7 @@ import { TimePicker } from '../../../components/time-picker';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-import { SERVER_URL } from '../../../constants';
+import { SERVER_URL, TIMEOUT } from '../../../constants';
 import { Card } from '../../../components/cards';
 import Modal, { ModalButton, ModalContent, ModalFooter } from 'react-native-modals';
 import { LoadingScreen } from '../../../loading-screen';
@@ -65,6 +65,7 @@ export const PharmacistServicesDetailsScreen = ({ navigation, route }) => {
 		axios({
 			method: 'get',
 			url: `${SERVER_URL}/api/schedule/0/settings`,
+			timeout: TIMEOUT,
 			headers: {
 				Authorization: userToken,
 			}
@@ -91,6 +92,7 @@ export const PharmacistServicesDetailsScreen = ({ navigation, route }) => {
 			axios({
 				method: 'get',
 				url: `${SERVER_URL}/api/schedule/0/${date.format('YYYY-MM-DD')}`,
+				timeout: TIMEOUT,
 				headers: {
 					Authorization: userToken,
 				}
@@ -132,6 +134,7 @@ export const PharmacistServicesDetailsScreen = ({ navigation, route }) => {
 		axios({
 			method: 'post',
 			url: `${SERVER_URL}/api/schedule/0`,
+			timeout: TIMEOUT,
 			headers: {
 				Authorization: userToken,
 			},

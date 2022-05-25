@@ -4,7 +4,7 @@ import { Card } from "../../../components/cards";
 import { TextBody, TextSubHeader1 } from "../../../components/text";
 import * as Progress from 'react-native-progress';
 import { PRIMARY_COLOR } from "../../../colors";
-import { SERVER_URL } from "../../../constants";
+import { SERVER_URL, TIMEOUT } from "../../../constants";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { LoadingScreen } from "../../../loading-screen";
@@ -21,6 +21,7 @@ export const PharmacistPatientMedicationScreen = ({ patient }) => {
 		var config = {
 			method: 'get',
 			url: `${SERVER_URL}/provider/medications/patient-medications/${patient.patientId}`,
+			timeout: TIMEOUT,
 			headers: {
 				Authorization: userToken,
 			}

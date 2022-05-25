@@ -6,7 +6,7 @@ import { TextHeader1, TextSubHeader2 } from '../../components/text.js';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import Modal, { ModalButton, ModalContent, ModalFooter } from 'react-native-modals';
-import { SERVER_URL } from '../../constants.js';
+import { SERVER_URL, TIMEOUT } from '../../constants.js';
 
 export const RegisterConsentFormScreen = ({ navigation }) => {
 	let [modalVisible, setModalVisible] = React.useState(false);
@@ -17,6 +17,7 @@ export const RegisterConsentFormScreen = ({ navigation }) => {
 		let config = {
 			method: 'post',
 			url: `${SERVER_URL}/auth/register`,
+			timeout: TIMEOUT,
 			data: {
 				email: registerData.email,
 				password: registerData.password,

@@ -9,7 +9,7 @@ import { UpcomingEvents } from '../../../components/scheduling-upcoming';
 import { TextHeader3, TextSubHeader1, TextSubHeader2 } from '../../../components/text';
 import moment from 'moment';
 import { useIsFocused } from "@react-navigation/native";
-import { SERVER_URL } from '../../../constants';
+import { SERVER_URL, TIMEOUT } from '../../../constants';
 import { RenderServicesGrid } from '../../../components/services';
 import { DayAndTimeDiff } from '../../../time';
 
@@ -69,6 +69,7 @@ const SchedulingHomeScreen = ({ navigation }) => {
 		axios({
 			method: 'get',
 			url: `${SERVER_URL}/api/schedule`,
+			timeout: TIMEOUT,
 			headers: {
 				Authorization: userToken,
 			}

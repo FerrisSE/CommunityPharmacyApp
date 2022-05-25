@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { addMed, removeMed } from '../../../redux/slices/cart-slice';
 import { ShoppingCart } from '../../../components/shopping-cart';
-import { SERVER_URL } from '../../../constants';
+import { SERVER_URL, TIMEOUT } from '../../../constants';
 import { AdherenceButtonLarge } from '../../../components/adherence-components';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
 import { HIGH_PRIORITY, SECONDARY_COLOR, SECONDARY_COLOR_TRANSPARENT } from '../../../colors';
@@ -36,6 +36,7 @@ const CurrentMedicationScreen = ({ navigation }) => {
 			let data = (await axios({
 				method: 'get',
 				url: `${SERVER_URL}/patient/medication/patient-medications`,
+				timeout: TIMEOUT,
 				headers: {
 					Authorization: userToken,
 				}
@@ -46,6 +47,7 @@ const CurrentMedicationScreen = ({ navigation }) => {
 			let ordersData = (await axios({
 				method: 'get',
 				url: `${SERVER_URL}/patient/orders`,
+				timeout: TIMEOUT,
 				headers: {
 					Authorization: userToken,
 				}

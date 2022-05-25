@@ -6,7 +6,7 @@ import { PRIMARY_COLOR, PRIMARY_COLOR_TRANSPARENT, SECONDARY_COLOR, WHITE } from
 import { PrimaryButton } from "../../../components/buttons"
 import { Card } from "../../../components/cards"
 import { TextHeader2, TextHeader1, TextSubHeader2, TextBody } from "../../../components/text"
-import { SERVER_URL } from "../../../constants"
+import { SERVER_URL, TIMEOUT } from "../../../constants"
 import { LoadingScreen } from "../../../loading-screen"
 
 export const PharmacistOrdersScreen = () => {
@@ -19,6 +19,7 @@ export const PharmacistOrdersScreen = () => {
 		let config = {
 			method: 'get',
 			url: `${SERVER_URL}/provider/orders`,
+			timeout: TIMEOUT,
 			headers: {
 				Authorization: userToken,
 			}

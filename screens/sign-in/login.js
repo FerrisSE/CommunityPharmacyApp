@@ -13,7 +13,7 @@ import { clearData } from '../../redux/slices/register-slice';
 import * as WebBrowser from 'expo-web-browser';
 import * as AuthSession from 'expo-auth-session';
 import * as Linking from 'expo-linking';
-import { SERVER_URL } from '../../constants';
+import { SERVER_URL, TIMEOUT } from '../../constants';
 import { changeStack } from '../../app-nav';
 
 WebBrowser.maybeCompleteAuthSession();
@@ -30,6 +30,7 @@ export const LoginScreen = ({ navigation }) => {
 		let config = {
 			method: 'post',
 			url: `${SERVER_URL}/auth/login`,
+			timeout: TIMEOUT,
 			data: {
 				email: inputUsername,
 				password: inputPassword,
@@ -43,6 +44,7 @@ export const LoginScreen = ({ navigation }) => {
 			config = {
 				method: 'get',
 				url: `${SERVER_URL}/user/me`,
+				timeout: TIMEOUT,
 				headers: {
 					Authorization: `Bearer ${token}`,
 				}

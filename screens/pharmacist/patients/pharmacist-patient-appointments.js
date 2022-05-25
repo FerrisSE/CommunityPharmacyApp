@@ -6,7 +6,7 @@ import { PRIMARY_COLOR } from "../../../colors";
 import { PrimaryButton } from "../../../components/buttons";
 import { Card } from "../../../components/cards";
 import { TextBody, TextSubHeader2 } from "../../../components/text";
-import { SERVER_URL } from "../../../constants";
+import { SERVER_URL, TIMEOUT } from "../../../constants";
 import moment from 'moment';
 import { DayAndTimeDiff, DayHasPassed } from "../../../time";
 import { LoadingScreen } from "../../../loading-screen";
@@ -30,6 +30,7 @@ export const PharmacistPatientAppointments = ({ nav, patient }) => {
 		var config = {
 			method: 'get',
 			url: `${SERVER_URL}/api/schedule/patient/${patient.patientId}`,
+			timeout: TIMEOUT,
 			headers: {
 				Authorization: userToken,
 			}
@@ -62,6 +63,7 @@ export const PharmacistPatientAppointments = ({ nav, patient }) => {
 		let config = {
 			method: 'patch',
 			url: `${SERVER_URL}/api/schedule/${appt.id}`,
+			timeout: TIMEOUT,
 			headers: {
 				Authorization: userToken,
 			},

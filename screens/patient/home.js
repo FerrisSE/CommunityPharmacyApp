@@ -11,7 +11,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { PrimaryButton } from '../../components/buttons';
 import axios from 'axios';
 import moment from 'moment';
-import { SERVER_URL } from '../../constants';
+import { SERVER_URL, TIMEOUT } from '../../constants';
 import { useSelector } from 'react-redux';
 import { scheduleAdherenceNotification } from '../../notifications';
 import { DayAndTimeDiff } from '../../time';
@@ -39,6 +39,7 @@ export const HomeScreen = ({ navigation }) => {
 		let data = (await axios({
 			method: 'get',
 			url: `${SERVER_URL}/patient/adherence/models`,
+			timeout: TIMEOUT,
 			headers: {
 				Authorization: userToken,
 			}
@@ -66,6 +67,7 @@ export const HomeScreen = ({ navigation }) => {
 		let data = (await axios({
 			method: 'get',
 			url: `${SERVER_URL}/api/schedule/`,
+			timeout: TIMEOUT,
 			headers: {
 				Authorization: userToken,
 			}

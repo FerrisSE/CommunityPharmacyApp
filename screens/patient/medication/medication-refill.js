@@ -10,7 +10,7 @@ import { RefillDeliveryCard } from '../../../components/refill-delivery-card';
 import Modal, { ModalButton, ModalContent, ModalFooter } from 'react-native-modals';
 import { clearCart } from '../../../redux/slices/cart-slice';
 import axios from 'axios';
-import { SERVER_URL } from '../../../constants';
+import { SERVER_URL, TIMEOUT } from '../../../constants';
 
 const MedicationRefillScreen = ({ navigation, route }) => {
 	const [selectedOption, setSelectedOption] = useState(-1);
@@ -27,6 +27,7 @@ const MedicationRefillScreen = ({ navigation, route }) => {
 			let config = {
 				method: 'post',
 				url: `${SERVER_URL}/patient/orders`,
+				timeout: TIMEOUT,
 				headers: {
 					Authorization: userToken,
 				},

@@ -5,7 +5,7 @@ import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcon
 import { TextBody, TextSubHeader2 } from "./text";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
-import { SERVER_URL } from "../constants";
+import { SERVER_URL, TIMEOUT } from "../constants";
 import axios from "axios";
 import moment from "moment";
 import { PrimaryButton } from "./buttons";
@@ -78,6 +78,7 @@ const AppointmentRow = ({ appointment, loadAppointments }) => {
 		let config = {
 			method: 'patch',
 			url: `${SERVER_URL}/api/schedule/${appt.id}`,
+			timeout: TIMEOUT,
 			headers: {
 				Authorization: userToken,
 			},
