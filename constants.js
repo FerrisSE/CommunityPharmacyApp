@@ -7,4 +7,4 @@ export const SERVER_URL = Platform.select({
 	default: "http://localhost:8080"
 });
 
-export const TIMEOUT = 10_000; // 10 seconds
+export const TIMEOUT = 10000; // 10 seconds
