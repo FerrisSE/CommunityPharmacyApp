@@ -6,8 +6,10 @@ import { AdherenceGraph, GetAdherence, GetAdherencePrecent, MedAdherenceCard } f
 import { useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import { LoadingScreen } from "../../loading-screen";
+import { ErrorScreen } from "../../error-screen";
 
 export const AdherenceScreen = () => {
+	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(true);
 	let [meds, setMeds] = useState([]);
 
@@ -29,9 +31,17 @@ export const AdherenceScreen = () => {
 
 	const isFocused = useIsFocused();
 	useEffect(async () => {
-		setMeds(await GetAdherence(userToken));
+		try {
+			setMeds(await GetAdherence(userToken));
+		} catch (err) {
+			setError(err);
+		}
+
 		setLoading(false);
 	}, [isFocused]);
+
+	if (error)
+		return <ErrorScreen error={error} />
 
 	if (loading)
 		return <LoadingScreen />

@@ -5,6 +5,10 @@ import { Card, CardWithHeader } from "./cards";
 import { TextHeader3, TextNote, TextSubHeader2 } from "./text";
 
 export const TimePicker = ({ title, subtitle, times, style, activeId, setActive }) => {
+	// don't render if there are no times
+	if (times.length == 0)
+		return <View></View>
+
 	return (
 		<CardWithHeader
 			depth={1}

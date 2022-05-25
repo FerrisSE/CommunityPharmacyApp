@@ -12,6 +12,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { ScrollView } from 'react-native-gesture-handler';
 import { LoadingScreen } from '../../../loading-screen';
+import { ErrorScreen } from '../../../error-screen';
 
 const PatientResult = ({ patient, nav }) => {
 	const viewPatient = () =>
@@ -43,6 +44,7 @@ const PatientResult = ({ patient, nav }) => {
 
 export const PharmacistPatientSearchScreen = ({ navigation }) => {
 	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(false);
 	let [searchText, setSearchText] = useState('');
 	let [patients, setPatients] = useState([]);
 
@@ -58,12 +60,14 @@ export const PharmacistPatientSearchScreen = ({ navigation }) => {
 		};
 
 		try {
+			setError(false);
 			setLoading(true);
 			setPatients((await axios(config)).data);
-			setLoading(false);
 		} catch (err) {
-			console.error(err);
+			setError(err);
 		}
+
+		setLoading(false);
 	}
 
 	return (
@@ -75,7 +79,8 @@ export const PharmacistPatientSearchScreen = ({ navigation }) => {
 					<PrimaryButton label="Search" onPress={searchPress} style={{ margin: 16, paddingLeft: 32, paddingRight: 32 }} />
 				</View>
 				{loading && <LoadingScreen />}
-				{patients.length != 0 && !loading &&
+				{error && <ErrorScreen error={error} />}
+				{patients.length != 0 && !loading && !error &&
 					<View style={{ flex: 1 }}>
 						<TextHeader3 text="Results" style={{ color: PRIMARY_COLOR, marginTop: 32 }} />
 

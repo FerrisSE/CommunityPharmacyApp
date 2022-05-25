@@ -8,9 +8,11 @@ import { SERVER_URL } from "../../../constants";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { LoadingScreen } from "../../../loading-screen";
+import { ErrorScreen } from "../../../error-screen";
 
 export const PharmacistPatientMedicationScreen = ({ patient }) => {
 	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(false);
 	const [meds, setMeds] = useState([]);
 
 	const userToken = useSelector((state) => state.userToken.value);
@@ -24,10 +26,18 @@ export const PharmacistPatientMedicationScreen = ({ patient }) => {
 			}
 		};
 
-		let results = (await axios(config)).data;
-		setMeds(results);
+		try {
+			let results = (await axios(config)).data;
+			setMeds(results);
+		} catch (err) {
+			setError(err);
+		}
+
 		setLoading(false);
 	}, []);
+
+	if (error)
+		return <ErrorScreen error={error} />
 
 	if (loading)
 		return <LoadingScreen />

@@ -5,10 +5,12 @@ import { AdherenceGraph, GetAdherencePharmacist, GetAdherencePrecent, MedAdheren
 import { Card } from "../../../components/cards";
 import { TextSubHeader2 } from "../../../components/text";
 import { LoadingScreen } from "../../../loading-screen";
+import { ErrorScreen } from "../../../error-screen";
 
 export const PharmacistPatientAdherenceScreen = ({ patient }) => {
-	let [loading, setLoading] = useState(true);
-	let [meds, setMeds] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(false);
+	const [meds, setMeds] = useState([]);
 
 	// default values for if meds can't be pulled in or there aren't any
 	let overallAdherence = 1;
@@ -27,9 +29,17 @@ export const PharmacistPatientAdherenceScreen = ({ patient }) => {
 	const userToken = useSelector((state) => state.userToken.value);
 
 	useEffect(async () => {
-		setMeds(await GetAdherencePharmacist(userToken, patient.patientId));
+		try {
+			setMeds(await GetAdherencePharmacist(userToken, patient.patientId));
+		} catch (err) {
+			setError(err);
+		}
+
 		setLoading(false);
 	}, []);
+
+	if (error)
+		return <ErrorScreen error={error} />
 
 	if (loading)
 		return <LoadingScreen />

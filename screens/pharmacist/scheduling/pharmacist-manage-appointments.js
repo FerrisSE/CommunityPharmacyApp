@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { SERVER_URL } from "../../../constants";
 import moment from "moment";
 import { LoadingScreen } from "../../../loading-screen";
+import { ErrorScreen } from "../../../error-screen";
 
 const Unavailability = [
 	{ date: "December 25th", duration: "All day", repeat: "Repeats Annually" },
@@ -17,6 +18,7 @@ const Unavailability = [
 ];
 
 export const PharmacistManageAppointmentsScreen = ({ navigation }) => {
+	const [error, setError] = useState(false);
 	const [settings, setSettings] = useState(false);
 	const [availability, setAvailability] = useState([]);
 
@@ -26,25 +28,32 @@ export const PharmacistManageAppointmentsScreen = ({ navigation }) => {
 
 	const isFocused = useIsFocused();
 	useEffect(async () => {
-		let data = (await axios({
-			method: 'get',
-			url: `${SERVER_URL}/api/schedule/0/settings`,
-			headers: {
-				Authorization: userToken,
-			}
-		})).data;
+		try {
+			let data = (await axios({
+				method: 'get',
+				url: `${SERVER_URL}/api/schedule/0/settings`,
+				headers: {
+					Authorization: userToken,
+				}
+			})).data;
 
-		setSettings(data);
-		setAvailability([
-			{ day: "Sunday", all: data.days.sun, from: "", to: "" },
-			{ day: "Monday", all: data.days.mon, from: "", to: "" },
-			{ day: "Tuesday", all: data.days.tue, from: "", to: "" },
-			{ day: "Wednesday", all: data.days.wed, from: "", to: "" },
-			{ day: "Thursday", all: data.days.thu, from: "", to: "" },
-			{ day: "Friday", all: data.days.fri, from: "", to: "" },
-			{ day: "Saturday", all: data.days.sat, from: "", to: "" },
-		]);
+			setSettings(data);
+			setAvailability([
+				{ day: "Sunday", all: data.days.sun, from: "", to: "" },
+				{ day: "Monday", all: data.days.mon, from: "", to: "" },
+				{ day: "Tuesday", all: data.days.tue, from: "", to: "" },
+				{ day: "Wednesday", all: data.days.wed, from: "", to: "" },
+				{ day: "Thursday", all: data.days.thu, from: "", to: "" },
+				{ day: "Friday", all: data.days.fri, from: "", to: "" },
+				{ day: "Saturday", all: data.days.sat, from: "", to: "" },
+			]);
+		} catch (err) {
+			setError(err);
+		}
 	}, [isFocused]);
+
+	if (error)
+		return <ErrorScreen error={error} />
 
 	if (!settings)
 		return <LoadingScreen />

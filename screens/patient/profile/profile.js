@@ -10,9 +10,11 @@ import { PRIMARY_COLOR } from '../../../colors';
 import { Card } from '../../../components/cards';
 import { TextBody, TextSubHeader1, TextSubHeader2 } from '../../../components/text';
 import { SERVER_URL } from '../../../constants';
+import { ErrorScreen } from '../../../error-screen';
 import { LoadingScreen } from '../../../loading-screen';
 
 const ProfileScreen = ({ navigation, route }) => {
+	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [profileData, setProfileData] = useState({});
 
@@ -23,21 +25,30 @@ const ProfileScreen = ({ navigation, route }) => {
 
 	const userToken = useSelector((state) => state.userToken.value);
 	const isFocused = useIsFocused();
-	useEffect(() => {
-		// get the profile data
-		axios({
-			method: 'get',
-			url: `${SERVER_URL}/user/me`,
-			headers: {
-				Authorization: userToken,
-			}
-		}).then(response => setProfileData(response.data))
-			.finally(() => setLoading(false));
+	useEffect(async () => {
+		try {
+			// get the profile data
+			let data = (await axios({
+				method: 'get',
+				url: `${SERVER_URL}/user/me`,
+				headers: {
+					Authorization: userToken,
+				}
+			})).data;
+			setProfileData(data)
+		} catch (err) {
+			setError(err);
+		}
+
+		setLoading(false);
 	}, [isFocused]);
 
 	const EditProfile = () => {
 		navigation.navigate("Edit Profile");
 	}
+
+	if (error)
+		return <ErrorScreen error={error} />
 
 	if (loading)
 		return <LoadingScreen />

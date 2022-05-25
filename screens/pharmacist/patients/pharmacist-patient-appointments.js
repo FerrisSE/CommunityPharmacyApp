@@ -10,9 +10,11 @@ import { SERVER_URL } from "../../../constants";
 import moment from 'moment';
 import { DayAndTimeDiff, DayHasPassed } from "../../../time";
 import { LoadingScreen } from "../../../loading-screen";
+import { ErrorScreen } from "../../../error-screen";
 
 export const PharmacistPatientAppointments = ({ nav, patient }) => {
 	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(false);
 	const [appointments, setAppointments] = useState([]);
 
 	const upcomingApps = appointments.filter(a => !DayHasPassed(a.day, a.start)).sort((a, b) => DayAndTimeDiff(a.day, a.start, b.day, b.start));
@@ -33,8 +35,14 @@ export const PharmacistPatientAppointments = ({ nav, patient }) => {
 			}
 		};
 
-		let results = (await axios(config)).data;
-		setAppointments(results);
+		try {
+
+			let results = (await axios(config)).data;
+			setAppointments(results);
+		} catch (err) {
+			setError(err);
+		}
+
 		setLoading(false);
 	}
 
@@ -66,6 +74,9 @@ export const PharmacistPatientAppointments = ({ nav, patient }) => {
 
 		loadAppts();
 	}
+
+	if (error)
+		return <ErrorScreen error={error} />
 
 	if (loading)
 		return <LoadingScreen />

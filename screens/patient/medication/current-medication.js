@@ -14,6 +14,7 @@ import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcon
 import { HIGH_PRIORITY, SECONDARY_COLOR, SECONDARY_COLOR_TRANSPARENT } from '../../../colors';
 import { useIsFocused } from '@react-navigation/native';
 import { LoadingScreen } from '../../../loading-screen';
+import { ErrorScreen } from '../../../error-screen';
 
 const CurrentMedicationScreen = ({ navigation }) => {
 	let [meds, setMeds] = useState([])
@@ -52,7 +53,7 @@ const CurrentMedicationScreen = ({ navigation }) => {
 			setOrders(ordersData);
 		} catch (err) {
 			console.error(err);
-			setError(true);
+			setError(err);
 		} finally {
 			setLoading(false)
 		}
@@ -70,11 +71,8 @@ const CurrentMedicationScreen = ({ navigation }) => {
 
 
 	if (error)
-		return (
-			<SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-				<TextSubHeader1 text="Something Went Wrong!" style={{ color: HIGH_PRIORITY }} />
-			</SafeAreaView>
-		)
+		return <ErrorScreen error={error} />
+
 	if (loading)
 		return <LoadingScreen />
 

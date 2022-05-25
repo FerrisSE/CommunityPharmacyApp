@@ -11,8 +11,10 @@ import { SERVER_URL } from "../../../constants";
 import { useSelector } from "react-redux";
 import { AppointmentsView } from "../../../components/pharmacist-appointments";
 import { LoadingScreen } from "../../../loading-screen";
+import { ErrorScreen } from "../../../error-screen";
 
 export const PharmacistSchedulingHomeScreen = ({ navigation }) => {
+	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [appointments, setAppointments] = useState([]);
 	const [viewedDay, setViewedDay] = useState(moment());
@@ -31,8 +33,13 @@ export const PharmacistSchedulingHomeScreen = ({ navigation }) => {
 			}
 		};
 
-		let data = (await axios(config)).data;
-		setAppointments(data);
+		try {
+			let data = (await axios(config)).data;
+			setAppointments(data);
+		} catch (err) {
+			setError(err);
+		}
+
 		setLoading(false);
 	}
 
@@ -104,7 +111,10 @@ export const PharmacistSchedulingHomeScreen = ({ navigation }) => {
 				{loading ?
 					<LoadingScreen />
 					:
-					<AppointmentsView appointments={appointments} viewedDay={viewedDay} loadAppointments={loadAppointments} />
+					error ?
+						<ErrorScreen error={error} />
+						:
+						<AppointmentsView appointments={appointments} viewedDay={viewedDay} loadAppointments={loadAppointments} />
 				}
 			</Card>
 		</View>

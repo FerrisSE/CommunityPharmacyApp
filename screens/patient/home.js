@@ -16,10 +16,12 @@ import { useSelector } from 'react-redux';
 import { scheduleAdherenceNotification } from '../../notifications';
 import { DayAndTimeDiff } from '../../time';
 import { LoadingScreen } from '../../loading-screen';
+import { ErrorScreen } from '../../error-screen';
 
 export const HomeScreen = ({ navigation }) => {
 	const toScheduling = () => navigation.navigate("Scheduling");
 
+	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(true);
 	let [adherenceMeds, setAdherenceMeds] = useState([]);
 	let [adherenceModel, setAdherenceModel] = useState([]);
@@ -30,83 +32,75 @@ export const HomeScreen = ({ navigation }) => {
 	const getMedsThisDay = (medId) => adherenceModel.find(m => m.medId == medId).medsPerDay[moment().day()];
 
 	const getMedAdherence = async () => {
-		try {
-			return await GetAdherence(userToken);
-		} catch (err) {
-			console.error(err);
-			return [];
-		}
+		return await GetAdherence(userToken);
 	}
 
 	const getAdherenceModel = async () => {
-		try {
-			let data = (await axios({
-				method: 'get',
-				url: `${SERVER_URL}/patient/adherence/models`,
-				headers: {
-					Authorization: userToken,
-				}
-			})).data;
+		let data = (await axios({
+			method: 'get',
+			url: `${SERVER_URL}/patient/adherence/models`,
+			headers: {
+				Authorization: userToken,
+			}
+		})).data;
 
-			// map to array so we can grab the index based off the day, week day 0 = sunday
-			let model = data.map(m => ({
-				medId: m.patientMedicationId,
-				medsPerDay: [
-					m.sundayPills,
-					m.mondayPills,
-					m.tuesdayPills,
-					m.wednesdayPills,
-					m.thursdayPills,
-					m.fridayPills,
-					m.saturdayPills,
-				]
-			}));
+		// map to array so we can grab the index based off the day, week day 0 = sunday
+		let model = data.map(m => ({
+			medId: m.patientMedicationId,
+			medsPerDay: [
+				m.sundayPills,
+				m.mondayPills,
+				m.tuesdayPills,
+				m.wednesdayPills,
+				m.thursdayPills,
+				m.fridayPills,
+				m.saturdayPills,
+			]
+		}));
 
-			return model;
-		} catch (err) {
-			console.log(err);
-			return [];
-		}
+		return model;
 	}
 
 	const getNextEvent = async () => {
-		try {
-			// get the clients list of scheduled events
-			let data = (await axios({
-				method: 'get',
-				url: `${SERVER_URL}/api/schedule/`,
-				headers: {
-					Authorization: userToken,
-				}
-			})).data;
-
-			// sort so next event is index 0
-			data = data.sort((a, b) => DayAndTimeDiff(a.day, a.start, b.day, b.start));
-
-			// grab the next event only
-			if (data.length > 0) {
-				return {
-					name: data[0].category,
-					date: moment(data[0].day),
-					time: moment(data[0].start, "HH:mm:ss")
-				};
+		// get the clients list of scheduled events
+		let data = (await axios({
+			method: 'get',
+			url: `${SERVER_URL}/api/schedule/`,
+			headers: {
+				Authorization: userToken,
 			}
+		})).data;
 
-			return false;
-		} catch (err) {
-			console.error(err);
-			return false;
+		// sort so next event is index 0
+		data = data.sort((a, b) => DayAndTimeDiff(a.day, a.start, b.day, b.start));
+
+		// grab the next event only
+		if (data.length > 0) {
+			return {
+				name: data[0].category,
+				date: moment(data[0].day),
+				time: moment(data[0].start, "HH:mm:ss")
+			};
 		}
+
+		return false;
 	}
 
 	// pull next event
 	const isFocused = useIsFocused();
 	useEffect(async () => {
-		setNextEvent(await getNextEvent());
-		setAdherenceModel(await getAdherenceModel());
-		setAdherenceMeds(await getMedAdherence());
+		try {
+			setNextEvent(await getNextEvent());
+			setAdherenceModel(await getAdherenceModel());
+			setAdherenceMeds(await getMedAdherence());
+		} catch (err) {
+			setError(err);
+		}
 		setLoading(false);
 	}, [isFocused]);
+
+	if (error)
+		return <ErrorScreen error={error} />
 
 	if (loading)
 		return <LoadingScreen />
