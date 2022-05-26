@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { GRAY_2, PRIMARY_COLOR, WHITE } from "../colors";
+import { ACCENT_1, ACCENT_3, GRAY_2, HIGH_PRIORITY, PRIMARY_COLOR, WHITE } from "../colors";
 import { Card } from "./cards";
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
 import { TextBody, TextSubHeader2 } from "./text";
@@ -9,6 +9,7 @@ import { SERVER_URL, TIMEOUT } from "../constants";
 import axios from "axios";
 import moment from "moment";
 import { PrimaryButton } from "./buttons";
+import { DayHasPassed } from "../time";
 
 
 export const AppointmentsView = ({ viewedDay, appointments, loadAppointments, viewLimit }) => {
@@ -44,11 +45,7 @@ export const AppointmentsView = ({ viewedDay, appointments, loadAppointments, vi
 					<View style={{ flex: 2, padding: 4, justifyContent: 'center' }}>
 						<TextSubHeader2 text="Status" style={{ color: PRIMARY_COLOR }} />
 					</View>
-					<View style={{ flex: 2, padding: 4, justifyContent: 'center' }}>
-						<TextSubHeader2 text="Verification" style={{ color: PRIMARY_COLOR }} />
-					</View>
-					{/* Blank on header, but items will have 3 dot more options button */}
-					<View style={{ flex: 1 }}>
+					<View style={{ flex: 3, padding: 4, justifyContent: 'center' }}>
 					</View>
 				</View>
 			</View>
@@ -71,10 +68,7 @@ export const AppointmentsView = ({ viewedDay, appointments, loadAppointments, vi
 const AppointmentRow = ({ appointment, loadAppointments }) => {
 	const userToken = useSelector((state) => state.userToken.value);
 
-	const onReview = async (appt) => {
-		if (appt.status != "Needs Verification")
-			return;
-
+	const onReview = async (appt, newStatus) => {
 		let config = {
 			method: 'patch',
 			url: `${SERVER_URL}/api/schedule/${appt.id}`,
@@ -83,7 +77,7 @@ const AppointmentRow = ({ appointment, loadAppointments }) => {
 				Authorization: userToken,
 			},
 			data: {
-				status: "Verified"
+				status: newStatus
 			}
 		};
 
@@ -91,6 +85,18 @@ const AppointmentRow = ({ appointment, loadAppointments }) => {
 
 		loadAppointments();
 	}
+
+	// change how the status can be changed depending on current status and time
+	let button = <View></View>;
+	if (appointment.status == "Needs Verification")
+		button = <PrimaryButton label="Review" onPress={() => onReview(appointment, "Verified")} />;
+	if (DayHasPassed(appointment.day, appointment.start) && appointment.status == "Verified")
+		button = (
+			<View style={{ flexDirection: "row" }}>
+				<PrimaryButton label="Complete" onPress={() => onReview(appointment, "Complete")} style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0, backgroundColor: ACCENT_3 }} />
+				<PrimaryButton label="No Show" onPress={() => onReview(appointment, "No Show")} style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0, backgroundColor: HIGH_PRIORITY }} />
+			</View>
+		);
 
 	return (
 		<View>
@@ -115,11 +121,8 @@ const AppointmentRow = ({ appointment, loadAppointments }) => {
 					<View style={{ flex: 2, padding: 4, justifyContent: 'center' }}>
 						<TextBody text={appointment.status} />
 					</View>
-					<View style={{ flex: 2, padding: 4, justifyContent: 'center' }}>
-						<PrimaryButton label={appointment.status == "Needs Verification" ? "Review" : "Reviewed"} onPress={() => onReview(appointment)} />
-					</View>
-					<View style={{ flex: 1, padding: 4, justifyContent: 'center' }}>
-						<Icon name="dots-vertical" size={24} color={GRAY_2} />
+					<View style={{ flex: 3, padding: 4, justifyContent: 'center' }}>
+						{button}
 					</View>
 				</View>
 			</View>

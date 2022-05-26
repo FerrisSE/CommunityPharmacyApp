@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { useSelector } from "react-redux";
-import { PRIMARY_COLOR } from "../../../colors";
+import { ACCENT_3, HIGH_PRIORITY, PRIMARY_COLOR } from "../../../colors";
 import { PrimaryButton } from "../../../components/buttons";
 import { Card } from "../../../components/cards";
 import { TextBody, TextSubHeader2 } from "../../../components/text";
@@ -56,27 +56,6 @@ export const PharmacistPatientAppointments = ({ nav, patient }) => {
 		});
 	}
 
-	const onReviewAppt = async (appt) => {
-		if (appt.status != "Needs Verification")
-			return;
-
-		let config = {
-			method: 'patch',
-			url: `${SERVER_URL}/api/schedule/${appt.id}`,
-			timeout: TIMEOUT,
-			headers: {
-				Authorization: userToken,
-			},
-			data: {
-				status: "Verified"
-			}
-		};
-
-		let resp = await axios(config);
-
-		loadAppts();
-	}
-
 	if (error)
 		return <ErrorScreen error={error} />
 
@@ -89,7 +68,7 @@ export const PharmacistPatientAppointments = ({ nav, patient }) => {
 			{upcomingApps.length == 0 ?
 				<TextBody text="No Appointments on Record" style={{ margin: 8 }} />
 				:
-				upcomingApps.map((a, i) => <AppointmentCard key={i} appointment={a} onReview={() => onReviewAppt(a)} />)
+				upcomingApps.map((a, i) => <AppointmentCard key={i} appointment={a} loadAppts={loadAppts} />)
 			}
 
 			<PrimaryButton label="Schedule Appointment" onPress={schedulePatient} style={{ margin: 8, padding: 12, borderRadius: 20 }} />
@@ -101,29 +80,58 @@ export const PharmacistPatientAppointments = ({ nav, patient }) => {
 			{pastApps.length == 0 ?
 				<TextBody text="No Past Appointments on Record" style={{ margin: 8 }} />
 				:
-				pastApps.map((a, i) => <AppointmentCard key={i} appointment={a} onReview={() => onReviewAppt(a)} />)
+				pastApps.map((a, i) => <AppointmentCard key={i} appointment={a} loadAppts={loadAppts} />)
 			}
 		</ScrollView>
 	)
 }
 
-const AppointmentCard = ({ appointment, onReview }) => {
+const AppointmentCard = ({ appointment, loadAppts }) => {
+	const userToken = useSelector((state) => state.userToken.value);
+
+	const onReview = async (appt, newStatus) => {
+		let config = {
+			method: 'patch',
+			url: `${SERVER_URL}/api/schedule/${appt.id}`,
+			timeout: TIMEOUT,
+			headers: {
+				Authorization: userToken,
+			},
+			data: {
+				status: newStatus
+			}
+		};
+
+		let resp = await axios(config);
+
+		loadAppts();
+	}
+
+	// change how the status can be changed depending on current status and time
+	let button = <View style={{ flex: 1, padding: 16 }}></View>;
+	if (appointment.status == "Needs Verification")
+		button = <PrimaryButton style={{ flex: 1 }} label="Review" onPress={() => onReview(appointment, "Verified")} />;
+	if (DayHasPassed(appointment.day, appointment.start) && appointment.status == "Verified")
+		button = (
+			<View style={{ flexDirection: "row", flex: 1 }}>
+				<PrimaryButton label="Complete" onPress={() => onReview(appointment, "Complete")} style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0, backgroundColor: ACCENT_3, flex: 1 }} />
+				<PrimaryButton label="No Show" onPress={() => onReview(appointment, "No Show")} style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0, backgroundColor: HIGH_PRIORITY, flex: 1 }} />
+			</View>
+		);
+
 	return (
 		<Card depth={1} style={{ margin: 8 }}>
 			<View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
-				<View style={{ flex: 2, padding: 4, alignContent: 'center', justifyContent: 'center' }}>
+				<View style={{ flex: 1, padding: 8, alignContent: 'center', justifyContent: 'center' }}>
 					<TextBody text={`${moment(appointment.day).format("MMM Do")}, ${moment(appointment.start, "HH:mm:ss").format("h:mm a")}`} />
 				</View>
-				<View style={{ flex: 1, padding: 2, alignContent: 'center', justifyContent: 'center' }}>
+				<View style={{ flex: 1, padding: 8, alignContent: 'center', justifyContent: 'center' }}>
 					<TextBody text={appointment.category} />
 				</View>
-				<View style={{ flex: 1, padding: 2, alignContent: 'center', justifyContent: 'center' }}>
+				<View style={{ flex: 1, padding: 8, alignContent: 'center', justifyContent: 'center' }}>
 					<TextBody text={appointment.status} />
 				</View>
-				<PrimaryButton label={appointment.status == "Needs Verification" ? "Review" : "Reviewed"}
-					onPress={onReview}
-					style={{ flex: 1, margin: 2, textAlign: 'center', textAlignVertical: 'center' }}
-				/>
+				{button}
 			</View>
 		</Card>
 	)
