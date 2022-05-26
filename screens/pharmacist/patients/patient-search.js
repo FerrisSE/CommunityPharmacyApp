@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { TextHeader2, TextHeader3, TextSubHeader2 } from '../../../components/text';
+import { TextHeader2, TextHeader3, TextSubHeader1, TextSubHeader2 } from '../../../components/text';
 import { default as Icon } from "react-native-vector-icons/MaterialCommunityIcons";
 import { SERVER_URL, TIMEOUT } from '../../../constants';
 import { Card } from '../../../components/cards';
@@ -47,6 +47,7 @@ export const PharmacistPatientSearchScreen = ({ navigation }) => {
 	const [error, setError] = useState(false);
 	let [searchText, setSearchText] = useState('');
 	let [patients, setPatients] = useState([]);
+	const [lastSearch, setLastSearch] = useState("");
 
 	const userToken = useSelector((state) => state.userToken.value);
 
@@ -61,6 +62,7 @@ export const PharmacistPatientSearchScreen = ({ navigation }) => {
 		};
 
 		try {
+			setLastSearch(searchText);
 			setError(false);
 			setLoading(true);
 			setPatients((await axios(config)).data);
@@ -93,6 +95,9 @@ export const PharmacistPatientSearchScreen = ({ navigation }) => {
 							</ScrollView>
 						</Card>
 					</View>
+				}
+				{!loading && !error && lastSearch != "" && patients.length == 0 &&
+					<TextSubHeader1 text={`No Results for "${lastSearch}" in Database`} />
 				}
 			</View>
 		</Card>
